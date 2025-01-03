@@ -37,9 +37,9 @@ const Index = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-secondary/5 to-transparent">
         <div className="max-w-7xl mx-auto text-center">
-          <span className="inline-block animate-fade-up bg-muted text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <span className="inline-block animate-fade-up bg-secondary/10 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-6">
             Premium Product Management Talent
           </span>
           <h1 className="animate-fade-up text-4xl md:text-6xl font-bold text-primary mb-6">
@@ -51,14 +51,14 @@ const Index = () => {
           <div className="animate-fade-up flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/hire"
-              className="btn-primary px-8 py-3 rounded-lg font-medium inline-flex items-center justify-center"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-lg font-medium inline-flex items-center justify-center transition-colors"
             >
               Hire Product Managers
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
             <Link
               to="/join"
-              className="btn-secondary px-8 py-3 rounded-lg font-medium inline-flex items-center justify-center"
+              className="bg-secondary hover:bg-secondary/90 text-secondary-foreground px-8 py-3 rounded-lg font-medium inline-flex items-center justify-center transition-colors"
             >
               Join as Product Manager
             </Link>
@@ -84,11 +84,11 @@ const Index = () => {
           {/* Key Features Grid */}
           <div className="grid md:grid-cols-3 gap-12 mt-16">
             {/* Instant Scaling */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all">
+            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all border border-secondary/10">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-xl mb-6">
                 <Zap className="h-6 w-6 text-secondary" />
               </div>
-              <h3 className="text-xl font-semibold mb-4">Instant Team Scaling</h3>
+              <h3 className="text-xl font-semibold mb-4 text-primary">Instant Team Scaling</h3>
               <p className="text-gray-600">
                 Access pre-vetted product managers immediately and scale your product team on demand.
                 No lengthy hiring processes.
@@ -96,22 +96,22 @@ const Index = () => {
             </div>
 
             {/* Flexible Subscription */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all">
+            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all border border-secondary/10">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-xl mb-6">
                 <Users className="h-6 w-6 text-secondary" />
               </div>
-              <h3 className="text-xl font-semibold mb-4">Cancel Anytime</h3>
+              <h3 className="text-xl font-semibold mb-4 text-primary">Cancel Anytime</h3>
               <p className="text-gray-600">
                 Flexible monthly subscription with no long-term commitments. Replace talent or cancel whenever needed.
               </p>
             </div>
 
             {/* AI Integration */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all">
+            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all border border-secondary/10">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-xl mb-6">
                 <Bot className="h-6 w-6 text-secondary" />
               </div>
-              <h3 className="text-xl font-semibold mb-4">AI-Powered Support</h3>
+              <h3 className="text-xl font-semibold mb-4 text-primary">AI-Powered Support</h3>
               <p className="text-gray-600">
                 Access specialized AI agents trained in product management to support your product journey.
               </p>
@@ -121,7 +121,7 @@ const Index = () => {
       </section>
 
       {/* Client Testimonials Section */}
-      <section className="py-20 bg-white relative">
+      <section className="py-20 bg-gradient-to-b from-white to-secondary/5 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-primary mb-4">
