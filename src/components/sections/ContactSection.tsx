@@ -18,20 +18,9 @@ export const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      // First create the user account
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password: crypto.randomUUID(), // Generate a random password
-        options: {
-          data: {
-            full_name: name,
-          },
-        },
-      });
-
-      if (authError) throw authError;
-
-      // Then store the contact form data
+      console.log("Attempting to insert contact form data...");
+      
+      // First insert the contact form data
       const { error: contactError } = await supabase
         .from("producthire")
         .insert([
@@ -44,6 +33,19 @@ export const ContactSection = () => {
 
       if (contactError) throw contactError;
 
+      // Then create the user account
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email,
+        password: crypto.randomUUID(), // Generate a random password
+        options: {
+          data: {
+            full_name: name,
+          },
+        },
+      });
+
+      if (authError) throw authError;
+
       // Update the user's profile with company name
       if (authData.user) {
         const { error: profileError } = await supabase
@@ -55,7 +57,7 @@ export const ContactSection = () => {
       }
 
       toast({
-        title: "Account created successfully!",
+        title: "Form submitted successfully!",
         description: "Check your email for login instructions.",
       });
 
@@ -67,7 +69,7 @@ export const ContactSection = () => {
       // Redirect to login page
       navigate("/login");
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Detailed error:", error);
       toast({
         title: "Something went wrong",
         description: "Please try again later.",
@@ -126,7 +128,7 @@ export const ContactSection = () => {
             className="w-full"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Creating Account..." : "Let's Talk"}
+            {isSubmitting ? "Submitting..." : "Let's Talk"}
           </Button>
         </form>
       </div>
