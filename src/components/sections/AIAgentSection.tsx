@@ -4,11 +4,20 @@ export const AIAgentSection = () => {
   return (
     <section className="py-24 bg-muted">
       <div className="container max-w-6xl mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Meet Karma, Your AI Product Assistant</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Powered by advanced AI, Karma ensures successful product development by supporting both hiring teams and product talent
-          </p>
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+          <div>
+            <h2 className="text-4xl font-bold mb-4">Meet Karma, Your AI Product Assistant</h2>
+            <p className="text-lg text-muted-foreground">
+              Powered by advanced AI, Karma ensures successful product development by supporting both hiring teams and product talent
+            </p>
+          </div>
+          <div>
+            <img
+              src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e"
+              alt="AI Assistant Visualization"
+              className="rounded-lg shadow-xl"
+            />
+          </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">

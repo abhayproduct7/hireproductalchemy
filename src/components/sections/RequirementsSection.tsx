@@ -5,11 +5,20 @@ export const RequirementsSection = () => {
   return (
     <section className="py-24 bg-background">
       <div className="container max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Tell Us About Your Needs</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Help us understand your requirements so we can match you with the perfect product manager from our community
-          </p>
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
+          <div>
+            <img
+              src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81"
+              alt="Team collaboration"
+              className="rounded-lg shadow-xl"
+            />
+          </div>
+          <div>
+            <h2 className="text-4xl font-bold mb-4">Tell Us About Your Needs</h2>
+            <p className="text-lg text-muted-foreground">
+              Help us understand your requirements so we can match you with the perfect product manager from our community
+            </p>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
