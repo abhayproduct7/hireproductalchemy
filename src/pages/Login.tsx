@@ -70,6 +70,7 @@ const Login = () => {
               },
             }}
             providers={["google"]}
+            view="sign_in"
           />
         </div>
       </div>
