@@ -20,13 +20,32 @@ const Login = () => {
 
   // Add error handling for auth state changes
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth event:', event);
+      console.log('Session:', session);
+      
       if (event === 'SIGNED_IN') {
         navigate("/");
+        toast({
+          title: "Successfully signed in",
+          description: "Welcome back!",
+        });
       }
       
-      // Log auth events
-      console.log('Auth event:', event);
+      if (event === 'SIGNED_OUT') {
+        toast({
+          title: "Signed out",
+          description: "You have been signed out successfully.",
+        });
+      }
+
+      if (event === 'USER_DELETED') {
+        toast({
+          variant: "destructive",
+          title: "Account deleted",
+          description: "Your account has been deleted.",
+        });
+      }
     });
 
     return () => {
@@ -88,6 +107,14 @@ const Login = () => {
             }}
             providers={["google"]}
             view="sign_in"
+            onError={(error) => {
+              console.error('Auth error:', error);
+              toast({
+                variant: "destructive",
+                title: "Authentication Error",
+                description: error.message,
+              });
+            }}
           />
         </div>
       </div>
