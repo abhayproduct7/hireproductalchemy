@@ -6,27 +6,27 @@ export const CompaniesSection = () => {
       </h2>
       <div className="flex flex-wrap justify-center items-center gap-8 opacity-75">
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
+          src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png"
           alt="Google"
           className="h-8 grayscale hover:grayscale-0 transition-all"
         />
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Meta-Logo.png/640px-Meta-Logo.png"
+          src="https://about.meta.com/brand/resources/facebookapp/logo/logo-primary.png"
           alt="Meta"
           className="h-8 grayscale hover:grayscale-0 transition-all"
         />
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg"
+          src="https://m.media-amazon.com/images/G/01/gc/designs/livepreview/amazon_dkblue_noto_email_v2016_us-main._CB468775337_.png"
           alt="Amazon"
           className="h-8 grayscale hover:grayscale-0 transition-all"
         />
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
+          src="https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png"
           alt="Apple"
           className="h-8 grayscale hover:grayscale-0 transition-all"
         />
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg"
+          src="https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31"
           alt="Microsoft"
           className="h-8 grayscale hover:grayscale-0 transition-all"
         />
