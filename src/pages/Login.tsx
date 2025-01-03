@@ -54,7 +54,7 @@ const Login = () => {
                 },
               },
             }}
-            providers={["google", "github"]}
+            providers={["google", "microsoft", "github"]}
           />
         </div>
       </div>
