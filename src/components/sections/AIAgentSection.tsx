@@ -1,6 +1,8 @@
 import { Brain, Users, CheckCircle } from "lucide-react";
 
 export const AIAgentSection = () => {
+  const storageUrl = "https://duqgdyzstzpcydztyflb.supabase.co/storage/v1/object/public/assets";
+  
   return (
     <section className="py-24 bg-muted">
       <div className="container max-w-6xl mx-auto px-4">
@@ -13,7 +15,7 @@ export const AIAgentSection = () => {
           </div>
           <div>
             <img
-              src="https://images.ctfassets.net/spoqsaf9291f/3csRrHDsthfkqErBtKR5ov/75e9d04af4544a87b945d07df3b9c220/hero.png"
+              src={`${storageUrl}/ai-interface.png`}
               alt="Modern AI Chat Interface"
               className="rounded-lg shadow-xl"
             />
