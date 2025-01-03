@@ -11,15 +11,16 @@ export const Navigation = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <img 
-                src="/lovable-uploads/c48ed142-2a69-4c2f-b7b9-e0691e03aa53.png" 
-                alt="ProductHire Logo" 
-                className="h-8 w-auto"
-              />
+              <div className="bg-muted rounded-lg p-2">
+                <img 
+                  src="/lovable-uploads/c48ed142-2a69-4c2f-b7b9-e0691e03aa53.png" 
+                  alt="ProductHire Logo" 
+                  className="h-10 w-auto"
+                />
+              </div>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/hire" className="nav-link">
               Hire Talent
