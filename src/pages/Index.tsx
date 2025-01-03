@@ -1,4 +1,4 @@
-import { ArrowRight, Star, Users, Briefcase } from "lucide-react";
+import { ArrowRight, Users, Zap, Bot } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 
@@ -37,42 +37,55 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Elite Companies & Features Section */}
       <section className="py-20 bg-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-12">
-            <div className="animate-fade-up text-center p-6">
-              <div className="bg-white rounded-2xl p-6 shadow-sm card-hover">
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl mb-6">
-                  <Star className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4">Premium Talent</h3>
-                <p className="text-gray-600">
-                  Access pre-vetted product managers with proven track records.
-                </p>
-              </div>
+          {/* Elite Tech Companies */}
+          <div className="text-center mb-16">
+            <h2 className="text-2xl font-semibold text-primary mb-8">Our Product Managers Come From Elite Tech Companies</h2>
+            <div className="flex flex-wrap justify-center items-center gap-8 opacity-75">
+              <img src="/google-logo.svg" alt="Google" className="h-8 grayscale hover:grayscale-0 transition-all" />
+              <img src="/meta-logo.svg" alt="Meta" className="h-8 grayscale hover:grayscale-0 transition-all" />
+              <img src="/amazon-logo.svg" alt="Amazon" className="h-8 grayscale hover:grayscale-0 transition-all" />
+              <img src="/apple-logo.svg" alt="Apple" className="h-8 grayscale hover:grayscale-0 transition-all" />
+              <img src="/microsoft-logo.svg" alt="Microsoft" className="h-8 grayscale hover:grayscale-0 transition-all" />
             </div>
-            <div className="animate-fade-up text-center p-6 delay-100">
-              <div className="bg-white rounded-2xl p-6 shadow-sm card-hover">
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl mb-6">
-                  <Users className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4">Simple Subscription</h3>
-                <p className="text-gray-600">
-                  Fixed monthly cost with flexibility to change talent as needed.
-                </p>
+          </div>
+
+          {/* Key Features Grid */}
+          <div className="grid md:grid-cols-3 gap-12 mt-16">
+            {/* Instant Scaling */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-xl mb-6">
+                <Zap className="h-6 w-6 text-secondary" />
               </div>
+              <h3 className="text-xl font-semibold mb-4">Instant Team Scaling</h3>
+              <p className="text-gray-600">
+                Access pre-vetted product managers immediately and scale your product team on demand.
+                No lengthy hiring processes.
+              </p>
             </div>
-            <div className="animate-fade-up text-center p-6 delay-200">
-              <div className="bg-white rounded-2xl p-6 shadow-sm card-hover">
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl mb-6">
-                  <Briefcase className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4">Resource Library</h3>
-                <p className="text-gray-600">
-                  Access shared product management resources and templates.
-                </p>
+
+            {/* Flexible Subscription */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-xl mb-6">
+                <Users className="h-6 w-6 text-secondary" />
               </div>
+              <h3 className="text-xl font-semibold mb-4">Cancel Anytime</h3>
+              <p className="text-gray-600">
+                Flexible monthly subscription with no long-term commitments. Replace talent or cancel whenever needed.
+              </p>
+            </div>
+
+            {/* AI Integration */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-secondary/10 rounded-xl mb-6">
+                <Bot className="h-6 w-6 text-secondary" />
+              </div>
+              <h3 className="text-xl font-semibold mb-4">AI-Powered Support</h3>
+              <p className="text-gray-600">
+                Access specialized AI agents trained in product management to support your product journey.
+              </p>
             </div>
           </div>
         </div>
