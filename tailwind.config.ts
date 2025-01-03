@@ -29,15 +29,15 @@ export default {
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#22C55E", // More vibrant green
+          DEFAULT: "#0F4C35", // Darker bottle green
           foreground: "#FFFFFF",
         },
         muted: {
-          DEFAULT: "#F0FDF4", // Light green background
+          DEFAULT: "#E6EFE9", // Light bottle green background
           foreground: "#1A1A1A",
         },
         accent: {
-          DEFAULT: "#16A34A", // Darker vibrant green
+          DEFAULT: "#1B5E40", // Rich bottle green
           foreground: "#FFFFFF",
         },
       },

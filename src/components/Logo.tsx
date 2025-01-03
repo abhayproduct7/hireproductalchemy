@@ -12,20 +12,20 @@ const Logo = () => {
         className="flex-shrink-0"
       >
         <circle cx="30" cy="20" r="4" fill="#1A1A1A" />
-        <circle cx="50" cy="30" r="4" fill="#22C55E" />
+        <circle cx="50" cy="30" r="4" fill="#0F4C35" />
         <circle cx="70" cy="20" r="4" fill="#1A1A1A" />
         <circle cx="20" cy="50" r="4" fill="#1A1A1A" />
-        <circle cx="40" cy="60" r="4" fill="#22C55E" />
-        <circle cx="60" cy="50" r="4" fill="#22C55E" />
+        <circle cx="40" cy="60" r="4" fill="#0F4C35" />
+        <circle cx="60" cy="50" r="4" fill="#0F4C35" />
         <circle cx="30" cy="80" r="4" fill="#1A1A1A" />
-        <circle cx="50" cy="70" r="4" fill="#22C55E" />
+        <circle cx="50" cy="70" r="4" fill="#0F4C35" />
         <line x1="30" y1="20" x2="50" y2="30" stroke="#1A1A1A" strokeWidth="2" />
-        <line x1="50" y1="30" x2="70" y2="20" stroke="#22C55E" strokeWidth="2" />
+        <line x1="50" y1="30" x2="70" y2="20" stroke="#0F4C35" strokeWidth="2" />
         <line x1="20" y1="50" x2="40" y2="60" stroke="#1A1A1A" strokeWidth="2" />
-        <line x1="40" y1="60" x2="60" y2="50" stroke="#22C55E" strokeWidth="2" />
+        <line x1="40" y1="60" x2="60" y2="50" stroke="#0F4C35" strokeWidth="2" />
         <line x1="30" y1="80" x2="50" y2="70" stroke="#1A1A1A" strokeWidth="2" />
-        <line x1="50" y1="30" x2="40" y2="60" stroke="#22C55E" strokeWidth="2" />
-        <line x1="50" y1="70" x2="60" y2="50" stroke="#22C55E" strokeWidth="2" />
+        <line x1="50" y1="30" x2="40" y2="60" stroke="#0F4C35" strokeWidth="2" />
+        <line x1="50" y1="70" x2="60" y2="50" stroke="#0F4C35" strokeWidth="2" />
       </svg>
       <div className="text-2xl font-semibold">
         <span className="text-primary">Product</span>
