@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 export const ContactSection = () => {
   const [name, setName] = useState("");
@@ -10,13 +11,28 @@ export const ContactSection = () => {
   const [companyName, setCompanyName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase
+      // First create the user account
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email,
+        password: crypto.randomUUID(), // Generate a random password
+        options: {
+          data: {
+            full_name: name,
+          },
+        },
+      });
+
+      if (authError) throw authError;
+
+      // Then store the contact form data
+      const { error: contactError } = await supabase
         .from("producthire")
         .insert([
           {
@@ -26,18 +42,32 @@ export const ContactSection = () => {
           },
         ]);
 
-      if (error) throw error;
+      if (contactError) throw contactError;
+
+      // Update the user's profile with company name
+      if (authData.user) {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .update({ company_name: companyName })
+          .eq('id', authData.user.id);
+
+        if (profileError) throw profileError;
+      }
 
       toast({
-        title: "Thank you for your interest!",
-        description: "We'll be in touch with you soon.",
+        title: "Account created successfully!",
+        description: "Check your email for login instructions.",
       });
 
       // Reset form
       setName("");
       setEmail("");
       setCompanyName("");
+      
+      // Redirect to login page
+      navigate("/login");
     } catch (error) {
+      console.error("Error:", error);
       toast({
         title: "Something went wrong",
         description: "Please try again later.",
@@ -96,7 +126,7 @@ export const ContactSection = () => {
             className="w-full"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Submitting..." : "Let's Talk"}
+            {isSubmitting ? "Creating Account..." : "Let's Talk"}
           </Button>
         </form>
       </div>
