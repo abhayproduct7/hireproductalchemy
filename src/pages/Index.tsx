@@ -7,6 +7,7 @@ import { PricingSection } from "@/components/sections/PricingSection";
 import { RequirementsSection } from "@/components/sections/RequirementsSection";
 import { AIAgentSection } from "@/components/sections/AIAgentSection";
 import { ContactSection } from "@/components/sections/ContactSection";
+import { Footer } from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -27,6 +28,7 @@ const Index = () => {
       <AIAgentSection />
       <RequirementsSection />
       <ContactSection />
+      <Footer />
     </div>
   );
 };
