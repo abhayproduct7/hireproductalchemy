@@ -13,8 +13,8 @@ export const AIAgentSection = () => {
           </div>
           <div>
             <img
-              src="https://images.unsplash.com/photo-1677442136019-21780ecad995"
-              alt="AI Innovation"
+              src="https://images.unsplash.com/photo-1701977406599-99b9cd7699c3"
+              alt="Modern AI Chat Interface"
               className="rounded-lg shadow-xl"
             />
           </div>
