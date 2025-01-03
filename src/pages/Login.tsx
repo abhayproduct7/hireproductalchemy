@@ -39,17 +39,27 @@ const Login = () => {
         });
       }
 
-      if (event === 'USER_DELETED') {
+      if (event === 'USER_UPDATED') {
         toast({
-          variant: "destructive",
-          title: "Account deleted",
-          description: "Your account has been deleted.",
+          title: "Account updated",
+          description: "Your account has been updated successfully.",
         });
       }
     });
 
+    // Handle auth errors globally
+    const authListener = supabase.auth.onError((error) => {
+      console.error('Auth error:', error);
+      toast({
+        variant: "destructive",
+        title: "Authentication Error",
+        description: error.message,
+      });
+    });
+
     return () => {
       subscription.unsubscribe();
+      authListener.data.subscription.unsubscribe();
     };
   }, [navigate]);
 
@@ -107,14 +117,6 @@ const Login = () => {
             }}
             providers={["google"]}
             view="sign_in"
-            onError={(error) => {
-              console.error('Auth error:', error);
-              toast({
-                variant: "destructive",
-                title: "Authentication Error",
-                description: error.message,
-              });
-            }}
           />
         </div>
       </div>
