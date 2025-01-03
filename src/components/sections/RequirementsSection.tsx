@@ -8,8 +8,8 @@ export const RequirementsSection = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
           <div>
             <img
-              src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81"
-              alt="Team collaboration"
+              src="https://images.unsplash.com/photo-1664575602276-acd073f104c1"
+              alt="Modern Team Collaboration"
               className="rounded-lg shadow-xl"
             />
           </div>
