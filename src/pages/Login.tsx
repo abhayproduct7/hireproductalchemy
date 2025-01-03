@@ -18,7 +18,6 @@ const Login = () => {
     }
   }, [session, navigate]);
 
-  // Add error handling for auth state changes
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       console.log('Auth event:', event);
@@ -47,19 +46,21 @@ const Login = () => {
       }
     });
 
-    // Handle auth errors globally
-    const authListener = supabase.auth.onError((error) => {
-      console.error('Auth error:', error);
-      toast({
-        variant: "destructive",
-        title: "Authentication Error",
-        description: error.message,
-      });
+    // Set up a listener for auth state errors
+    const { data: { subscription: errorSubscription } } = supabase.auth.onAuthStateChange((event, session, error) => {
+      if (error) {
+        console.error('Auth error:', error);
+        toast({
+          variant: "destructive",
+          title: "Authentication Error",
+          description: error.message,
+        });
+      }
     });
 
     return () => {
       subscription.unsubscribe();
-      authListener.data.subscription.unsubscribe();
+      errorSubscription.unsubscribe();
     };
   }, [navigate]);
 
