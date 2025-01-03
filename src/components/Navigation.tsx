@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import Logo from "./Logo";
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,14 +11,8 @@ export const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="bg-muted rounded-lg p-2">
-                <img 
-                  src="/lovable-uploads/c48ed142-2a69-4c2f-b7b9-e0691e03aa53.png" 
-                  alt="ProductHire Logo" 
-                  className="h-10 w-auto"
-                />
-              </div>
+            <Link to="/" className="flex items-center">
+              <Logo />
             </Link>
           </div>
 
