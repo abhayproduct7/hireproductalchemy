@@ -124,7 +124,7 @@ const Index = () => {
       </section>
 
       {/* Client Testimonials Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-primary mb-4">
@@ -135,47 +135,49 @@ const Index = () => {
             </p>
           </div>
 
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full max-w-5xl mx-auto"
-          >
-            <CarouselContent>
-              {testimonials.map((testimonial, index) => (
-                <CarouselItem key={index} className="md:basis-1/1 lg:basis-1/1">
-                  <Card className="border-none shadow-lg">
-                    <CardContent className="p-8">
-                      <div className="flex flex-col items-center space-y-6">
-                        <img
-                          src={testimonial.logo}
-                          alt={`${testimonial.company} logo`}
-                          className="h-12 mb-4 opacity-80"
-                        />
-                        <blockquote className="text-lg text-gray-700 text-center italic">
-                          "{testimonial.testimonial}"
-                        </blockquote>
-                        <div className="text-center">
-                          <div className="font-semibold text-primary">
-                            {testimonial.author}
-                          </div>
-                          <div className="text-sm text-gray-600">
-                            {testimonial.designation}
-                          </div>
-                          <div className="text-sm text-secondary mt-1">
-                            {testimonial.company}
+          <div className="relative px-12">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full max-w-5xl mx-auto"
+            >
+              <CarouselContent>
+                {testimonials.map((testimonial, index) => (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/1">
+                    <Card className="border-none shadow-lg mx-2">
+                      <CardContent className="p-8">
+                        <div className="flex flex-col items-center space-y-6">
+                          <img
+                            src={testimonial.logo}
+                            alt={`${testimonial.company} logo`}
+                            className="h-12 mb-4 opacity-80"
+                          />
+                          <blockquote className="text-lg text-gray-700 text-center italic">
+                            "{testimonial.testimonial}"
+                          </blockquote>
+                          <div className="text-center">
+                            <div className="font-semibold text-primary">
+                              {testimonial.author}
+                            </div>
+                            <div className="text-sm text-gray-600">
+                              {testimonial.designation}
+                            </div>
+                            <div className="text-sm text-secondary mt-1">
+                              {testimonial.company}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="hidden md:flex" />
-            <CarouselNext className="hidden md:flex" />
-          </Carousel>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="absolute -left-4 top-1/2 -translate-y-1/2" />
+              <CarouselNext className="absolute -right-4 top-1/2 -translate-y-1/2" />
+            </Carousel>
+          </div>
         </div>
       </section>
     </div>
