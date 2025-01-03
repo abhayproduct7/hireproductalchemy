@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from './App.tsx'
 import Login from './pages/Login.tsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.tsx'
+import TermsOfService from './pages/TermsOfService.tsx'
 import './index.css'
 
 const router = createBrowserRouter([
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/privacy-policy",
     element: <PrivacyPolicy />,
+  },
+  {
+    path: "/terms-of-service",
+    element: <TermsOfService />,
   },
 ]);
 
