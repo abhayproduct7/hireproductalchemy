@@ -12,7 +12,7 @@ export const Navigation = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
               <img 
-                src="/producthire-logo.png" 
+                src="/lovable-uploads/c48ed142-2a69-4c2f-b7b9-e0691e03aa53.png" 
                 alt="ProductHire Logo" 
                 className="h-8"
               />

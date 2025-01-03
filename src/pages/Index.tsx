@@ -14,21 +14,18 @@ const Index = () => {
   const testimonials = [
     {
       company: "TechGiant Inc.",
-      logo: "/techgiant-logo.svg",
       testimonial: "The product manager we hired through this platform transformed our product development process. Their expertise in AI and machine learning helped us launch our flagship product 3 months ahead of schedule.",
       author: "Sarah Chen",
       designation: "VP of Engineering",
     },
     {
       company: "InnovateCorp",
-      logo: "/innovate-logo.svg",
       testimonial: "Having access to both an experienced product manager and their AI tools has been game-changing for our startup. We've seen a 40% increase in feature adoption since implementing their suggested strategies.",
       author: "Michael Rodriguez",
       designation: "Chief Technology Officer",
     },
     {
       company: "FutureScale",
-      logo: "/futurescale-logo.svg",
       testimonial: "The flexibility to scale our product team up or down as needed has been invaluable. The product manager's deep expertise in B2B SaaS has helped us refine our product-market fit.",
       author: "Amanda Foster",
       designation: "Director of Product",
@@ -149,11 +146,6 @@ const Index = () => {
                     <Card className="border-none shadow-lg mx-2">
                       <CardContent className="p-8">
                         <div className="flex flex-col items-center space-y-6">
-                          <img
-                            src={testimonial.logo}
-                            alt={`${testimonial.company} logo`}
-                            className="h-12 mb-4 opacity-80"
-                          />
                           <blockquote className="text-lg text-gray-700 text-center italic">
                             "{testimonial.testimonial}"
                           </blockquote>
