@@ -1,76 +1,24 @@
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSession } from "@supabase/auth-helpers-react";
 import { Navigation } from "@/components/Navigation";
 import Logo from "@/components/Logo";
-import { toast } from "@/components/ui/use-toast";
-import { AuthError, Session, AuthChangeEvent } from "@supabase/supabase-js";
+import { AuthForm } from "@/components/auth/AuthForm";
+import { useAuthState } from "@/hooks/useAuthState";
 
 const Login = () => {
   const session = useSession();
   const navigate = useNavigate();
 
+  // Initialize auth state management
+  useAuthState();
+
+  // Redirect if already logged in
   useEffect(() => {
     if (session) {
       navigate("/");
     }
   }, [session, navigate]);
-
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
-      console.log('Auth event:', event);
-      console.log('Session:', session);
-      
-      if (event === 'SIGNED_IN') {
-        navigate("/");
-        toast({
-          title: "Successfully signed in",
-          description: "Welcome back!",
-        });
-      }
-      
-      if (event === 'SIGNED_OUT') {
-        toast({
-          title: "Signed out",
-          description: "You have been signed out successfully.",
-        });
-      }
-
-      if (event === 'USER_UPDATED') {
-        toast({
-          title: "Account updated",
-          description: "Your account has been updated successfully.",
-        });
-      }
-    });
-
-    // Set up error handling through the auth state change event
-    const handleError = (error: AuthError | null) => {
-      if (error) {
-        console.error('Auth error:', error);
-        toast({
-          variant: "destructive",
-          title: "Authentication Error",
-          description: error.message,
-        });
-      }
-    };
-
-    // Subscribe to auth state changes and handle errors
-    const { data: { subscription: errorSubscription } } = supabase.auth.onAuthStateChange(
-      (_event: AuthChangeEvent, _session: Session | null, error: AuthError | null) => {
-        handleError(error);
-      }
-    );
-
-    return () => {
-      subscription.unsubscribe();
-      errorSubscription.unsubscribe();
-    };
-  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -86,47 +34,7 @@ const Login = () => {
           </p>
         </div>
         <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-          <Auth
-            supabaseClient={supabase}
-            appearance={{
-              theme: ThemeSupa,
-              style: {
-                button: {
-                  background: "#0F4C35",
-                  color: "white",
-                  borderRadius: "0.5rem",
-                  fontWeight: "500",
-                  padding: "0.75rem 1rem",
-                },
-                anchor: {
-                  color: "#0F4C35",
-                },
-                container: {
-                  gap: "1rem",
-                },
-                divider: {
-                  background: "#E6EFE9",
-                },
-                message: {
-                  color: "#1A1A1A",
-                },
-              },
-              variables: {
-                default: {
-                  colors: {
-                    brand: "#0F4C35",
-                    brandAccent: "#1B5E40",
-                    inputBackground: "white",
-                    inputBorder: "#E6EFE9",
-                    inputText: "#1A1A1A",
-                    messageText: "#1A1A1A",
-                  },
-                },
-              },
-            }}
-            providers={["google"]}
-            view="sign_in"
-          />
+          <AuthForm />
         </div>
       </div>
     </div>
