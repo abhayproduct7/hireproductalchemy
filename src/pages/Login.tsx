@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useSession } from "@supabase/auth-helpers-react";
 import { Navigation } from "@/components/Navigation";
 import Logo from "@/components/Logo";
+import { toast } from "@/components/ui/use-toast";
 
 const Login = () => {
   const session = useSession();
@@ -16,6 +17,24 @@ const Login = () => {
       navigate("/");
     }
   }, [session, navigate]);
+
+  // Add error handling for auth state changes
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN') {
+        navigate("/");
+      }
+      
+      // Log auth errors
+      if (event === 'USER_DELETED' || event === 'SIGNED_OUT') {
+        console.log('Auth event:', event);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -71,6 +90,14 @@ const Login = () => {
             }}
             providers={["google"]}
             view="sign_in"
+            onError={(error) => {
+              console.error("Auth error:", error);
+              toast({
+                title: "Authentication Error",
+                description: error.message,
+                variant: "destructive",
+              });
+            }}
           />
         </div>
       </div>
