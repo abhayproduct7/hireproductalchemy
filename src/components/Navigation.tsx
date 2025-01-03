@@ -11,7 +11,7 @@ export const Navigation = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="text-xl font-semibold text-primary">
-              ProductTalent
+              producthire.co.uk
             </Link>
           </div>
 
