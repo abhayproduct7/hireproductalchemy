@@ -7,6 +7,7 @@ import { useSession } from "@supabase/auth-helpers-react";
 import { Navigation } from "@/components/Navigation";
 import Logo from "@/components/Logo";
 import { toast } from "@/components/ui/use-toast";
+import { AuthError, Session, AuthChangeEvent } from "@supabase/supabase-js";
 
 const Login = () => {
   const session = useSession();
@@ -19,7 +20,7 @@ const Login = () => {
   }, [session, navigate]);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
       console.log('Auth event:', event);
       console.log('Session:', session);
       
@@ -46,8 +47,8 @@ const Login = () => {
       }
     });
 
-    // Set up a listener for auth state errors
-    const { data: { subscription: errorSubscription } } = supabase.auth.onAuthStateChange((event, session, error) => {
+    // Set up error handling through the auth state change event
+    const handleError = (error: AuthError | null) => {
       if (error) {
         console.error('Auth error:', error);
         toast({
@@ -56,7 +57,14 @@ const Login = () => {
           description: error.message,
         });
       }
-    });
+    };
+
+    // Subscribe to auth state changes and handle errors
+    const { data: { subscription: errorSubscription } } = supabase.auth.onAuthStateChange(
+      (_event: AuthChangeEvent, _session: Session | null, error: AuthError | null) => {
+        handleError(error);
+      }
+    );
 
     return () => {
       subscription.unsubscribe();
