@@ -17,7 +17,7 @@ export const CompaniesSection = () => {
     { 
       name: "Indeed", 
       logo: "indeed-logo.png", 
-      className: "h-[768px]" 
+      className: "h-[768px] scale-[8]" 
     },
     { 
       name: "Revolut", 
