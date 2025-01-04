@@ -9,14 +9,14 @@ export const CompaniesSection = () => {
   const storageUrl = "https://duqgdyzstzpcydztyflb.supabase.co/storage/v1/object/public/assets";
   
   const companies = [
-    { name: "EY", logo: "ey-logo-new.png" },
-    { name: "Indeed", logo: "indeed-logo.png" },
-    { name: "Revolut", logo: "revolut-logo.png" },
-    { name: "Monzo", logo: "monzo-logo.png" },
-    { name: "BCG", logo: "bcg-logo-new.png" },
-    { name: "Meta", logo: "meta-logo-new.png" },
-    { name: "Google", logo: "google-logo-new.png" },
-    { name: "Amazon", logo: "amazon-logo-new.png" },
+    { name: "EY", logo: "ey-logo-new.png", className: "" },
+    { name: "Indeed", logo: "indeed-logo.png", className: "scale-[3]" },
+    { name: "Revolut", logo: "revolut-logo.png", className: "" },
+    { name: "Monzo", logo: "monzo-logo.png", className: "" },
+    { name: "BCG", logo: "bcg-logo-new.png", className: "" },
+    { name: "Meta", logo: "meta-logo-new.png", className: "scale-[3]" },
+    { name: "Google", logo: "google-logo-new.png", className: "" },
+    { name: "Amazon", logo: "amazon-logo-new.png", className: "" },
   ];
 
   const autoplayOptions = {
@@ -46,7 +46,7 @@ export const CompaniesSection = () => {
                     <img
                       src={`${storageUrl}/${company.logo}`}
                       alt={company.name}
-                      className="h-20 w-auto object-contain mix-blend-multiply hover:mix-blend-normal transition-all duration-300"
+                      className={`h-20 w-auto object-contain mix-blend-multiply hover:mix-blend-normal transition-all duration-300 ${company.className}`}
                     />
                   </div>
                 </CarouselItem>
