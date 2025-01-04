@@ -17,7 +17,7 @@ export const CompaniesSection = () => {
     { 
       name: "Indeed", 
       logo: "indeed-logo.png", 
-      className: "h-24" 
+      className: "h-48" 
     },
     { 
       name: "Revolut", 
@@ -37,7 +37,7 @@ export const CompaniesSection = () => {
     { 
       name: "Meta", 
       logo: "meta-logo-new.png", 
-      className: "h-24" 
+      className: "h-48" 
     },
     { 
       name: "Google", 
@@ -79,7 +79,7 @@ export const CompaniesSection = () => {
                     key={index} 
                     className="pl-2 md:pl-4 basis-1/2 md:basis-1/4 lg:basis-1/4"
                   >
-                    <div className="h-32 flex items-center justify-center p-4">
+                    <div className="h-48 flex items-center justify-center p-4">
                       <img
                         src={imageUrl}
                         alt={company.name}
