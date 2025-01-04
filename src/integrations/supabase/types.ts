@@ -60,6 +60,27 @@ export type Database = {
         }
         Relationships: []
       }
+      requirements: {
+        Row: {
+          answers: Json
+          created_at: string
+          id: number
+          user_id: string | null
+        }
+        Insert: {
+          answers: Json
+          created_at?: string
+          id?: never
+          user_id?: string | null
+        }
+        Update: {
+          answers?: Json
+          created_at?: string
+          id?: never
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
