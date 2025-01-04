@@ -12,7 +12,7 @@ export const CompaniesSection = () => {
     { 
       name: "EY", 
       logo: "ey-logo-new.png?t=2025-01-04T14%3A01%3A00.395Z", 
-      className: "h-24" 
+      className: "h-14" // Reduced from h-24 to h-14 (approximately 0.6x)
     },
     { 
       name: "Indeed", 
