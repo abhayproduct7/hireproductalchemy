@@ -6,7 +6,7 @@ export const HireTalentHero = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    console.log("Attempting navigation to /requirements");
+    console.log("Navigating to requirements page");
     navigate("/requirements");
   };
 

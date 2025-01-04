@@ -4,6 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 type Question = {
   id: number;
@@ -92,6 +93,13 @@ export default function RequirementsCapture() {
     }
   };
 
+  const handlePrevious = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion((prev) => prev - 1);
+      setCurrentAnswer(answers[questions[currentQuestion - 1].id] || "");
+    }
+  };
+
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       handleNext();
@@ -127,13 +135,18 @@ export default function RequirementsCapture() {
             <div className="flex justify-between items-center">
               <Button
                 variant="outline"
-                onClick={() => navigate("/hire")}
+                onClick={handlePrevious}
+                disabled={currentQuestion === 0}
                 className="w-28"
               >
-                Cancel
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back
               </Button>
               <Button onClick={handleNext} className="w-28">
                 {currentQuestion === questions.length - 1 ? "Submit" : "Next"}
+                {currentQuestion !== questions.length - 1 && (
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                )}
               </Button>
             </div>
           </div>
