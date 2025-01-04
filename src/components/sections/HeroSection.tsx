@@ -6,7 +6,7 @@ export const HeroSection = () => {
     <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-secondary/10 via-secondary/5 to-transparent">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-start">
-          <div className="text-center md:text-left md:pt-8">
+          <div className="text-center md:text-left">
             <span className="inline-block animate-fade-up bg-secondary/20 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-6">
               Premium Product Management Talent
             </span>
@@ -32,7 +32,7 @@ export const HeroSection = () => {
               </Link>
             </div>
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:block mt-6">
             <img
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c"
               alt="Product professionals collaborating"
