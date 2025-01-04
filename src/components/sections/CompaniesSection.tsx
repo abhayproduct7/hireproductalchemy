@@ -29,8 +29,8 @@ export const CompaniesSection = () => {
   };
 
   return (
-    <div className="bg-white py-16">
-      <div className="text-center mb-16">
+    <div className="bg-white py-8">
+      <div className="text-center mb-8">
         <h2 className="text-2xl font-semibold text-primary mb-8">
           Our Product Managers Come From Elite Tech Companies
         </h2>
@@ -46,8 +46,6 @@ export const CompaniesSection = () => {
             <CarouselContent className="-ml-2 md:-ml-4">
               {companies.map((company, index) => {
                 const imageUrl = `${storageUrl}/${company.logo}`;
-                console.log(`Loading image for ${company.name}:`, imageUrl);
-                
                 return (
                   <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 md:basis-1/4 lg:basis-1/4">
                     <div className="h-40 flex items-center justify-center p-4">
@@ -55,8 +53,6 @@ export const CompaniesSection = () => {
                         src={imageUrl}
                         alt={company.name}
                         className={`h-20 w-auto object-contain mix-blend-multiply hover:mix-blend-normal transition-all duration-300 ${company.className}`}
-                        onError={(e) => console.error(`Error loading image for ${company.name}:`, e)}
-                        onLoad={() => console.log(`Successfully loaded image for ${company.name}`)}
                       />
                     </div>
                   </CarouselItem>

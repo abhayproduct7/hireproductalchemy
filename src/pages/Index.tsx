@@ -14,15 +14,8 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <HeroSection />
-      
-      {/* Elite Companies & Features Section */}
-      <section className="py-20 bg-muted">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <CompaniesSection />
-          <FeaturesSection />
-        </div>
-      </section>
-
+      <CompaniesSection />
+      <FeaturesSection />
       <TestimonialsSection />
       <PricingSection />
       <AIAgentSection />
