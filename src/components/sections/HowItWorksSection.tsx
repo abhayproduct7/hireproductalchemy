@@ -1,4 +1,5 @@
 import { ClipboardList, Users, CreditCard } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const HowItWorksSection = () => {
   return (
@@ -13,7 +14,7 @@ export const HowItWorksSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
           {steps.map((step, index) => (
             <div
               key={index}
@@ -35,6 +36,15 @@ export const HowItWorksSection = () => {
               )}
             </div>
           ))}
+        </div>
+
+        <div className="text-center">
+          <Link
+            to="/hire"
+            className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-secondary hover:bg-secondary/90 rounded-lg shadow-lg hover:shadow-secondary/30 transition-all duration-200"
+          >
+            Get Started Now
+          </Link>
         </div>
       </div>
     </section>
