@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { Progress } from "@/components/ui/progress";
 
 type Question = {
   id: number;
@@ -31,6 +32,11 @@ const questions: Question[] = [
     question: "What are the key responsibilities for this role?",
     placeholder: "e.g., Product strategy, Feature prioritization...",
   },
+  {
+    id: 5,
+    question: "What's your target timeline for bringing someone onboard?",
+    placeholder: "e.g., Immediately, Within 2 weeks, Next month...",
+  }
 ];
 
 export default function RequirementsCapture() {
@@ -39,6 +45,8 @@ export default function RequirementsCapture() {
   const [currentAnswer, setCurrentAnswer] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   const handleNext = async () => {
     if (!currentAnswer.trim()) {
@@ -67,7 +75,7 @@ export default function RequirementsCapture() {
 
         toast({
           title: "Requirements submitted successfully!",
-          description: "We'll match you with the perfect product manager.",
+          description: "We'll be in touch with matched candidates soon.",
         });
         
         navigate("/hire");
@@ -103,6 +111,8 @@ export default function RequirementsCapture() {
             </p>
           </div>
 
+          <Progress value={progress} className="h-2" />
+
           <div className="space-y-4">
             <input
               type="text"
@@ -126,21 +136,6 @@ export default function RequirementsCapture() {
                 {currentQuestion === questions.length - 1 ? "Submit" : "Next"}
               </Button>
             </div>
-          </div>
-
-          <div className="flex justify-center gap-2 pt-8">
-            {questions.map((_, index) => (
-              <div
-                key={index}
-                className={`h-2 w-2 rounded-full ${
-                  index === currentQuestion
-                    ? "bg-primary"
-                    : index < currentQuestion
-                    ? "bg-primary/40"
-                    : "bg-muted"
-                }`}
-              />
-            ))}
           </div>
         </div>
       </div>
