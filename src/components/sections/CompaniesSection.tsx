@@ -9,14 +9,14 @@ export const CompaniesSection = () => {
   const storageUrl = "https://duqgdyzstzpcydztyflb.supabase.co/storage/v1/object/public/assets";
   
   const companies = [
-    { name: "EY", logo: "ey-logo.png" },
+    { name: "EY", logo: "ey-logo-new.png" },
     { name: "Indeed", logo: "indeed-logo.png" },
     { name: "Revolut", logo: "revolut-logo.png" },
     { name: "Monzo", logo: "monzo-logo.png" },
     { name: "BCG", logo: "bcg-logo-new.png" },
-    { name: "Meta", logo: "meta-logo.png" },
-    { name: "Google", logo: "google-logo.png" },
-    { name: "Amazon", logo: "amazon-logo.png" },
+    { name: "Meta", logo: "meta-logo-new.png" },
+    { name: "Google", logo: "google-logo-new.png" },
+    { name: "Amazon", logo: "amazon-logo-new.png" },
   ];
 
   const autoplayOptions = {
