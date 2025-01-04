@@ -34,8 +34,8 @@ export const HeroSection = () => {
           </div>
           <div className="hidden md:block">
             <img
-              src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
-              alt="Professional Product Management"
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c"
+              alt="Product professionals collaborating"
               className="rounded-lg shadow-xl animate-fade-up object-cover aspect-video"
             />
           </div>
