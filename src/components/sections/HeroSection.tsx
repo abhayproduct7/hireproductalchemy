@@ -20,13 +20,17 @@ export const HeroSection = () => {
                 to="/hire"
                 className="bg-secondary hover:bg-secondary/90 text-white w-full sm:w-[280px] h-[72px] px-8 flex items-center justify-center rounded-lg font-medium text-center transition-colors shadow-lg hover:shadow-secondary/30"
               >
-                <span className="whitespace-pre-line">Hire Product<br />Managers</span>
+                <span>
+                  Hire Product<br />Managers
+                </span>
               </Link>
               <Link
                 to="/join"
                 className="bg-primary hover:bg-primary/90 text-white w-full sm:w-[280px] h-[72px] px-8 flex items-center justify-center rounded-lg font-medium text-center transition-colors shadow-lg hover:shadow-primary/30"
               >
-                <span className="whitespace-pre-line">Join as<br />Product Manager</span>
+                <span>
+                  Join as<br />Product Manager
+                </span>
               </Link>
             </div>
           </div>
