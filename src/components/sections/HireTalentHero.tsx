@@ -48,8 +48,8 @@ const deliverables = [
     icon: Target,
   },
   {
-    title: "Product Roadmap Development",
-    description: "Design and maintain strategic roadmaps that balance customer needs with business objectives.",
+    title: "MVP and Go-to-Market Strategy",
+    description: "Define and execute lean MVP development plans and create effective go-to-market strategies for successful product launches.",
     icon: Map,
   },
   {
