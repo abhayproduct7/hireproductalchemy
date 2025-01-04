@@ -7,31 +7,26 @@ export const TrustedBrandsSection = () => {
     {
       name: "Bridgestone",
       logo: "bridgestone-logo.png",
-      caseStudyLink: "#",
       className: "max-h-8",
     },
     {
       name: "Duolingo",
       logo: "duolingo-logo.png",
-      caseStudyLink: "#",
       className: "max-h-8",
     },
     {
       name: "USC",
       logo: "usc-logo.png",
-      caseStudyLink: "#",
       className: "max-h-10",
     },
     {
       name: "Shopify",
       logo: "shopify-logo.png",
-      caseStudyLink: "#",
       className: "max-h-8",
     },
     {
       name: "Cleveland Cavaliers",
       logo: "cavaliers-logo.png",
-      caseStudyLink: "#",
       className: "max-h-12",
     },
   ];
@@ -45,7 +40,7 @@ export const TrustedBrandsSection = () => {
         
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center">
           {brands.map((brand, index) => (
-            <div key={index} className="flex flex-col items-center gap-2">
+            <div key={index} className="flex flex-col items-center">
               <img
                 src={`${storageUrl}/${brand.logo}`}
                 alt={`${brand.name} logo`}
@@ -54,12 +49,6 @@ export const TrustedBrandsSection = () => {
                   brand.className
                 )}
               />
-              <a
-                href={brand.caseStudyLink}
-                className="text-xs text-blue-600 hover:text-blue-800 transition-colors"
-              >
-                WATCH THE CASE STUDY
-              </a>
             </div>
           ))}
         </div>
