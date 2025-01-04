@@ -10,17 +10,45 @@ export const CompaniesSection = () => {
   
   const companies = [
     { 
+      name: "Amazon", 
+      logo: "amazon-logo-new.png", 
+      className: "h-12 w-auto" 
+    },
+    { 
       name: "EY", 
       logo: "ey-logo-new.png?t=2025-01-04T14%3A01%3A00.395Z", 
-      className: "translate-y-[-8px]" // Added translation to adjust vertical alignment
+      className: "h-12 w-auto" 
     },
-    { name: "Indeed", logo: "indeed-logo.png", className: "scale-[3]" },
-    { name: "Revolut", logo: "revolut-logo.png", className: "" },
-    { name: "Monzo", logo: "monzo-logo.png", className: "" },
-    { name: "BCG", logo: "bcg-logo-new.png", className: "" },
-    { name: "Meta", logo: "meta-logo-new.png", className: "scale-[3]" },
-    { name: "Google", logo: "google-logo-new.png", className: "" },
-    { name: "Amazon", logo: "amazon-logo-new.png", className: "" },
+    { 
+      name: "Indeed", 
+      logo: "indeed-logo.png", 
+      className: "h-10 w-auto" 
+    },
+    { 
+      name: "Revolut", 
+      logo: "revolut-logo.png", 
+      className: "h-8 w-auto" 
+    },
+    { 
+      name: "Monzo", 
+      logo: "monzo-logo.png", 
+      className: "h-10 w-auto" 
+    },
+    { 
+      name: "BCG", 
+      logo: "bcg-logo-new.png", 
+      className: "h-12 w-auto" 
+    },
+    { 
+      name: "Meta", 
+      logo: "meta-logo-new.png", 
+      className: "h-10 w-auto" 
+    },
+    { 
+      name: "Google", 
+      logo: "google-logo-new.png", 
+      className: "h-8 w-auto" 
+    }
   ];
 
   const autoplayOptions = {
@@ -29,35 +57,37 @@ export const CompaniesSection = () => {
   };
 
   return (
-    <div className="bg-white py-8">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-semibold text-primary mb-8">
+    <div className="bg-white py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl font-semibold text-primary text-center mb-12">
           Our Product Managers Come From Elite Tech Companies
         </h2>
-        <div className="max-w-5xl mx-auto px-8">
+        <div className="max-w-6xl mx-auto">
           <Carousel
             opts={{
-              align: "start",
+              align: "center",
               loop: true,
+              skipSnaps: false,
+              containScroll: "trimSnaps",
             }}
             plugins={[Autoplay(autoplayOptions)]}
             className="w-full"
           >
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {companies.map((company, index) => {
-                const imageUrl = `${storageUrl}/${company.logo}`;
-                return (
-                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 md:basis-1/4 lg:basis-1/4">
-                    <div className="h-40 flex items-center justify-center p-4">
-                      <img
-                        src={imageUrl}
-                        alt={company.name}
-                        className={`h-20 w-auto object-contain mix-blend-multiply hover:mix-blend-normal transition-all duration-300 ${company.className}`}
-                      />
-                    </div>
-                  </CarouselItem>
-                );
-              })}
+            <CarouselContent className="-ml-4">
+              {companies.map((company, index) => (
+                <CarouselItem 
+                  key={index} 
+                  className="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/4"
+                >
+                  <div className="h-24 flex items-center justify-center p-4 bg-white rounded-lg">
+                    <img
+                      src={`${storageUrl}/${company.logo}`}
+                      alt={`${company.name} logo`}
+                      className={`object-contain ${company.className} transition-all duration-300 hover:opacity-80`}
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
             </CarouselContent>
           </Carousel>
         </div>
