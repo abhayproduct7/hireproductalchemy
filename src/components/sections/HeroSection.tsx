@@ -18,18 +18,20 @@ export const HeroSection = () => {
             <div className="animate-fade-up flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <Link
                 to="/hire"
-                className="bg-secondary hover:bg-secondary/90 text-white w-full sm:w-[280px] h-[72px] px-8 flex items-center justify-center rounded-lg font-medium text-center transition-colors shadow-lg hover:shadow-secondary/30"
+                className="bg-secondary hover:bg-secondary/90 text-white w-full sm:w-[320px] h-[72px] px-8 flex items-center justify-center rounded-lg font-medium text-center transition-colors shadow-lg hover:shadow-secondary/30"
               >
-                <span>
-                  Hire Product<br />Managers
+                <span className="flex flex-col">
+                  <span>Hire Product</span>
+                  <span>Managers</span>
                 </span>
               </Link>
               <Link
                 to="/join"
-                className="bg-primary hover:bg-primary/90 text-white w-full sm:w-[280px] h-[72px] px-8 flex items-center justify-center rounded-lg font-medium text-center transition-colors shadow-lg hover:shadow-primary/30"
+                className="bg-primary hover:bg-primary/90 text-white w-full sm:w-[320px] h-[72px] px-8 flex items-center justify-center rounded-lg font-medium text-center transition-colors shadow-lg hover:shadow-primary/30"
               >
-                <span>
-                  Join as<br />Product Manager
+                <span className="flex flex-col">
+                  <span>Join as</span>
+                  <span>Product Manager</span>
                 </span>
               </Link>
             </div>
