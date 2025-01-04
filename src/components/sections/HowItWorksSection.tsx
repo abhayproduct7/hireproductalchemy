@@ -1,4 +1,4 @@
-import { ClipboardList, Users, CreditCard, Brain, Target, FileText, TrendingUp } from "lucide-react";
+import { ClipboardList, Users, CreditCard, Brain, Target, FileText, TrendingUp, CheckCircle, Rocket } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AIInterfaceShowcase } from "./AIInterfaceShowcase";
 
