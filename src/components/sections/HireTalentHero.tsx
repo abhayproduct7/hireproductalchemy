@@ -43,8 +43,8 @@ export const HireTalentHero = () => {
 
 const deliverables = [
   {
-    title: "Product Strategy Development",
-    description: "Create comprehensive product strategies aligned with business goals and market opportunities.",
+    title: "Product Strategy & Roadmap Development",
+    description: "Create comprehensive product strategies and strategic roadmaps aligned with business goals and market opportunities.",
     icon: Target,
   },
   {
