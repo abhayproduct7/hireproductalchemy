@@ -19,7 +19,7 @@ export const HeroSection = () => {
             <div className="animate-fade-up flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <Link
                 to="/hire"
-                className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg font-medium inline-flex items-center justify-center transition-colors shadow-lg hover:shadow-primary/30"
+                className="bg-secondary hover:bg-secondary/90 text-white px-8 py-3 rounded-lg font-medium inline-flex items-center justify-center transition-colors shadow-lg hover:shadow-secondary/30"
               >
                 Hire Product Managers
                 <ArrowRight className="ml-2 h-5 w-5" />
