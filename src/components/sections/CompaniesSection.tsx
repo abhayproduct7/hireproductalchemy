@@ -37,7 +37,7 @@ export const CompaniesSection = () => {
     { 
       name: "Meta", 
       logo: "meta-logo-new.png", 
-      className: "h-48" 
+      className: "h-48 scale-[2]" 
     },
     { 
       name: "Google", 
