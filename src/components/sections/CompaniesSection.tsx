@@ -46,7 +46,7 @@ export const CompaniesSection = () => {
                     <img
                       src={`${storageUrl}/${company.logo}`}
                       alt={company.name}
-                      className="h-20 w-auto object-contain grayscale hover:grayscale-0 transition-all"
+                      className="h-20 w-auto object-contain mix-blend-multiply hover:mix-blend-normal transition-all duration-300"
                     />
                   </div>
                 </CarouselItem>
