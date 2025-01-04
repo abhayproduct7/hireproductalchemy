@@ -1,21 +1,21 @@
-import { Trophy, Clock, BadgeCheck } from "lucide-react";
+import { Zap, Users, Bot } from "lucide-react";
 
 export const FeaturesSection = () => {
   const features = [
     {
       title: "Instant Team Scaling",
       description: "Access pre-vetted product managers immediately and scale your product team on demand. No lengthy hiring processes.",
-      icon: Trophy,
+      icon: Zap,
     },
     {
       title: "Cancel Anytime",
       description: "Flexible monthly subscription with no long-term commitments. Replace talent or cancel whenever needed.",
-      icon: Clock,
+      icon: Users,
     },
     {
       title: "AI-Powered Support",
       description: "Access specialized AI agents trained in product management to support your product journey.",
-      icon: BadgeCheck,
+      icon: Bot,
     },
   ];
 
@@ -26,13 +26,13 @@ export const FeaturesSection = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-muted p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 min-h-[280px] flex flex-col"
+              className="bg-muted p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 min-h-[320px] flex flex-col items-start"
             >
-              <div className="flex items-center mb-6">
-                <feature.icon className="h-8 w-8 text-secondary mr-3" />
-                <h3 className="text-lg font-semibold text-primary">{feature.title}</h3>
+              <div className="bg-gray-100 p-4 rounded-full mb-6">
+                <feature.icon className="h-6 w-6 text-secondary" />
               </div>
-              <p className="text-gray-600 flex-grow">{feature.description}</p>
+              <h3 className="text-2xl font-semibold text-primary mb-4">{feature.title}</h3>
+              <p className="text-gray-600 text-left leading-relaxed">{feature.description}</p>
             </div>
           ))}
         </div>
