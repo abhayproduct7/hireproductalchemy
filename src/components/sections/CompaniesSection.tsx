@@ -32,6 +32,21 @@ export const CompaniesSection = () => {
           alt="Microsoft"
           className="h-8 grayscale hover:grayscale-0 transition-all"
         />
+        <img
+          src={`${storageUrl}/netflix-logo.png`}
+          alt="Netflix"
+          className="h-8 grayscale hover:grayscale-0 transition-all"
+        />
+        <img
+          src={`${storageUrl}/uber-logo.png`}
+          alt="Uber"
+          className="h-8 grayscale hover:grayscale-0 transition-all"
+        />
+        <img
+          src={`${storageUrl}/airbnb-logo.png`}
+          alt="Airbnb"
+          className="h-8 grayscale hover:grayscale-0 transition-all"
+        />
       </div>
     </div>
   );
