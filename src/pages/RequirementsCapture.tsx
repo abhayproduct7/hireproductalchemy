@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -47,6 +47,23 @@ export default function RequirementsCapture() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Add authentication check
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to submit requirements",
+          variant: "destructive",
+        });
+        navigate("/login");
+      }
+    };
+    
+    checkAuth();
+  }, [navigate, toast]);
+
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   const handleNext = async () => {
@@ -68,11 +85,30 @@ export default function RequirementsCapture() {
 
     if (currentQuestion === questions.length - 1) {
       try {
+        // Get current user
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (!session) {
+          toast({
+            title: "Authentication required",
+            description: "Please sign in to submit requirements",
+            variant: "destructive",
+          });
+          navigate("/login");
+          return;
+        }
+
         const { error } = await supabase
           .from("requirements")
-          .insert([{ answers: updatedAnswers }]);
+          .insert([{ 
+            answers: updatedAnswers,
+            user_id: session.user.id // Include user_id in the insert
+          }]);
 
-        if (error) throw error;
+        if (error) {
+          console.error("Error submitting requirements:", error);
+          throw error;
+        }
 
         toast({
           title: "Requirements submitted successfully!",
