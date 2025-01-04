@@ -1,21 +1,21 @@
-import { Leaf, Lightbulb, Shield } from "lucide-react";
+import { Trophy, Clock, BadgeCheck } from "lucide-react";
 
 export const FeaturesSection = () => {
   const features = [
     {
       title: "Elite Product Managers",
       description: "Access top-tier product management talent from leading tech companies",
-      icon: Lightbulb,
+      icon: Trophy,
     },
     {
       title: "Flexible Engagement",
       description: "Work with product managers on a project basis or ongoing collaboration",
-      icon: Leaf,
+      icon: Clock,
     },
     {
       title: "Quality Guaranteed",
       description: "Every product manager is thoroughly vetted for excellence",
-      icon: Shield,
+      icon: BadgeCheck,
     },
   ];
 
