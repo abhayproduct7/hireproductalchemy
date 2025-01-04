@@ -5,10 +5,13 @@ import { useNavigate } from "react-router-dom";
 export const HireTalentHero = () => {
   const navigate = useNavigate();
 
+  const handleGetStarted = () => {
+    navigate("/requirements");
+  };
+
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white border-b">
       <div className="max-w-6xl mx-auto">
-        {/* Hero content */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-6">
             Hire Elite Product Specialists
@@ -19,14 +22,13 @@ export const HireTalentHero = () => {
           </p>
           <Button 
             size="lg" 
-            onClick={() => navigate("/requirements")}
+            onClick={handleGetStarted}
             className="bg-primary hover:bg-primary/90"
           >
             Get Started Now
           </Button>
         </div>
 
-        {/* Featured capabilities grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {deliverables.map((deliverable, index) => (
             <div
