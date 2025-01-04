@@ -2,8 +2,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 
 export const CompaniesSection = () => {
@@ -30,6 +28,8 @@ export const CompaniesSection = () => {
           opts={{
             align: "start",
             loop: true,
+            autoplay: true,
+            interval: 3000,
           }}
           className="w-full"
         >
@@ -46,8 +46,6 @@ export const CompaniesSection = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden md:flex" />
-          <CarouselNext className="hidden md:flex" />
         </Carousel>
       </div>
     </div>
