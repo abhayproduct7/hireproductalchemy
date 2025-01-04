@@ -15,9 +15,9 @@ export const AIAgentSection = () => {
           </div>
           <div>
             <img
-              src={`${storageUrl}/ai-interface.png`}
-              alt="Modern AI Chat Interface"
-              className="rounded-lg shadow-xl"
+              src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b"
+              alt="Modern AI Interface"
+              className="rounded-lg shadow-xl object-cover aspect-video"
             />
           </div>
         </div>
