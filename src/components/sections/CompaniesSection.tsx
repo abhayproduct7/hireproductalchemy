@@ -13,7 +13,7 @@ export const CompaniesSection = () => {
     { name: "Indeed", logo: "indeed-logo.png" },
     { name: "Revolut", logo: "revolut-logo.png" },
     { name: "Monzo", logo: "monzo-logo.png" },
-    { name: "BCG", logo: "bcg-logo.png" },
+    { name: "BCG", logo: "bcg-logo-new.png" },
     { name: "Meta", logo: "meta-logo.png" },
     { name: "Google", logo: "google-logo.png" },
     { name: "Amazon", logo: "amazon-logo.png" },
