@@ -1,18 +1,21 @@
-import { CheckCircle } from "lucide-react";
+import { Leaf, Lightbulb, Shield } from "lucide-react";
 
 export const FeaturesSection = () => {
   const features = [
     {
       title: "Elite Product Managers",
       description: "Access top-tier product management talent from leading tech companies",
+      icon: Lightbulb,
     },
     {
       title: "Flexible Engagement",
       description: "Work with product managers on a project basis or ongoing collaboration",
+      icon: Leaf,
     },
     {
       title: "Quality Guaranteed",
       description: "Every product manager is thoroughly vetted for excellence",
+      icon: Shield,
     },
   ];
 
@@ -23,13 +26,13 @@ export const FeaturesSection = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-muted p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="bg-muted p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 min-h-[280px] flex flex-col"
             >
-              <div className="flex items-center mb-4">
-                <CheckCircle className="h-6 w-6 text-secondary mr-2" />
+              <div className="flex items-center mb-6">
+                <feature.icon className="h-8 w-8 text-secondary mr-3" />
                 <h3 className="text-lg font-semibold text-primary">{feature.title}</h3>
               </div>
-              <p className="text-gray-600">{feature.description}</p>
+              <p className="text-gray-600 flex-grow">{feature.description}</p>
             </div>
           ))}
         </div>
