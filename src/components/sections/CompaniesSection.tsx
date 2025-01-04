@@ -12,15 +12,43 @@ export const CompaniesSection = () => {
     { 
       name: "EY", 
       logo: "ey-logo-new.png?t=2025-01-04T14%3A01%3A00.395Z", 
-      className: "translate-y-[-8px]" // Added translation to adjust vertical alignment
+      className: "h-8" 
     },
-    { name: "Indeed", logo: "indeed-logo.png", className: "scale-[3]" },
-    { name: "Revolut", logo: "revolut-logo.png", className: "" },
-    { name: "Monzo", logo: "monzo-logo.png", className: "" },
-    { name: "BCG", logo: "bcg-logo-new.png", className: "" },
-    { name: "Meta", logo: "meta-logo-new.png", className: "scale-[3]" },
-    { name: "Google", logo: "google-logo-new.png", className: "" },
-    { name: "Amazon", logo: "amazon-logo-new.png", className: "" },
+    { 
+      name: "Indeed", 
+      logo: "indeed-logo.png", 
+      className: "h-8" 
+    },
+    { 
+      name: "Revolut", 
+      logo: "revolut-logo.png", 
+      className: "h-8" 
+    },
+    { 
+      name: "Monzo", 
+      logo: "monzo-logo.png", 
+      className: "h-10" 
+    },
+    { 
+      name: "BCG", 
+      logo: "bcg-logo-new.png", 
+      className: "h-8" 
+    },
+    { 
+      name: "Meta", 
+      logo: "meta-logo-new.png", 
+      className: "h-8" 
+    },
+    { 
+      name: "Google", 
+      logo: "google-logo-new.png", 
+      className: "h-8" 
+    },
+    { 
+      name: "Amazon", 
+      logo: "amazon-logo-new.png", 
+      className: "h-8" 
+    },
   ];
 
   const autoplayOptions = {
@@ -29,15 +57,15 @@ export const CompaniesSection = () => {
   };
 
   return (
-    <div className="bg-white py-8">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-semibold text-primary mb-8">
+    <div className="bg-white py-12">
+      <div className="text-center">
+        <h2 className="text-2xl font-semibold text-primary mb-12">
           Our Product Managers Come From Elite Tech Companies
         </h2>
-        <div className="max-w-5xl mx-auto px-8">
+        <div className="max-w-6xl mx-auto px-4">
           <Carousel
             opts={{
-              align: "start",
+              align: "center",
               loop: true,
             }}
             plugins={[Autoplay(autoplayOptions)]}
@@ -47,12 +75,15 @@ export const CompaniesSection = () => {
               {companies.map((company, index) => {
                 const imageUrl = `${storageUrl}/${company.logo}`;
                 return (
-                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 md:basis-1/4 lg:basis-1/4">
-                    <div className="h-40 flex items-center justify-center p-4">
+                  <CarouselItem 
+                    key={index} 
+                    className="pl-2 md:pl-4 basis-1/2 md:basis-1/4 lg:basis-1/4"
+                  >
+                    <div className="h-24 flex items-center justify-center p-4">
                       <img
                         src={imageUrl}
                         alt={company.name}
-                        className={`h-20 w-auto object-contain mix-blend-multiply hover:mix-blend-normal transition-all duration-300 ${company.className}`}
+                        className={`w-auto object-contain ${company.className}`}
                       />
                     </div>
                   </CarouselItem>
