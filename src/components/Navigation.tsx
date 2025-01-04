@@ -35,7 +35,7 @@ export const Navigation = () => {
               Hire Talent
             </Link>
             <Link to="/join" className="nav-link">
-              Join as Talent
+              Join Our Community
             </Link>
             <Link to="/resources" className="nav-link">
               Resources
@@ -83,7 +83,7 @@ export const Navigation = () => {
               to="/join"
               className="block px-3 py-2 rounded-md text-base nav-link"
             >
-              Join as Talent
+              Join Our Community
             </Link>
             <Link
               to="/resources"

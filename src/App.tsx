@@ -6,15 +6,16 @@ import RequirementsCapture from "./pages/RequirementsCapture";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import ThankYou from "./pages/ThankYou";
+import JoinCommunity from "./pages/JoinCommunity";
 
 function App() {
-  console.log("App rendering with routes");
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/login" element={<Login />} />
         <Route path="/hire" element={<HireTalent />} />
+        <Route path="/join" element={<JoinCommunity />} />
         <Route path="/requirements" element={<RequirementsCapture />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />

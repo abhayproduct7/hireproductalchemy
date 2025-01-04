@@ -26,7 +26,7 @@ export const HeroSection = () => {
                 to="/join"
                 className="bg-primary hover:bg-primary/90 text-white w-full sm:w-[240px] px-8 py-4 rounded-lg font-medium inline-flex items-center justify-center transition-colors shadow-lg hover:shadow-primary/30"
               >
-                Join as Product Manager
+                Join Our Community
               </Link>
             </div>
           </div>
