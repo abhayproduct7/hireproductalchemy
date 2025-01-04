@@ -9,7 +9,7 @@ export const CompaniesSection = () => {
   const storageUrl = "https://duqgdyzstzpcydztyflb.supabase.co/storage/v1/object/public/assets";
   
   const companies = [
-    { name: "EY", logo: "ey-logo-new.png", className: "" }, // Changed back to new filename
+    { name: "EY", logo: "ey-logo-new.png", className: "" },
     { name: "Indeed", logo: "indeed-logo.png", className: "scale-[3]" },
     { name: "Revolut", logo: "revolut-logo.png", className: "" },
     { name: "Monzo", logo: "monzo-logo.png", className: "" },
@@ -40,17 +40,24 @@ export const CompaniesSection = () => {
             className="w-full"
           >
             <CarouselContent className="-ml-2 md:-ml-4">
-              {companies.map((company, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 md:basis-1/4 lg:basis-1/4">
-                  <div className="h-40 flex items-center justify-center p-4">
-                    <img
-                      src={`${storageUrl}/${company.logo}`}
-                      alt={company.name}
-                      className={`h-20 w-auto object-contain mix-blend-multiply hover:mix-blend-normal transition-all duration-300 ${company.className}`}
-                    />
-                  </div>
-                </CarouselItem>
-              ))}
+              {companies.map((company, index) => {
+                const imageUrl = `${storageUrl}/${company.logo}`;
+                console.log(`Loading image for ${company.name}:`, imageUrl);
+                
+                return (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/2 md:basis-1/4 lg:basis-1/4">
+                    <div className="h-40 flex items-center justify-center p-4">
+                      <img
+                        src={imageUrl}
+                        alt={company.name}
+                        className={`h-20 w-auto object-contain mix-blend-multiply hover:mix-blend-normal transition-all duration-300 ${company.className}`}
+                        onError={(e) => console.error(`Error loading image for ${company.name}:`, e)}
+                        onLoad={() => console.log(`Successfully loaded image for ${company.name}`)}
+                      />
+                    </div>
+                  </CarouselItem>
+                );
+              })}
             </CarouselContent>
           </Carousel>
         </div>
