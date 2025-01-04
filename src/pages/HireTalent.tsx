@@ -1,6 +1,7 @@
 import { HireTalentHero } from "@/components/sections/HireTalentHero";
 import { HowItWorksSection } from "@/components/sections/HowItWorksSection";
 import { TrustedBrandsSection } from "@/components/sections/TrustedBrandsSection";
+import { Footer } from "@/components/Footer";
 
 const HireTalent = () => {
   return (
@@ -8,6 +9,7 @@ const HireTalent = () => {
       <HireTalentHero />
       <TrustedBrandsSection />
       <HowItWorksSection />
+      <Footer />
     </div>
   );
 };
