@@ -1,4 +1,4 @@
-import { CheckCircle2 } from "lucide-react";
+import { Target, Map, Lightbulb, Users, GitPullRequest, Users2 } from "lucide-react";
 
 export const HireTalentHero = () => {
   return (
@@ -20,7 +20,7 @@ export const HireTalentHero = () => {
               className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow animate-fade-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <CheckCircle2 className="text-secondary mb-4 h-8 w-8" />
+              <deliverable.icon className="text-secondary mb-4 h-8 w-8" />
               <h3 className="text-xl font-semibold mb-3">{deliverable.title}</h3>
               <p className="text-gray-600">{deliverable.description}</p>
             </div>
@@ -35,25 +35,31 @@ const deliverables = [
   {
     title: "Product Strategy Development",
     description: "Create comprehensive product strategies aligned with business goals and market opportunities.",
+    icon: Target,
   },
   {
     title: "Product Roadmap Development",
     description: "Design and maintain strategic roadmaps that balance customer needs with business objectives.",
+    icon: Map,
   },
   {
     title: "Ideation and Innovation",
     description: "Drive innovation through structured ideation processes and market analysis.",
+    icon: Lightbulb,
   },
   {
     title: "User Research & Insights",
     description: "Conduct thorough user research to inform product decisions and feature prioritization.",
+    icon: Users,
   },
   {
     title: "Agile Product Development",
     description: "Lead agile development processes to ensure efficient product delivery and iteration.",
+    icon: GitPullRequest,
   },
   {
     title: "Stakeholder Management",
     description: "Effectively manage relationships with stakeholders across all levels of the organization.",
+    icon: Users2,
   },
 ];
