@@ -12,7 +12,7 @@ export const CompaniesSection = () => {
     { 
       name: "EY", 
       logo: "ey-logo-new.png?t=2025-01-04T14%3A01%3A00.395Z", 
-      className: "h-14 translate-y-[1px]" // Reduced translate-y value from 4px to 1px
+      className: "h-14 -translate-y-[4px]" // Changed to negative translate to move up
     },
     { 
       name: "Indeed", 
