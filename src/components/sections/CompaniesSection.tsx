@@ -42,7 +42,7 @@ export const CompaniesSection = () => {
     { 
       name: "Google", 
       logo: "google-logo-new.png", 
-      className: "h-24" 
+      className: "h-[16.8px]" // Changed from h-24 (96px) to 0.7x (16.8px) 
     },
     { 
       name: "Amazon", 
