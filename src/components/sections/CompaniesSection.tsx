@@ -12,7 +12,7 @@ export const CompaniesSection = () => {
     { 
       name: "EY", 
       logo: "ey-logo-new.png?t=2025-01-04T14%3A01%3A00.395Z", 
-      className: "h-14 -translate-y-[4px]" // Changed to negative translate to move up
+      className: "h-14 -translate-y-[4px]" 
     },
     { 
       name: "Indeed", 
@@ -42,7 +42,7 @@ export const CompaniesSection = () => {
     { 
       name: "Google", 
       logo: "google-logo-new.png", 
-      className: "h-[16.8px]" // Changed from h-24 (96px) to 0.7x (16.8px) 
+      className: "h-24" 
     },
     { 
       name: "Amazon", 
