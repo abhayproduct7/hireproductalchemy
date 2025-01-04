@@ -12,7 +12,7 @@ export const CompaniesSection = () => {
     { 
       name: "EY", 
       logo: "ey-logo-new.png?t=2025-01-04T14%3A01%3A00.395Z", 
-      className: "" 
+      className: "translate-y-[-8px]" // Added translation to adjust vertical alignment
     },
     { name: "Indeed", logo: "indeed-logo.png", className: "scale-[3]" },
     { name: "Revolut", logo: "revolut-logo.png", className: "" },
