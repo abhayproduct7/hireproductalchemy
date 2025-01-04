@@ -1,6 +1,10 @@
 import { Target, Map, Lightbulb, Users, GitPullRequest, Users2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export const HireTalentHero = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white border-b">
       <div className="max-w-6xl mx-auto">
@@ -9,10 +13,17 @@ export const HireTalentHero = () => {
           <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-6">
             Hire Elite Product Specialists
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 mb-8">
             Work with the top 3% of product specialists who have proven track records 
             in driving successful product initiatives across various industries.
           </p>
+          <Button 
+            size="lg" 
+            onClick={() => navigate("/requirements")}
+            className="bg-primary hover:bg-primary/90"
+          >
+            Get Started Now
+          </Button>
         </div>
 
         {/* Featured capabilities grid */}
