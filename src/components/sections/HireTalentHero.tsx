@@ -18,8 +18,9 @@ export const HireTalentHero = () => {
             Hire Elite Product Specialists
           </h1>
           <p className="text-lg text-gray-600 mb-8">
-            Work with the top 3% of product specialists who have proven track records 
-            in driving successful product initiatives across various industries.
+            Connect with experienced product leaders who bring proven expertise in 
+            scaling products from ideation to market success, carefully matched to 
+            your specific industry and growth stage.
           </p>
           <Button 
             size="lg" 
