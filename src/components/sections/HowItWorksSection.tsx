@@ -93,15 +93,6 @@ export const HowItWorksSection = () => {
           <div className="mb-16">
             <AIInterfaceShowcase />
           </div>
-
-          <div className="text-center">
-            <Link
-              to="/hire"
-              className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-secondary hover:bg-secondary/90 rounded-lg shadow-lg hover:shadow-secondary/30 transition-all duration-200"
-            >
-              Get Started Now
-            </Link>
-          </div>
         </div>
       </div>
     </section>
