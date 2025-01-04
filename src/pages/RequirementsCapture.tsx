@@ -10,6 +10,7 @@ type Question = {
   id: number;
   question: string;
   placeholder: string;
+  type?: string;
 };
 
 const questions: Question[] = [
@@ -37,6 +38,17 @@ const questions: Question[] = [
     id: 5,
     question: "What's your target timeline for bringing someone onboard?",
     placeholder: "e.g., Immediately, Within 2 weeks, Next month...",
+  },
+  {
+    id: 6,
+    question: "What's your email address?",
+    placeholder: "e.g., john@company.com",
+    type: "email",
+  },
+  {
+    id: 7,
+    question: "What's your company name?",
+    placeholder: "e.g., Acme Inc",
   }
 ];
 
@@ -54,6 +66,16 @@ export default function RequirementsCapture() {
       toast({
         title: "Please provide an answer",
         description: "This information helps us match you with the right talent.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate email format for email question
+    if (questions[currentQuestion].type === 'email' && !currentAnswer.includes('@')) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
         variant: "destructive",
       });
       return;
@@ -80,7 +102,7 @@ export default function RequirementsCapture() {
         });
         
         // Redirect to login page with return URL
-        navigate("/login?returnTo=/requirements");
+        navigate("/login?returnTo=/thank-you");
         return;
       }
 
@@ -92,17 +114,14 @@ export default function RequirementsCapture() {
             user_id: session.user.id
           }]);
 
-        if (error) {
-          console.error("Error submitting requirements:", error);
-          throw error;
-        }
+        if (error) throw error;
 
         toast({
           title: "Requirements submitted successfully!",
           description: "We'll be in touch with matched candidates soon.",
         });
         
-        navigate("/hire");
+        navigate("/thank-you");
       } catch (error) {
         console.error("Error submitting requirements:", error);
         toast({
@@ -146,7 +165,7 @@ export default function RequirementsCapture() {
 
           <div className="space-y-4">
             <input
-              type="text"
+              type={questions[currentQuestion].type || "text"}
               value={currentAnswer}
               onChange={(e) => setCurrentAnswer(e.target.value)}
               onKeyPress={handleKeyPress}

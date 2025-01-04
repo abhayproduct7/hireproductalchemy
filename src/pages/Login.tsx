@@ -44,8 +44,8 @@ const Login = () => {
             // Clear pending requirements
             localStorage.removeItem('pendingRequirements');
             
-            // Navigate to hire page
-            navigate("/hire");
+            // Navigate to thank you page
+            navigate("/thank-you");
           } catch (error) {
             console.error("Error submitting requirements:", error);
             toast({
