@@ -9,7 +9,7 @@ export const CompaniesSection = () => {
   const storageUrl = "https://duqgdyzstzpcydztyflb.supabase.co/storage/v1/object/public/assets";
   
   const companies = [
-    { name: "EY", logo: "ey-logo-new.png", className: "" },
+    { name: "EY", logo: "ey-logo.png", className: "" }, // Changed back to original filename
     { name: "Indeed", logo: "indeed-logo.png", className: "scale-[3]" },
     { name: "Revolut", logo: "revolut-logo.png", className: "" },
     { name: "Monzo", logo: "monzo-logo.png", className: "" },
