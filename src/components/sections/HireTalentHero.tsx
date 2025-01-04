@@ -4,59 +4,35 @@ export const HireTalentHero = () => {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white border-b">
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12 items-start">
-          {/* Left column - Hero content */}
-          <div className="space-y-6">
-            <h1 className="text-4xl font-bold text-gray-900 leading-tight">
-              Hire Elite Product Managers
-            </h1>
-            <p className="text-lg text-gray-600">
-              Work with the top 3% of product management talent who have proven track records 
-              in driving successful product initiatives across various industries.
-            </p>
-          </div>
-
-          {/* Right column - Featured capabilities */}
-          <div className="grid grid-cols-2 gap-4">
-            {deliverables.slice(0, 4).map((deliverable, index) => (
-              <div
-                key={index}
-                className="bg-white border border-gray-100 rounded-lg p-5 shadow-sm hover:shadow-md transition-all duration-300"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2 rounded-md bg-secondary/10">
-                    <deliverable.icon className="text-secondary h-5 w-5" />
-                  </div>
-                  <h3 className="font-medium text-gray-900">
-                    {deliverable.title}
-                  </h3>
-                </div>
-                <p className="text-sm text-gray-600">
-                  {deliverable.description}
-                </p>
-              </div>
-            ))}
-          </div>
+        {/* Hero content */}
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-6">
+            Hire Elite Product Managers
+          </h1>
+          <p className="text-lg text-gray-600">
+            Work with the top 3% of product management talent who have proven track records 
+            in driving successful product initiatives across various industries.
+          </p>
         </div>
 
-        {/* Additional capabilities */}
-        <div className="mt-12 grid md:grid-cols-3 gap-6">
-          {deliverables.slice(4).map((deliverable, index) => (
+        {/* Featured capabilities grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {deliverables.map((deliverable, index) => (
             <div
               key={index}
-              className="flex items-start gap-4 p-5 bg-white border border-gray-100 rounded-lg shadow-sm"
+              className="bg-white border border-gray-100 rounded-lg p-5 shadow-sm hover:shadow-md transition-all duration-300"
             >
-              <div className="p-2 rounded-md bg-secondary/10 shrink-0">
-                <deliverable.icon className="text-secondary h-5 w-5" />
-              </div>
-              <div>
-                <h3 className="font-medium text-gray-900 mb-2">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="p-2 rounded-md bg-secondary/10 shrink-0">
+                  <deliverable.icon className="text-secondary h-5 w-5" />
+                </div>
+                <h3 className="font-medium text-gray-900">
                   {deliverable.title}
                 </h3>
-                <p className="text-sm text-gray-600">
-                  {deliverable.description}
-                </p>
               </div>
+              <p className="text-sm text-gray-600">
+                {deliverable.description}
+              </p>
             </div>
           ))}
         </div>
