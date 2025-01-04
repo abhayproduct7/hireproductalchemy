@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 
 export const TrustedBrandsSection = () => {
+  // Update to use the correct Supabase project URL
   const storageUrl = "https://duqgdyzstzpcydztyflb.supabase.co/storage/v1/object/public/assets";
   
   const brands = [
