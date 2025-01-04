@@ -7,10 +7,10 @@ export const HireTalentHero = () => {
         {/* Hero content */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-6">
-            Hire Elite Product Managers
+            Hire Elite Product Specialists
           </h1>
           <p className="text-lg text-gray-600">
-            Work with the top 3% of product management talent who have proven track records 
+            Work with the top 3% of product specialists who have proven track records 
             in driving successful product initiatives across various industries.
           </p>
         </div>

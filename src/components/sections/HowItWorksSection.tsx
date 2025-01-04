@@ -59,7 +59,7 @@ const steps = [
   },
   {
     title: "Get Matched",
-    description: "Our AI-powered system matches you with the best product managers from our expert community, perfectly aligned with your project needs.",
+    description: "Our AI-powered system matches you with the best product specialists from our expert community, perfectly aligned with your project needs.",
     icon: Users,
   },
   {
