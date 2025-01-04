@@ -12,22 +12,22 @@ export const CompaniesSection = () => {
     { 
       name: "EY", 
       logo: "ey-logo-new.png?t=2025-01-04T14%3A01%3A00.395Z", 
-      className: "h-8" 
+      className: "h-24" 
     },
     { 
       name: "Indeed", 
       logo: "indeed-logo.png", 
-      className: "h-8" 
+      className: "h-24" 
     },
     { 
       name: "Revolut", 
       logo: "revolut-logo.png", 
-      className: "h-8" 
+      className: "h-24" 
     },
     { 
       name: "Monzo", 
       logo: "monzo-logo.png", 
-      className: "h-10" 
+      className: "h-24" 
     },
     { 
       name: "BCG", 
@@ -37,17 +37,17 @@ export const CompaniesSection = () => {
     { 
       name: "Meta", 
       logo: "meta-logo-new.png", 
-      className: "h-8" 
+      className: "h-24" 
     },
     { 
       name: "Google", 
       logo: "google-logo-new.png", 
-      className: "h-8" 
+      className: "h-24" 
     },
     { 
       name: "Amazon", 
       logo: "amazon-logo-new.png", 
-      className: "h-8" 
+      className: "h-24" 
     },
   ];
 
@@ -79,7 +79,7 @@ export const CompaniesSection = () => {
                     key={index} 
                     className="pl-2 md:pl-4 basis-1/2 md:basis-1/4 lg:basis-1/4"
                   >
-                    <div className="h-24 flex items-center justify-center p-4">
+                    <div className="h-32 flex items-center justify-center p-4">
                       <img
                         src={imageUrl}
                         alt={company.name}
