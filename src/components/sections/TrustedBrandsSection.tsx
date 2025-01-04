@@ -7,14 +7,14 @@ export const TrustedBrandsSection = () => {
     { 
       name: "EY", 
       logo: "ey-logo-new.png?t=2025-01-04T14%3A01%3A00.395Z", 
-      className: "translate-y-[-8px] h-8 scale-[2]"
+      className: "translate-y-[-8px] h-8 scale-[0.8]"
     },
     { name: "Indeed", logo: "indeed-logo.png", className: "scale-[2] h-6" },
     { name: "Revolut", logo: "revolut-logo.png", className: "h-8 scale-[2]" },
     { name: "Monzo", logo: "monzo-logo.png", className: "h-8 scale-[2]" },
-    { name: "BCG", logo: "bcg-logo-new.png", className: "h-8 scale-[0.5]" },
+    { name: "BCG", logo: "bcg-logo-new.png", className: "h-8 scale-[1.2]" },
     { name: "Meta", logo: "meta-logo-new.png", className: "scale-[2] h-6" },
-    { name: "Google", logo: "google-logo-new.png", className: "h-8 scale-[2]" },
+    { name: "Google", logo: "google-logo-new.png", className: "h-8 scale-[0.7]" },
     { name: "Amazon", logo: "amazon-logo-new.png", className: "h-8 scale-[2]" },
   ];
 
