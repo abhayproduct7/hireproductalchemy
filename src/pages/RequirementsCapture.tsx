@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -47,23 +47,6 @@ export default function RequirementsCapture() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Add authentication check
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        toast({
-          title: "Authentication required",
-          description: "Please sign in to submit requirements",
-          variant: "destructive",
-        });
-        navigate("/login");
-      }
-    };
-    
-    checkAuth();
-  }, [navigate, toast]);
-
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   const handleNext = async () => {
@@ -84,25 +67,29 @@ export default function RequirementsCapture() {
     setCurrentAnswer("");
 
     if (currentQuestion === questions.length - 1) {
-      try {
-        // Get current user
-        const { data: { session } } = await supabase.auth.getSession();
+      // Check if user is logged in
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        // Store answers in localStorage before redirecting
+        localStorage.setItem('pendingRequirements', JSON.stringify(updatedAnswers));
         
-        if (!session) {
-          toast({
-            title: "Authentication required",
-            description: "Please sign in to submit requirements",
-            variant: "destructive",
-          });
-          navigate("/login");
-          return;
-        }
+        toast({
+          title: "Almost there!",
+          description: "Please sign in or create an account to submit your requirements.",
+        });
+        
+        // Redirect to login page with return URL
+        navigate("/login?returnTo=/requirements");
+        return;
+      }
 
+      try {
         const { error } = await supabase
           .from("requirements")
           .insert([{ 
             answers: updatedAnswers,
-            user_id: session.user.id // Include user_id in the insert
+            user_id: session.user.id
           }]);
 
         if (error) {
