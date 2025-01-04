@@ -6,7 +6,12 @@ export const HireTalentHero = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate("/requirements");
+    console.log("Navigation triggered to /requirements");
+    try {
+      navigate("/requirements");
+    } catch (error) {
+      console.error("Navigation error:", error);
+    }
   };
 
   return (

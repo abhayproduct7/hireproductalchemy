@@ -7,6 +7,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 
 function App() {
+  console.log("App rendering with routes");
   return (
     <Router>
       <Routes>
