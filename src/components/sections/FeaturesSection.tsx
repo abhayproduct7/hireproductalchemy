@@ -3,18 +3,18 @@ import { Trophy, Clock, BadgeCheck } from "lucide-react";
 export const FeaturesSection = () => {
   const features = [
     {
-      title: "Elite Product Managers",
-      description: "Access top-tier product management talent from leading tech companies",
+      title: "Instant Team Scaling",
+      description: "Access pre-vetted product managers immediately and scale your product team on demand. No lengthy hiring processes.",
       icon: Trophy,
     },
     {
-      title: "Flexible Engagement",
-      description: "Work with product managers on a project basis or ongoing collaboration",
+      title: "Cancel Anytime",
+      description: "Flexible monthly subscription with no long-term commitments. Replace talent or cancel whenever needed.",
       icon: Clock,
     },
     {
-      title: "Quality Guaranteed",
-      description: "Every product manager is thoroughly vetted for excellence",
+      title: "AI-Powered Support",
+      description: "Access specialized AI agents trained in product management to support your product journey.",
       icon: BadgeCheck,
     },
   ];
