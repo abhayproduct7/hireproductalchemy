@@ -1,11 +1,19 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 export const AuthForm = () => {
-  // Use the URL directly from the client configuration
-  console.log("Auth Configuration:", supabase.auth.getSession());
+  const { toast } = useToast();
   
+  // Log the current session state for debugging
+  supabase.auth.getSession().then(({ data, error }) => {
+    console.log("Current session:", data);
+    if (error) {
+      console.error("Session error:", error);
+    }
+  });
+
   return (
     <Auth
       supabaseClient={supabase}
@@ -47,6 +55,14 @@ export const AuthForm = () => {
       }}
       providers={["google"]}
       view="sign_in"
+      onError={(error) => {
+        console.error("Auth error:", error);
+        toast({
+          title: "Authentication Error",
+          description: error.message,
+          variant: "destructive",
+        });
+      }}
     />
   );
 };
