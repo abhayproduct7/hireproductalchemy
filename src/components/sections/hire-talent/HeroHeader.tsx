@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 export const HeroHeader = () => {
   return (
-    <div className="mb-12">
+    <div className="mb-12 text-center">
       <h1 className="text-3xl font-bold text-[#1A1F2C] leading-tight mb-4 animate-fade-up">
         Achieving Strategic Product Management Excellence
       </h1>
