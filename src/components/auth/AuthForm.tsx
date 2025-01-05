@@ -43,6 +43,7 @@ export const AuthForm = () => {
         },
       }}
       providers={["google"]}
+      redirectTo={`${window.location.origin}/login`}
       view="sign_in"
     />
   );
