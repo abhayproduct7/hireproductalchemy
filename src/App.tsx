@@ -7,6 +7,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import ThankYou from "./pages/ThankYou";
 import JoinCommunity from "./pages/JoinCommunity";
+import { ChatBot } from "./components/ChatBot";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/thank-you" element={<ThankYou />} />
       </Routes>
+      <ChatBot />
     </Router>
   );
 }
