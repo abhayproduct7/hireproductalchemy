@@ -1,6 +1,9 @@
 import { Brain, FileText, Users, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export const CommunityAdvantagesSection = () => {
+  const navigate = useNavigate();
   const advantages = [
     {
       icon: Brain,
@@ -53,7 +56,7 @@ export const CommunityAdvantagesSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
           {advantages.map((advantage, index) => (
             <div
               key={index}
@@ -76,6 +79,19 @@ export const CommunityAdvantagesSection = () => {
               </ul>
             </div>
           ))}
+        </div>
+
+        <div className="text-center space-y-4">
+          <Button
+            onClick={() => navigate("/login")}
+            size="lg"
+            className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white px-8 py-6 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            Start Your Application
+          </Button>
+          <p className="text-sm text-[#8A898C]">
+            Join hundreds of product leaders already benefiting from our community
+          </p>
         </div>
       </div>
     </section>

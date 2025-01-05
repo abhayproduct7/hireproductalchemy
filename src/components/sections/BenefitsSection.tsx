@@ -1,6 +1,9 @@
 import { Zap, Clock, DollarSign, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export const BenefitsSection = () => {
+  const navigate = useNavigate();
   const benefits = [
     {
       icon: Zap,
@@ -36,7 +39,7 @@ export const BenefitsSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {benefits.map((benefit, index) => (
             <div
               key={index}
@@ -59,6 +62,16 @@ export const BenefitsSection = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="text-center">
+          <Button
+            onClick={() => navigate("/login")}
+            size="lg"
+            className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white px-8 py-6 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            Apply to Join Our Community
+          </Button>
         </div>
       </div>
     </section>
