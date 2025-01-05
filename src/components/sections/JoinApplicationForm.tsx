@@ -28,7 +28,7 @@ export const JoinApplicationForm = () => {
         hoursPerWeek: "",
         timeZone: "",
       },
-      skills: [],
+      skills: [], // Initialize skills as an empty array
     },
   });
 
