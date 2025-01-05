@@ -9,6 +9,113 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      candidate_applications: {
+        Row: {
+          availability_type: Database["public"]["Enums"]["availability_type"]
+          created_at: string | null
+          earliest_start_date: string | null
+          id: string
+          preferred_schedule: Json | null
+          professional_summary: string
+          profile_image_url: string | null
+          updated_at: string | null
+          user_id: string
+          years_experience: number
+        }
+        Insert: {
+          availability_type: Database["public"]["Enums"]["availability_type"]
+          created_at?: string | null
+          earliest_start_date?: string | null
+          id?: string
+          preferred_schedule?: Json | null
+          professional_summary: string
+          profile_image_url?: string | null
+          updated_at?: string | null
+          user_id: string
+          years_experience: number
+        }
+        Update: {
+          availability_type?: Database["public"]["Enums"]["availability_type"]
+          created_at?: string | null
+          earliest_start_date?: string | null
+          id?: string
+          preferred_schedule?: Json | null
+          professional_summary?: string
+          profile_image_url?: string | null
+          updated_at?: string | null
+          user_id?: string
+          years_experience?: number
+        }
+        Relationships: []
+      }
+      candidate_skills: {
+        Row: {
+          application_id: string
+          skill_id: string
+        }
+        Insert: {
+          application_id: string
+          skill_id: string
+        }
+        Update: {
+          application_id?: string
+          skill_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "candidate_skills_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "candidate_applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "candidate_skills_skill_id_fkey"
+            columns: ["skill_id"]
+            isOneToOne: false
+            referencedRelation: "skills"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      case_studies: {
+        Row: {
+          application_id: string | null
+          attachments: Json | null
+          created_at: string | null
+          description: string
+          id: string
+          outcome: string
+          title: string
+        }
+        Insert: {
+          application_id?: string | null
+          attachments?: Json | null
+          created_at?: string | null
+          description: string
+          id?: string
+          outcome: string
+          title: string
+        }
+        Update: {
+          application_id?: string | null
+          attachments?: Json | null
+          created_at?: string | null
+          description?: string
+          id?: string
+          outcome?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_studies_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "candidate_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       producthire: {
         Row: {
           "company name": string | null
@@ -81,6 +188,65 @@ export type Database = {
         }
         Relationships: []
       }
+      skills: {
+        Row: {
+          id: string
+          name: string
+        }
+        Insert: {
+          id?: string
+          name: string
+        }
+        Update: {
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      work_experiences: {
+        Row: {
+          application_id: string | null
+          company_name: string
+          created_at: string | null
+          description: string | null
+          end_date: string | null
+          id: string
+          industry: string
+          role_title: string
+          start_date: string
+        }
+        Insert: {
+          application_id?: string | null
+          company_name: string
+          created_at?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          industry: string
+          role_title: string
+          start_date: string
+        }
+        Update: {
+          application_id?: string | null
+          company_name?: string
+          created_at?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          industry?: string
+          role_title?: string
+          start_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "work_experiences_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "candidate_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -89,7 +255,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      availability_type: "full_time" | "part_time" | "fractional"
     }
     CompositeTypes: {
       [_ in never]: never
