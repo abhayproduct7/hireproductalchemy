@@ -2,8 +2,8 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { JoinCommunityHero } from "@/components/sections/JoinCommunityHero";
 import { BenefitsSection } from "@/components/sections/BenefitsSection";
-import { OpportunitiesSection } from "@/components/sections/OpportunitiesSection";
 import { CommunityAdvantagesSection } from "@/components/sections/CommunityAdvantagesSection";
+import { JoinApplicationForm } from "@/components/sections/JoinApplicationForm";
 
 const JoinCommunity = () => {
   return (
@@ -12,7 +12,7 @@ const JoinCommunity = () => {
       <JoinCommunityHero />
       <CommunityAdvantagesSection />
       <BenefitsSection />
-      <OpportunitiesSection />
+      <JoinApplicationForm />
       <Footer />
     </div>
   );
