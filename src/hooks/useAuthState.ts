@@ -26,6 +26,10 @@ export const useAuthState = () => {
           description: "You have been signed out successfully.",
         });
       }
+
+      if (event === 'USER_UPDATED') {
+        console.log('User updated:', session?.user);
+      }
     });
 
     return () => {

@@ -13,15 +13,19 @@ const Login = () => {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Auth event:", event);
-      console.log("Session:", session);
-
       if (event === "SIGNED_IN" && session) {
         toast({
           title: "Successfully signed in",
           description: "Welcome back!",
         });
         navigate("/");
+      }
+
+      if (event === "SIGNED_OUT") {
+        toast({
+          title: "Signed out",
+          description: "You have been signed out successfully.",
+        });
       }
     });
 
@@ -30,7 +34,6 @@ const Login = () => {
     };
   }, [navigate]);
 
-  // Redirect if already logged in
   useEffect(() => {
     if (session) {
       navigate("/");
