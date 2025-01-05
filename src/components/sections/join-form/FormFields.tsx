@@ -1,4 +1,4 @@
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
 import { UseFormReturn } from "react-hook-form";
 import { JoinFormValues } from "./schema";
@@ -25,12 +25,37 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import { useState } from "react";
 
 interface FormFieldsProps {
   form: UseFormReturn<JoinFormValues>;
 }
 
 export const FormFields = ({ form }: FormFieldsProps) => {
+  const [newSkill, setNewSkill] = useState("");
+
+  const addSkill = () => {
+    const skill = newSkill.trim();
+    if (skill && !form.getValues().skills.includes(skill)) {
+      form.setValue("skills", [...form.getValues().skills, skill]);
+      setNewSkill("");
+    }
+  };
+
+  const removeSkill = (skillToRemove: string) => {
+    form.setValue(
+      "skills",
+      form.getValues().skills.filter((skill) => skill !== skillToRemove)
+    );
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addSkill();
+    }
+  };
+
   return (
     <>
       <FormField
@@ -61,6 +86,47 @@ export const FormFields = ({ form }: FormFieldsProps) => {
               />
             </FormControl>
             <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="skills"
+        render={() => (
+          <FormItem>
+            <FormLabel>Skills</FormLabel>
+            <div className="space-y-4">
+              <div className="flex gap-2">
+                <Input
+                  value={newSkill}
+                  onChange={(e) => setNewSkill(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Add a skill (e.g., Agile, User Research)"
+                />
+                <Button type="button" onClick={addSkill}>
+                  Add
+                </Button>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {form.getValues().skills.map((skill) => (
+                  <div
+                    key={skill}
+                    className="flex items-center gap-1 bg-secondary/20 px-3 py-1 rounded-full"
+                  >
+                    <span>{skill}</span>
+                    <button
+                      type="button"
+                      onClick={() => removeSkill(skill)}
+                      className="text-gray-500 hover:text-gray-700"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <FormMessage />
+            </div>
           </FormItem>
         )}
       />

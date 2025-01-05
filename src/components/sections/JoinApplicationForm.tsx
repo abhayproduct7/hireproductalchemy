@@ -28,6 +28,7 @@ export const JoinApplicationForm = () => {
         hoursPerWeek: "",
         timeZone: "",
       },
+      skills: [],
     },
   });
 
@@ -40,16 +41,63 @@ export const JoinApplicationForm = () => {
 
     setIsLoading(true);
     try {
-      const { error } = await supabase.from("candidate_applications").insert({
-        user_id: session.user.id,
-        years_experience: parseInt(values.yearsExperience),
-        professional_summary: values.professionalSummary,
-        availability_type: values.availabilityType,
-        earliest_start_date: values.earliestStartDate,
-        preferred_schedule: values.preferredSchedule,
+      // First insert the application
+      const { data: applicationData, error: applicationError } = await supabase
+        .from("candidate_applications")
+        .insert({
+          user_id: session.user.id,
+          years_experience: parseInt(values.yearsExperience),
+          professional_summary: values.professionalSummary,
+          availability_type: values.availabilityType,
+          earliest_start_date: values.earliestStartDate,
+          preferred_schedule: values.preferredSchedule,
+        })
+        .select()
+        .single();
+
+      if (applicationError) throw applicationError;
+
+      // Then handle skills
+      const skillPromises = values.skills.map(async (skillName) => {
+        // First, insert or get the skill
+        const { data: skillData, error: skillError } = await supabase
+          .from("skills")
+          .select("id")
+          .eq("name", skillName)
+          .single();
+
+        if (skillError && skillError.code !== "PGRST116") {
+          // If error is not "no rows returned", throw it
+          throw skillError;
+        }
+
+        let skillId;
+        if (!skillData) {
+          // Skill doesn't exist, create it
+          const { data: newSkill, error: newSkillError } = await supabase
+            .from("skills")
+            .insert({ name: skillName })
+            .select()
+            .single();
+
+          if (newSkillError) throw newSkillError;
+          skillId = newSkill.id;
+        } else {
+          skillId = skillData.id;
+        }
+
+        // Link skill to application
+        const { error: linkError } = await supabase
+          .from("candidate_skills")
+          .insert({
+            application_id: applicationData.id,
+            skill_id: skillId,
+          });
+
+        if (linkError) throw linkError;
       });
 
-      if (error) throw error;
+      await Promise.all(skillPromises);
 
       toast({
         title: "Application submitted successfully!",
