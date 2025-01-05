@@ -28,33 +28,33 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
       <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-b border-gray-100">
         <Link
           to="/hire"
-          className="block px-3 py-2 rounded-md text-base nav-link"
+          className="block px-3 py-2 rounded-md text-sm nav-link"
         >
           Hire Talent
         </Link>
         <Link
           to="/join"
-          className="block px-3 py-2 rounded-md text-base nav-link"
+          className="block px-3 py-2 rounded-md text-sm nav-link"
         >
           Join Our Community
         </Link>
         <Link
           to="/resources"
-          className="block px-3 py-2 rounded-md text-base nav-link"
+          className="block px-3 py-2 rounded-md text-sm nav-link"
         >
           Resources
         </Link>
         {session ? (
           <button
             onClick={handleLogout}
-            className="block w-full px-3 py-2 rounded-md text-base btn-secondary text-center"
+            className="block w-full px-3 py-2 rounded-md text-sm btn-secondary text-center"
           >
             Log Out
           </button>
         ) : (
           <Link
             to="/login"
-            className="block px-3 py-2 rounded-md text-base btn-primary text-center"
+            className="block px-3 py-2 rounded-md text-sm btn-primary text-center"
           >
             Sign In
           </Link>

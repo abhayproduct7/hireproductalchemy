@@ -19,26 +19,26 @@ export const DesktopNav = () => {
 
   return (
     <div className="hidden md:flex items-center space-x-8">
-      <Link to="/hire" className="nav-link">
+      <Link to="/hire" className="nav-link text-sm">
         Hire Talent
       </Link>
-      <Link to="/join" className="nav-link">
+      <Link to="/join" className="nav-link text-sm">
         Join Our Community
       </Link>
-      <Link to="/resources" className="nav-link">
+      <Link to="/resources" className="nav-link text-sm">
         Resources
       </Link>
       {session ? (
         <button
           onClick={handleLogout}
-          className="btn-secondary px-4 py-2 rounded-md font-medium"
+          className="btn-secondary px-4 py-2 rounded-md font-medium text-sm"
         >
           Log Out
         </button>
       ) : (
         <Link
           to="/login"
-          className="btn-primary px-4 py-2 rounded-md font-medium"
+          className="btn-primary px-4 py-2 rounded-md font-medium text-sm"
         >
           Sign In
         </Link>
