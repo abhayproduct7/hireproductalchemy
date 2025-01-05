@@ -13,6 +13,7 @@ export type Database = {
         Row: {
           availability_type: Database["public"]["Enums"]["availability_type"]
           created_at: string | null
+          cv_url: string | null
           earliest_start_date: string | null
           id: string
           preferred_schedule: Json | null
@@ -25,6 +26,7 @@ export type Database = {
         Insert: {
           availability_type: Database["public"]["Enums"]["availability_type"]
           created_at?: string | null
+          cv_url?: string | null
           earliest_start_date?: string | null
           id?: string
           preferred_schedule?: Json | null
@@ -37,6 +39,7 @@ export type Database = {
         Update: {
           availability_type?: Database["public"]["Enums"]["availability_type"]
           created_at?: string | null
+          cv_url?: string | null
           earliest_start_date?: string | null
           id?: string
           preferred_schedule?: Json | null
