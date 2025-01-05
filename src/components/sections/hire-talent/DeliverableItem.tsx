@@ -4,7 +4,6 @@ interface DeliverableItemProps {
   title: string;
   description: string;
   icon: LucideIcon;
-  titleColor: string;
   index: number;
 }
 
@@ -12,7 +11,6 @@ export const DeliverableItem = ({
   title, 
   description, 
   icon: Icon, 
-  titleColor, 
   index 
 }: DeliverableItemProps) => {
   return (
@@ -28,10 +26,10 @@ export const DeliverableItem = ({
       </div>
 
       <div className="flex-1 -mt-1">
-        <h3 className={`text-lg font-semibold mb-1 ${titleColor}`}>
+        <h3 className="text-lg font-semibold mb-1 text-secondary">
           {title}
         </h3>
-        <p className="text-sm text-[#8E9196]">
+        <p className="text-sm text-black">
           {description}
         </p>
       </div>
