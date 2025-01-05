@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthChangeEvent, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
 
@@ -8,11 +7,11 @@ export const useAuthState = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       console.log('Auth event:', event);
       console.log('Session:', session);
       
-      if (event === 'SIGNED_IN') {
+      if (event === 'SIGNED_IN' && session) {
         navigate("/");
         toast({
           title: "Successfully signed in",
@@ -21,16 +20,10 @@ export const useAuthState = () => {
       }
       
       if (event === 'SIGNED_OUT') {
+        navigate("/login");
         toast({
           title: "Signed out",
           description: "You have been signed out successfully.",
-        });
-      }
-
-      if (event === 'USER_UPDATED') {
-        toast({
-          title: "Account updated",
-          description: "Your account has been updated successfully.",
         });
       }
     });

@@ -43,23 +43,8 @@ export const AuthForm = () => {
         },
       }}
       providers={["google"]}
-      redirectTo={`${window.location.origin}/login`}
-      view="sign_in"
-      showLinks={true}
-      localization={{
-        variables: {
-          sign_up: {
-            email_label: "Email",
-            password_label: "Password",
-            email_input_placeholder: "Your email address",
-            password_input_placeholder: "Your password",
-            button_label: "Sign up",
-            loading_button_label: "Signing up...",
-            social_provider_text: "Sign in with {{provider}}",
-            link_text: "Don't have an account? Sign up",
-          },
-        },
-      }}
+      redirectTo={window.location.origin}
+      onlyThirdPartyProviders={false}
     />
   );
 };

@@ -5,39 +5,30 @@ import { Navigation } from "@/components/Navigation";
 import Logo from "@/components/Logo";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "@/components/ui/use-toast";
 
 const Login = () => {
   const session = useSession();
   const navigate = useNavigate();
-  const { toast } = useToast();
 
-  // Handle auth state changes
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       console.log("Auth event:", event);
       console.log("Session:", session);
 
-      if (event === "SIGNED_IN") {
+      if (event === "SIGNED_IN" && session) {
         toast({
           title: "Successfully signed in",
           description: "Welcome back!",
         });
         navigate("/");
       }
-
-      if (event === "SIGNED_OUT") {
-        toast({
-          title: "Signed out",
-          description: "You have been signed out successfully.",
-        });
-      }
     });
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [navigate, toast]);
+  }, [navigate]);
 
   // Redirect if already logged in
   useEffect(() => {
@@ -56,7 +47,7 @@ const Login = () => {
           </div>
           <h1 className="text-2xl font-bold text-primary mb-2">Welcome Back</h1>
           <p className="text-muted-foreground">
-            Sign in to access your account and manage your product hiring needs
+            Sign in to access your account
           </p>
         </div>
         <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
