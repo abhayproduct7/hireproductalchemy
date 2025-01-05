@@ -14,10 +14,10 @@ export const HireTalentHero = () => {
     <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-secondary/5 to-white overflow-hidden">
       <div className="max-w-7xl mx-auto relative">
         <div className="mb-12">
-          <h1 className="text-3xl font-bold text-gray-900 leading-tight mb-4 animate-fade-up">
+          <h1 className="text-3xl font-bold text-[#1A1F2C] leading-tight mb-4 animate-fade-up">
             Achieving Strategic Product Management Excellence
           </h1>
-          <p className="text-base text-gray-600 mb-6 animate-fade-up delay-100">
+          <p className="text-base text-[#8E9196] mb-6 animate-fade-up delay-100">
             Connect with experienced product leaders who bring proven expertise in 
             scaling products from ideation to market success.
           </p>
@@ -61,7 +61,7 @@ export const HireTalentHero = () => {
                   <h3 className={`text-lg font-semibold mb-1 ${deliverable.titleColor}`}>
                     {deliverable.title}
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-[#8E9196]">
                     {deliverable.description}
                   </p>
                 </div>
@@ -79,36 +79,36 @@ const deliverables = [
     title: "Stakeholder Management",
     description: "Effectively manage relationships across all levels of the organization.",
     icon: Users2,
-    titleColor: "text-purple-500"
+    titleColor: "text-[#9b87f5]"
   },
   {
     title: "Agile Development",
     description: "Lead agile development processes to ensure efficient product delivery and iteration.",
     icon: GitPullRequest,
-    titleColor: "text-red-500"
+    titleColor: "text-[#7E69AB]"
   },
   {
     title: "User Research & Insights",
     description: "Conduct thorough user research to inform product decisions and feature prioritization.",
     icon: Users,
-    titleColor: "text-green-500"
+    titleColor: "text-[#6E59A5]"
   },
   {
     title: "Ideation & Innovation",
     description: "Drive innovation through structured ideation processes and market analysis.",
     icon: Lightbulb,
-    titleColor: "text-yellow-500"
+    titleColor: "text-[#8B5CF6]"
   },
   {
     title: "MVP and Go-to-Market Strategy",
     description: "Define and execute lean MVP development plans and create effective go-to-market strategies for successful product launches.",
     icon: Map,
-    titleColor: "text-orange-500"
+    titleColor: "text-[#D6BCFA]"
   },
   {
     title: "Product Strategy & Roadmap",
     description: "Create comprehensive product strategies and strategic roadmaps aligned with business goals and market opportunities.",
     icon: Target,
-    titleColor: "text-blue-500"
+    titleColor: "text-[#9b87f5]"
   }
 ];
