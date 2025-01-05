@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { Configuration, OpenAIApi } from "https://esm.sh/openai@3.1.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -8,39 +7,49 @@ const corsHeaders = {
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+    return new Response(null, { headers: corsHeaders });
   }
 
   try {
     const { message } = await req.json();
+    const perplexityApiKey = Deno.env.get('PERPLEXITY_API_KEY');
 
-    // Initialize OpenAI
-    const configuration = new Configuration({
-      apiKey: Deno.env.get("OPENAI_API_KEY"),
+    if (!perplexityApiKey) {
+      throw new Error('Perplexity API key not found');
+    }
+
+    const response = await fetch('https://api.perplexity.ai/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${perplexityApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'llama-3.1-sonar-small-128k-online',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a helpful customer support assistant for ProductHire, a platform that connects companies with product management talent. Be concise, professional, and helpful.'
+          },
+          {
+            role: 'user',
+            content: message
+          }
+        ],
+        temperature: 0.2,
+        max_tokens: 1000,
+      }),
     });
-    const openai = new OpenAIApi(configuration);
 
-    // Get response from OpenAI
-    const completion = await openai.createChatCompletion({
-      model: "gpt-4o",
-      messages: [
-        {
-          role: "system",
-          content: "You are a helpful customer support assistant for ProductHire, a platform that connects companies with product management talent. Be concise, professional, and helpful.",
-        },
-        {
-          role: "user",
-          content: message,
-        },
-      ],
-      max_tokens: 150,
-      temperature: 0.7,
-    });
+    if (!response.ok) {
+      throw new Error(`Perplexity API error: ${response.statusText}`);
+    }
 
-    const response = completion.data.choices[0]?.message?.content || "I apologize, but I couldn't process your request.";
+    const data = await response.json();
+    const aiMessage = data.choices[0].message.content;
 
     return new Response(
-      JSON.stringify({ message: response }),
+      JSON.stringify({ message: aiMessage }),
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       },
@@ -48,7 +57,7 @@ serve(async (req) => {
   } catch (error) {
     console.error("Error:", error);
     return new Response(
-      JSON.stringify({ error: "Failed to process the request" }),
+      JSON.stringify({ error: error.message }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
