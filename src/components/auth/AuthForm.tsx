@@ -3,7 +3,7 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 
 export const AuthForm = () => {
-  console.log("Supabase URL:", supabase.supabaseUrl);
+  // Use the URL directly from the client configuration
   console.log("Auth Configuration:", supabase.auth.getSession());
   
   return (
@@ -47,9 +47,6 @@ export const AuthForm = () => {
       }}
       providers={["google"]}
       view="sign_in"
-      onError={(error) => {
-        console.error("Auth Error:", error);
-      }}
     />
   );
 };
