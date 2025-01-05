@@ -170,6 +170,65 @@ export type Database = {
         }
         Relationships: []
       }
+      requirement_matches: {
+        Row: {
+          application_id: string | null
+          created_at: string | null
+          employer_id: string | null
+          id: string
+          requirement_id: number | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          application_id?: string | null
+          created_at?: string | null
+          employer_id?: string | null
+          id?: string
+          requirement_id?: number | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          application_id?: string | null
+          created_at?: string | null
+          employer_id?: string | null
+          id?: string
+          requirement_id?: number | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "requirement_matches_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "candidate_applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "requirement_matches_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "requirement_matches_requirement_id_fkey"
+            columns: ["requirement_id"]
+            isOneToOne: false
+            referencedRelation: "requirements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "requirement_matches_requirement_id_fkey"
+            columns: ["requirement_id"]
+            isOneToOne: false
+            referencedRelation: "top_candidate_matches"
+            referencedColumns: ["requirement_id"]
+          },
+        ]
+      }
       requirements: {
         Row: {
           answers: Json
@@ -252,10 +311,38 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      top_candidate_matches: {
+        Row: {
+          application_id: string | null
+          availability_type: string | null
+          candidate_name: string | null
+          earliest_start_date: string | null
+          employer_id: string | null
+          match_score: number | null
+          professional_summary: string | null
+          requirement_id: number | null
+          skills: string[] | null
+          years_experience: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      match_candidates_with_requirements: {
+        Args: {
+          requirement_id: number
+        }
+        Returns: {
+          application_id: string
+          candidate_name: string
+          match_score: number
+          years_experience: number
+          availability_type: string
+          professional_summary: string
+          earliest_start_date: string
+          skills: string[]
+        }[]
+      }
     }
     Enums: {
       availability_type: "full_time" | "part_time" | "fractional"
