@@ -32,6 +32,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const formSchema = z.object({
   yearsExperience: z.string().min(1, "Years of experience is required"),
@@ -46,6 +54,7 @@ const formSchema = z.object({
 
 export const JoinApplicationForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
   const navigate = useNavigate();
   const session = useSession();
   const supabase = useSupabaseClient();
@@ -64,12 +73,9 @@ export const JoinApplicationForm = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     if (!session?.user) {
-      toast({
-        title: "Authentication required",
-        description: "Please sign in to submit your application.",
-        variant: "destructive",
-      });
-      navigate("/login");
+      // Store form data in localStorage
+      localStorage.setItem('pendingApplication', JSON.stringify(values));
+      setShowAuthDialog(true);
       return;
     }
 
@@ -244,6 +250,25 @@ export const JoinApplicationForm = () => {
           </Button>
         </form>
       </Form>
+
+      <Dialog open={showAuthDialog} onOpenChange={setShowAuthDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Sign in to Submit Your Application</DialogTitle>
+            <DialogDescription>
+              Your form data has been saved. Please sign in or create an account to submit your application.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end space-x-4 mt-4">
+            <Button variant="outline" onClick={() => setShowAuthDialog(false)}>
+              Continue Editing
+            </Button>
+            <Button onClick={() => navigate("/login")}>
+              Sign In
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
