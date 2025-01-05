@@ -19,7 +19,6 @@ export const useAuthState = () => {
       }
       
       if (event === 'SIGNED_OUT') {
-        navigate("/login");
         toast({
           title: "Signed out",
           description: "You have been signed out successfully.",
