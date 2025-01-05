@@ -29,7 +29,7 @@ export const DeliverableItem = ({
         <h3 className="text-lg font-semibold mb-1 text-secondary">
           {title}
         </h3>
-        <p className="text-sm text-black">
+        <p className="text-sm text-[#8E9196]">
           {description}
         </p>
       </div>
