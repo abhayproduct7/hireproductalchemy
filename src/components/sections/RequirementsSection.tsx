@@ -1,5 +1,6 @@
 import { ArrowRight, List, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CandidateMatchesSection } from "./CandidateMatchesSection";
 
 export const RequirementsSection = () => {
   return (
@@ -21,7 +22,7 @@ export const RequirementsSection = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-start">
           <div className="space-y-8">
             <div className="flex gap-4">
               <div className="flex-shrink-0">
@@ -59,6 +60,8 @@ export const RequirementsSection = () => {
             </Button>
           </div>
         </div>
+
+        <CandidateMatchesSection requirementId={1} />
       </div>
     </section>
   );
