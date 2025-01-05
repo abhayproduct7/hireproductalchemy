@@ -12,7 +12,6 @@ export const useAuthState = () => {
       console.log('Session:', session);
       
       if (event === 'SIGNED_IN' && session) {
-        navigate("/");
         toast({
           title: "Successfully signed in",
           description: "Welcome back!",
