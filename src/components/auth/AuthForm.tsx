@@ -3,8 +3,6 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 
 export const AuthForm = () => {
-  const redirectTo = `${window.location.origin}/login`;
-
   return (
     <Auth
       supabaseClient={supabase}
@@ -45,9 +43,7 @@ export const AuthForm = () => {
         },
       }}
       providers={["google"]}
-      redirectTo={redirectTo}
-      onlyThirdPartyProviders={false}
-      magicLink={false}
+      view="sign_in"
     />
   );
 };

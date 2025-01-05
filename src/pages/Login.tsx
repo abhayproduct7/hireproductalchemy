@@ -1,40 +1,71 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSession } from "@supabase/auth-helpers-react";
 import { Navigation } from "@/components/Navigation";
 import Logo from "@/components/Logo";
 import { AuthForm } from "@/components/auth/AuthForm";
+import { useAuthState } from "@/hooks/useAuthState";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
   const session = useSession();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { toast } = useToast();
 
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Auth state changed:", event, session);
-      
-      if (event === "SIGNED_IN" && session) {
-        toast({
-          title: "Successfully signed in",
-          description: "Welcome back!",
-        });
-        navigate("/");
-      }
-    });
+  // Initialize auth state management
+  useAuthState();
 
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [navigate]);
-
-  // If we have a session, redirect to home
+  // Handle successful login
   useEffect(() => {
     if (session) {
-      navigate("/");
+      const handlePendingRequirements = async () => {
+        const pendingRequirements = localStorage.getItem('pendingRequirements');
+        
+        if (pendingRequirements) {
+          try {
+            const requirements = JSON.parse(pendingRequirements);
+            
+            const { error } = await supabase
+              .from("requirements")
+              .insert([{ 
+                answers: requirements,
+                user_id: session.user.id
+              }]);
+
+            if (error) throw error;
+
+            toast({
+              title: "Requirements submitted successfully!",
+              description: "We'll be in touch with matched candidates soon.",
+            });
+
+            // Clear pending requirements
+            localStorage.removeItem('pendingRequirements');
+            
+            // Navigate to thank you page
+            navigate("/thank-you");
+          } catch (error) {
+            console.error("Error submitting requirements:", error);
+            toast({
+              title: "Something went wrong",
+              description: "Please try again later.",
+              variant: "destructive",
+            });
+            navigate("/requirements");
+          }
+        } else {
+          // If no pending requirements, check for return URL
+          const params = new URLSearchParams(location.search);
+          const returnTo = params.get('returnTo');
+          navigate(returnTo || "/");
+        }
+      };
+
+      handlePendingRequirements();
     }
-  }, [session, navigate]);
+  }, [session, navigate, location.search, toast]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -46,7 +77,7 @@ const Login = () => {
           </div>
           <h1 className="text-2xl font-bold text-primary mb-2">Welcome Back</h1>
           <p className="text-muted-foreground">
-            Sign in to access your account
+            Sign in to access your account and manage your product hiring needs
           </p>
         </div>
         <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
