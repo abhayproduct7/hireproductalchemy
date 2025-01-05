@@ -1,71 +1,50 @@
 import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSession } from "@supabase/auth-helpers-react";
 import { Navigation } from "@/components/Navigation";
 import Logo from "@/components/Logo";
 import { AuthForm } from "@/components/auth/AuthForm";
-import { useAuthState } from "@/hooks/useAuthState";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
   const session = useSession();
   const navigate = useNavigate();
-  const location = useLocation();
   const { toast } = useToast();
 
-  // Initialize auth state management
-  useAuthState();
+  // Handle auth state changes
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Auth event:", event);
+      console.log("Session:", session);
 
-  // Handle successful login
+      if (event === "SIGNED_IN") {
+        toast({
+          title: "Successfully signed in",
+          description: "Welcome back!",
+        });
+        navigate("/");
+      }
+
+      if (event === "SIGNED_OUT") {
+        toast({
+          title: "Signed out",
+          description: "You have been signed out successfully.",
+        });
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [navigate, toast]);
+
+  // Redirect if already logged in
   useEffect(() => {
     if (session) {
-      const handlePendingRequirements = async () => {
-        const pendingRequirements = localStorage.getItem('pendingRequirements');
-        
-        if (pendingRequirements) {
-          try {
-            const requirements = JSON.parse(pendingRequirements);
-            
-            const { error } = await supabase
-              .from("requirements")
-              .insert([{ 
-                answers: requirements,
-                user_id: session.user.id
-              }]);
-
-            if (error) throw error;
-
-            toast({
-              title: "Requirements submitted successfully!",
-              description: "We'll be in touch with matched candidates soon.",
-            });
-
-            // Clear pending requirements
-            localStorage.removeItem('pendingRequirements');
-            
-            // Navigate to thank you page
-            navigate("/thank-you");
-          } catch (error) {
-            console.error("Error submitting requirements:", error);
-            toast({
-              title: "Something went wrong",
-              description: "Please try again later.",
-              variant: "destructive",
-            });
-            navigate("/requirements");
-          }
-        } else {
-          // If no pending requirements, check for return URL
-          const params = new URLSearchParams(location.search);
-          const returnTo = params.get('returnTo');
-          navigate(returnTo || "/");
-        }
-      };
-
-      handlePendingRequirements();
+      navigate("/");
     }
-  }, [session, navigate, location.search, toast]);
+  }, [session, navigate]);
 
   return (
     <div className="min-h-screen bg-background">
