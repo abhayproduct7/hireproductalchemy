@@ -22,13 +22,6 @@ const Login = () => {
         });
         navigate("/");
       }
-
-      if (event === "SIGNED_OUT") {
-        toast({
-          title: "Signed out",
-          description: "You have been signed out successfully.",
-        });
-      }
     });
 
     return () => {
@@ -36,6 +29,7 @@ const Login = () => {
     };
   }, [navigate]);
 
+  // If we have a session, redirect to home
   useEffect(() => {
     if (session) {
       navigate("/");
