@@ -38,13 +38,12 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 const formSchema = z.object({
   yearsExperience: z.string().min(1, "Years of experience is required"),
   professionalSummary: z.string().min(100, "Please provide at least 100 characters"),
-  availabilityType: z.enum(["full_time", "part_time", "fractional"]),
+  availabilityType: z.enum(["full_time", "part_time"]),
   earliestStartDate: z.date(),
   preferredSchedule: z.object({
     hoursPerWeek: z.string().min(1, "Hours per week is required"),
@@ -160,8 +159,7 @@ export const JoinApplicationForm = () => {
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="full_time">Full Time</SelectItem>
-                    <SelectItem value="part_time">Part Time</SelectItem>
-                    <SelectItem value="fractional">Fractional</SelectItem>
+                    <SelectItem value="part_time">Part Time / Fractional</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
