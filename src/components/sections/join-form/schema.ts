@@ -10,6 +10,7 @@ export const joinFormSchema = z.object({
     timeZone: z.string().min(1, "Time zone is required"),
   }),
   skills: z.array(z.string()).min(1, "Please add at least one skill"),
+  cv: z.instanceof(File).optional(),
 });
 
 export type JoinFormValues = z.infer<typeof joinFormSchema>;

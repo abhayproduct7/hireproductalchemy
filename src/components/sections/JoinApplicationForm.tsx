@@ -28,7 +28,7 @@ export const JoinApplicationForm = () => {
         hoursPerWeek: "",
         timeZone: "",
       },
-      skills: [], // Initialize skills as an empty array
+      skills: [],
     },
   });
 
@@ -41,6 +41,26 @@ export const JoinApplicationForm = () => {
 
     setIsLoading(true);
     try {
+      let cvUrl = null;
+      
+      // Upload CV if provided
+      if (values.cv) {
+        const fileExt = values.cv.name.split('.').pop();
+        const filePath = `${session.user.id}/${crypto.randomUUID()}.${fileExt}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('assets')
+          .upload(filePath, values.cv);
+
+        if (uploadError) throw uploadError;
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('assets')
+          .getPublicUrl(filePath);
+
+        cvUrl = publicUrl;
+      }
+
       // First insert the application
       const { data: applicationData, error: applicationError } = await supabase
         .from("candidate_applications")
@@ -51,6 +71,7 @@ export const JoinApplicationForm = () => {
           availability_type: values.availabilityType,
           earliest_start_date: values.earliestStartDate,
           preferred_schedule: values.preferredSchedule,
+          cv_url: cvUrl,
         })
         .select()
         .single();
@@ -67,13 +88,11 @@ export const JoinApplicationForm = () => {
           .single();
 
         if (skillError && skillError.code !== "PGRST116") {
-          // If error is not "no rows returned", throw it
           throw skillError;
         }
 
         let skillId;
         if (!skillData) {
-          // Skill doesn't exist, create it
           const { data: newSkill, error: newSkillError } = await supabase
             .from("skills")
             .insert({ name: skillName })
@@ -86,7 +105,6 @@ export const JoinApplicationForm = () => {
           skillId = skillData.id;
         }
 
-        // Link skill to application
         const { error: linkError } = await supabase
           .from("candidate_skills")
           .insert({
