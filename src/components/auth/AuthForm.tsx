@@ -47,6 +47,7 @@ export const AuthForm = () => {
       providers={["google"]}
       redirectTo={redirectTo}
       onlyThirdPartyProviders={false}
+      magicLink={false}
     />
   );
 };
