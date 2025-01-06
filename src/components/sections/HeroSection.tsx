@@ -42,11 +42,11 @@ export const HeroSection = () => {
                 <ProfileSection />
                 <ProductTasks />
                 
-                {/* Process Flow with Vertical Arrow */}
-                <div className="flex flex-col items-center justify-center py-2 space-y-2">
-                  <span className="text-sm font-medium text-secondary">Expert Product Talent</span>
+                {/* Process Flow with Side Labels */}
+                <div className="flex items-center justify-center py-2 gap-4">
+                  <span className="text-sm font-medium text-secondary text-right w-32">Expert Product Talent</span>
                   <ArrowDown className="w-6 h-6 text-secondary" />
-                  <span className="text-sm font-medium text-secondary">Enhanced by AI Assistant</span>
+                  <span className="text-sm font-medium text-secondary text-left w-32">Enhanced by AI Assistant</span>
                 </div>
 
                 <DeliveredResults />
