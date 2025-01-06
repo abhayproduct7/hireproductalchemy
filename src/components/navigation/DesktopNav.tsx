@@ -43,24 +43,24 @@ export const DesktopNav = () => {
           </DropdownMenuTrigger>
           <DropdownMenuContent 
             align="end" 
-            className="w-56 bg-white border border-gray-100 shadow-lg mt-2 z-50"
+            className="w-56 bg-white border border-gray-200 shadow-lg rounded-md mt-2 z-50"
           >
             <DropdownMenuItem 
               onClick={() => navigate("/profile")}
-              className="hover:bg-secondary/10 focus:bg-secondary/10 text-gray-700 hover:text-secondary"
+              className="cursor-pointer px-4 py-2.5 text-gray-800 hover:bg-secondary hover:text-white focus:bg-secondary focus:text-white transition-colors"
             >
               My Profile
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={() => navigate("/dashboard")}
-              className="hover:bg-secondary/10 focus:bg-secondary/10 text-gray-700 hover:text-secondary"
+              className="cursor-pointer px-4 py-2.5 text-gray-800 hover:bg-secondary hover:text-white focus:bg-secondary focus:text-white transition-colors"
             >
               Dashboard
             </DropdownMenuItem>
-            <DropdownMenuSeparator className="bg-gray-100" />
+            <DropdownMenuSeparator className="bg-gray-200 my-1" />
             <DropdownMenuItem 
               onClick={handleLogout}
-              className="hover:bg-secondary/10 focus:bg-secondary/10 text-gray-700 hover:text-secondary"
+              className="cursor-pointer px-4 py-2.5 text-gray-800 hover:bg-secondary hover:text-white focus:bg-secondary focus:text-white transition-colors"
             >
               Log Out
             </DropdownMenuItem>
