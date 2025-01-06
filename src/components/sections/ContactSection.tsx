@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
 
 export const ContactSection = () => {
   const [name, setName] = useState("");
@@ -31,59 +31,70 @@ export const ContactSection = () => {
 
       if (contactError) throw contactError;
 
-      // Try to create the user account
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password: crypto.randomUUID(), // Generate a random password
-        options: {
-          data: {
-            full_name: name,
+      try {
+        // Try to create the user account
+        const { data: authData, error: authError } = await supabase.auth.signUp({
+          email,
+          password: crypto.randomUUID(), // Generate a random password
+          options: {
+            data: {
+              full_name: name,
+            },
           },
-        },
-      });
-
-      // If user already exists, that's fine - we'll just update their profile
-      if (authError && !authError.message.includes("User already registered")) {
-        throw authError;
-      }
-
-      // Update or create profile
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .upsert({ 
-          id: authData?.user?.id, // Will be undefined if user already exists, which is fine for upsert
-          full_name: name,
-          company_name: companyName,
-          user_type: 'employer'
         });
 
-      if (profileError) throw profileError;
+        if (authError) {
+          // If user already exists, redirect to login
+          if (authError.message.includes("User already registered")) {
+            toast({
+              title: "Account already exists",
+              description: "Please sign in with your existing account.",
+            });
+            navigate("/login");
+            return;
+          }
+          // For other auth errors, throw them
+          throw authError;
+        }
 
-      toast({
-        title: "Form submitted successfully!",
-        description: "Check your email for login instructions.",
-      });
+        // Only try to update profile if we successfully created a new user
+        if (authData?.user?.id) {
+          const { error: profileError } = await supabase
+            .from('profiles')
+            .upsert({ 
+              id: authData.user.id,
+              full_name: name,
+              company_name: companyName,
+              user_type: 'employer'
+            });
 
-      // Reset form
-      setName("");
-      setEmail("");
-      setCompanyName("");
-      
-      // Redirect to login page
-      navigate("/login");
+          if (profileError) throw profileError;
+        }
+
+        toast({
+          title: "Form submitted successfully!",
+          description: "Check your email for login instructions.",
+        });
+
+        // Reset form
+        setName("");
+        setEmail("");
+        setCompanyName("");
+        
+        // Redirect to login page
+        navigate("/login");
+      } catch (authError: any) {
+        // If it's not a "user exists" error, show a generic error
+        if (!authError.message?.includes("User already registered")) {
+          toast({
+            title: "Authentication error",
+            description: "There was a problem creating your account.",
+            variant: "destructive",
+          });
+        }
+      }
     } catch (error: any) {
       console.error("Detailed error:", error);
-      
-      // Handle user already exists error gracefully
-      if (error.message?.includes("User already registered")) {
-        toast({
-          title: "Account already exists",
-          description: "Please try signing in instead.",
-        });
-        navigate("/login");
-        return;
-      }
-
       toast({
         title: "Something went wrong",
         description: "Please try again later.",
