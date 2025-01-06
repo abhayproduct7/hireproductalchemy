@@ -1,4 +1,11 @@
-import { Brain, Users, CheckCircle, FileEdit, MessagesSquare, Target, Rocket } from "lucide-react";
+import { Brain, FileEdit, Target, Rocket, MessagesSquare } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export const AIAgentSection = () => {
   return (
@@ -60,47 +67,67 @@ export const AIAgentSection = () => {
           </div>
         </div>
 
-        {/* Sleeker PM-Focused Prompt Cards in a single row */}
-        <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
-          <div className="min-w-[280px] flex-shrink-0 snap-start bg-background rounded-lg p-4 hover:shadow-md transition-all cursor-pointer group border border-secondary/10">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
-                <FileEdit className="h-4 w-4 text-secondary" />
-              </div>
-              <h3 className="font-medium group-hover:text-secondary transition-colors">Create PRD</h3>
-            </div>
-            <p className="text-sm text-muted-foreground">Get help writing product requirements</p>
-          </div>
+        {/* PM-Focused Prompt Cards in Carousel */}
+        <div className="max-w-4xl mx-auto">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="bg-background rounded-lg p-4 h-full border border-secondary/10">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
+                      <FileEdit className="h-4 w-4 text-secondary" />
+                    </div>
+                    <h3 className="font-medium group-hover:text-secondary transition-colors">Create PRD</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Get help writing product requirements</p>
+                </div>
+              </CarouselItem>
 
-          <div className="min-w-[280px] flex-shrink-0 snap-start bg-background rounded-lg p-4 hover:shadow-md transition-all cursor-pointer group border border-secondary/10">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
-                <Target className="h-4 w-4 text-secondary" />
-              </div>
-              <h3 className="font-medium group-hover:text-secondary transition-colors">Validate Work</h3>
-            </div>
-            <p className="text-sm text-muted-foreground">Review and improve your deliverables</p>
-          </div>
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="bg-background rounded-lg p-4 h-full border border-secondary/10">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
+                      <Target className="h-4 w-4 text-secondary" />
+                    </div>
+                    <h3 className="font-medium group-hover:text-secondary transition-colors">Validate Work</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Review and improve your deliverables</p>
+                </div>
+              </CarouselItem>
 
-          <div className="min-w-[280px] flex-shrink-0 snap-start bg-background rounded-lg p-4 hover:shadow-md transition-all cursor-pointer group border border-secondary/10">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
-                <Rocket className="h-4 w-4 text-secondary" />
-              </div>
-              <h3 className="font-medium group-hover:text-secondary transition-colors">Plan Features</h3>
-            </div>
-            <p className="text-sm text-muted-foreground">Brainstorm and prioritize features</p>
-          </div>
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="bg-background rounded-lg p-4 h-full border border-secondary/10">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
+                      <Rocket className="h-4 w-4 text-secondary" />
+                    </div>
+                    <h3 className="font-medium group-hover:text-secondary transition-colors">Plan Features</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Brainstorm and prioritize features</p>
+                </div>
+              </CarouselItem>
 
-          <div className="min-w-[280px] flex-shrink-0 snap-start bg-background rounded-lg p-4 hover:shadow-md transition-all cursor-pointer group border border-secondary/10">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
-                <MessagesSquare className="h-4 w-4 text-secondary" />
-              </div>
-              <h3 className="font-medium group-hover:text-secondary transition-colors">Get Feedback</h3>
-            </div>
-            <p className="text-sm text-muted-foreground">Improve your product decisions</p>
-          </div>
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <div className="bg-background rounded-lg p-4 h-full border border-secondary/10">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
+                      <MessagesSquare className="h-4 w-4 text-secondary" />
+                    </div>
+                    <h3 className="font-medium group-hover:text-secondary transition-colors">Get Feedback</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Improve your product decisions</p>
+                </div>
+              </CarouselItem>
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
 
         <div className="mt-16 text-center bg-background rounded-xl p-8 max-w-3xl mx-auto">
