@@ -15,6 +15,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     flowType: 'pkce',
     storage: window.localStorage,
     storageKey: 'supabase.auth.token',
+    redirect: {
+      login: 'https://ae82674f-facd-4030-8450-06fd05686c12.lovableproject.com/login',
+      callback: 'https://ae82674f-facd-4030-8450-06fd05686c12.lovableproject.com/login'
+    }
   },
 });
 
