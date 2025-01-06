@@ -19,13 +19,18 @@ export const SkillsSection = ({ applicationId }: SkillsSectionProps) => {
 
   useEffect(() => {
     const fetchSkills = async () => {
-      if (!applicationId) return;
+      if (!applicationId) {
+        setIsLoadingSkills(false);
+        return;
+      }
 
       try {
-        const { data: skillsData } = await supabase
+        const { data: skillsData, error } = await supabase
           .from('candidate_skills')
           .select('skills(name)')
           .eq('application_id', applicationId);
+
+        if (error) throw error;
 
         if (skillsData) {
           const skillNames = skillsData.map((item: SkillResponse) => item.skills.name);
