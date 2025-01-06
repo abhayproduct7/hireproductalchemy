@@ -6,10 +6,10 @@ import { SignUpForm } from "./SignUpForm";
 import { AuthLinks } from "./AuthLinks";
 
 export const AuthForm = () => {
-  const { view, setView } = useAuthForm();
+  const { view, setView, userType, setUserType } = useAuthForm();
 
   if (view === "sign_up") {
-    return <SignUpForm setView={setView} />;
+    return <SignUpForm setView={setView} userType={userType} setUserType={setUserType} />;
   }
 
   return (

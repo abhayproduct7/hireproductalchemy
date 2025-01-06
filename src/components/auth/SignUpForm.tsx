@@ -26,18 +26,30 @@ type FormData = z.infer<typeof formSchema>;
 interface SignUpFormProps {
   setView: (view: "sign_in" | "sign_up") => void;
   userType: "talent" | "employer" | null;
-  setUserType: (type: "talent" | "employer" | null) => void;
+  setUserType: (type: "talent" | "employer") => void;
 }
 
 export const SignUpForm = ({ setView, userType, setUserType }: SignUpFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showPasswordRequirements, setShowPasswordRequirements] = useState(false);
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
+
+  const password = watch("password", "");
+  
+  const passwordRequirements = [
+    { met: password.length >= 8, text: "At least 8 characters" },
+    { met: /[A-Z]/.test(password), text: "One uppercase letter" },
+    { met: /[a-z]/.test(password), text: "One lowercase letter" },
+    { met: /[0-9]/.test(password), text: "One number" },
+    { met: /[^A-Za-z0-9]/.test(password), text: "One special character" },
+  ];
 
   const onSubmit = async ({ email, password }: FormData) => {
     if (!userType) {
@@ -145,19 +157,23 @@ export const SignUpForm = ({ setView, userType, setUserType }: SignUpFormProps) 
             type="password"
             autoComplete="new-password"
             disabled={isLoading}
+            onFocus={() => setShowPasswordRequirements(true)}
             {...register("password")}
           />
           {errors?.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
         </div>
 
-        <PasswordRequirements />
+        <PasswordRequirements 
+          requirements={passwordRequirements}
+          show={showPasswordRequirements}
+        />
 
         <Button className="w-full" type="submit" disabled={isLoading}>
           {isLoading ? "Creating account..." : "Create account"}
         </Button>
       </form>
 
-      <AuthLinks view="sign_up" setView={setView} />
+      <AuthLinks setView={setView} />
     </div>
   );
 };
