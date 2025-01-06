@@ -35,39 +35,45 @@ export const AIAgentSection = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-12 mt-16">
-          <div className="space-y-4 group">
-            <div className="bg-muted/50 p-4 rounded-full w-fit">
-              <BrainIcon className="w-6 h-6 text-secondary" />
+        <div className="grid md:grid-cols-3 gap-8 mt-16">
+          <div className="group">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="bg-muted/50 p-2.5 rounded-full">
+                <BrainIcon className="w-4 h-4 text-secondary" />
+              </div>
+              <h3 className="text-lg font-medium group-hover:text-secondary transition-colors">
+                Skillset Assessment
+              </h3>
             </div>
-            <h3 className="text-2xl font-semibold group-hover:text-secondary transition-colors">
-              Skillset Assessment
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed pl-[52px]">
               Karma analyzes your project requirements and helps identify the exact skillset and experience level needed for your product manager
             </p>
           </div>
 
-          <div className="space-y-4 group">
-            <div className="bg-muted/50 p-4 rounded-full w-fit">
-              <Users className="w-6 h-6 text-secondary" />
+          <div className="group">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="bg-muted/50 p-2.5 rounded-full">
+                <Users className="w-4 h-4 text-secondary" />
+              </div>
+              <h3 className="text-lg font-medium group-hover:text-secondary transition-colors">
+                Talent Empowerment
+              </h3>
             </div>
-            <h3 className="text-2xl font-semibold group-hover:text-secondary transition-colors">
-              Talent Empowerment
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed pl-[52px]">
               Assists product managers with frameworks, tools, and best practices to deliver exceptional product strategy and management
             </p>
           </div>
 
-          <div className="space-y-4 group">
-            <div className="bg-muted/50 p-4 rounded-full w-fit">
-              <CheckCircle2 className="w-6 h-6 text-secondary" />
+          <div className="group">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="bg-muted/50 p-2.5 rounded-full">
+                <CheckCircle2 className="w-4 h-4 text-secondary" />
+              </div>
+              <h3 className="text-lg font-medium group-hover:text-secondary transition-colors">
+                Quality Assurance
+              </h3>
             </div>
-            <h3 className="text-2xl font-semibold group-hover:text-secondary transition-colors">
-              Quality Assurance
-            </h3>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed pl-[52px]">
               Helps non-technical teams assess and validate work quality, ensuring alignment with business objectives
             </p>
           </div>
