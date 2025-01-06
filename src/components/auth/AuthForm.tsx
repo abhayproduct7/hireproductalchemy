@@ -17,7 +17,33 @@ export const AuthForm = () => {
     { met: password.length >= 6, text: "At least 6 characters long" },
   ];
 
-  // Use useEffect to monitor Auth component's view changes
+  // Monitor password input using useEffect
+  useEffect(() => {
+    if (view === "sign_up") {
+      const checkPasswordInput = () => {
+        const passwordInput = document.querySelector('input[type="password"]') as HTMLInputElement;
+        if (passwordInput) {
+          const currentValue = passwordInput.value;
+          setPassword(currentValue);
+          setShowRequirements(true);
+        }
+      };
+
+      // Initial check
+      checkPasswordInput();
+
+      // Set up an interval to periodically check the password input
+      const intervalId = setInterval(checkPasswordInput, 500);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    } else {
+      setShowRequirements(false);
+    }
+  }, [view]);
+
+  // Monitor auth state changes
   useEffect(() => {
     const {
       data: { subscription },
@@ -90,19 +116,6 @@ export const AuthForm = () => {
               button_label: "Sign In",
             },
           },
-        }}
-        onViewChange={(newView) => {
-          // Listen for password input changes through the form elements
-          setTimeout(() => {
-            const passwordInput = document.querySelector('input[type="password"]');
-            if (passwordInput) {
-              passwordInput.addEventListener('input', (e) => {
-                const target = e.target as HTMLInputElement;
-                setPassword(target.value);
-                setShowRequirements(true);
-              });
-            }
-          }, 100);
         }}
       />
     </div>
