@@ -3,9 +3,9 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 export const AuthForm = () => {
-  const supabase = useSupabaseClient();
   const location = useLocation();
   const navigate = useNavigate();
   
@@ -21,6 +21,7 @@ export const AuthForm = () => {
 
     // Set up auth state change listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Auth state changed:", event, session);
       if (event === "SIGNED_IN" && session) {
         // Clear the stored return URL
         localStorage.removeItem("returnTo");
@@ -32,7 +33,7 @@ export const AuthForm = () => {
     return () => {
       subscription.unsubscribe();
     };
-  }, [supabase, navigate, returnTo]);
+  }, [navigate, returnTo]);
 
   return (
     <Auth
