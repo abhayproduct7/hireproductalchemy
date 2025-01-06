@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Users, Brain, ArrowDown } from "lucide-react";
+import { Users, Brain } from "lucide-react";
 import { ProfileSection } from "./hero/ProfileSection";
 import { ProductTasks } from "./hero/ProductTasks";
 import { DeliveredResults } from "./hero/DeliveredResults";
@@ -42,21 +42,18 @@ export const HeroSection = () => {
                 <ProfileSection />
                 <ProductTasks />
                 
-                {/* Process Flow with Modern Design */}
-                <div className="relative flex items-center justify-center py-4">
-                  <div className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-secondary/20 to-transparent"></div>
-                  <div className="flex items-center justify-center gap-4 bg-white px-4">
-                    <span className="text-sm font-medium text-secondary/80 text-right w-32 transition-all hover:text-secondary">
-                      Expert Product Talent
-                    </span>
-                    <div className="relative">
-                      <div className="absolute inset-0 bg-secondary/10 blur-lg rounded-full"></div>
-                      <ArrowDown className="w-6 h-6 text-secondary relative animate-bounce" />
+                {/* Modern Button-like Element */}
+                <div className="relative py-6">
+                  <button className="w-full group relative overflow-hidden rounded-lg bg-gradient-to-r from-secondary/5 via-secondary/10 to-secondary/5 px-8 py-4 transition-all hover:shadow-lg">
+                    <div className="absolute inset-0 bg-secondary/5 transform transition-transform group-hover:scale-105"></div>
+                    <div className="relative flex items-center justify-center gap-3">
+                      <Brain className="w-5 h-5 text-secondary" />
+                      <span className="text-secondary font-medium">
+                        Our Product Specialists Enhanced by AI Assistant
+                      </span>
                     </div>
-                    <span className="text-sm font-medium text-secondary/80 text-left w-32 transition-all hover:text-secondary">
-                      Enhanced by AI Assistant
-                    </span>
-                  </div>
+                    <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-secondary/20 to-transparent"></div>
+                  </button>
                 </div>
 
                 <DeliveredResults />
