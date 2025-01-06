@@ -25,7 +25,7 @@ export const AuthForm = () => {
         if (passwordInput) {
           const currentValue = passwordInput.value;
           setPassword(currentValue);
-          setShowRequirements(true);
+          setShowRequirements(currentValue.length > 0);
         }
       };
 
@@ -65,7 +65,7 @@ export const AuthForm = () => {
             onUserTypeChange={setUserType}
           />
           {showRequirements && (
-            <Alert variant="info">
+            <Alert variant="info" className="animate-fade-in">
               <Info className="h-4 w-4" />
               <AlertDescription>
                 <div className="text-sm mt-1">

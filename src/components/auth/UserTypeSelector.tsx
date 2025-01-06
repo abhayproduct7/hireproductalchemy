@@ -11,7 +11,7 @@ export const UserTypeSelector = ({ userType, onUserTypeChange }: UserTypeSelecto
     <div className="space-y-4 mb-6">
       <Label className="text-base font-medium">Join as:</Label>
       <RadioGroup
-        value={userType || ""}
+        defaultValue={userType || undefined}
         onValueChange={(value) => onUserTypeChange(value as "talent" | "employer")}
         className="grid grid-cols-2 gap-4"
       >
