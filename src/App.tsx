@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
@@ -15,27 +16,32 @@ import Dashboard from "./pages/Dashboard";
 import { ChatBot } from "./components/ChatBot";
 import { Toaster } from "@/components/ui/toaster";
 
+// Create a client
+const queryClient = new QueryClient();
+
 function App() {
   return (
     <React.StrictMode>
-      <SessionContextProvider supabaseClient={supabase}>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/hire" element={<HireTalent />} />
-            <Route path="/join" element={<JoinCommunity />} />
-            <Route path="/requirements" element={<RequirementsCapture />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="/thank-you" element={<ThankYou />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-          <ChatBot />
-          <Toaster />
-        </Router>
-      </SessionContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <SessionContextProvider supabaseClient={supabase}>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/hire" element={<HireTalent />} />
+              <Route path="/join" element={<JoinCommunity />} />
+              <Route path="/requirements" element={<RequirementsCapture />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/thank-you" element={<ThankYou />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Routes>
+            <ChatBot />
+            <Toaster />
+          </Router>
+        </SessionContextProvider>
+      </QueryClientProvider>
     </React.StrictMode>
   );
 }

@@ -1,11 +1,11 @@
-import * as z from "zod";
+import { z } from "zod";
 
 export const personalDetailsSchema = z.object({
-  full_name: z.string().min(2, "Name must be at least 2 characters"),
+  full_name: z.string().min(1, "Full name is required"),
   email: z.string().email("Invalid email address"),
   phone: z.string().optional(),
   location: z.string().optional(),
   avatar_url: z.string().optional(),
 });
 
-export type PersonalDetailsForm = z.infer<typeof personalDetailsSchema>;
+export type PersonalDetailsFormData = z.infer<typeof personalDetailsSchema>;

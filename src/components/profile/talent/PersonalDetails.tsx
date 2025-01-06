@@ -7,7 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PersonalDetailsForm } from "./personal-details/PersonalDetailsForm";
 import { AvatarUpload } from "./personal-details/AvatarUpload";
-import { personalDetailsSchema, type PersonalDetailsForm } from "./personal-details/schema";
+import { personalDetailsSchema, type PersonalDetailsFormData } from "./personal-details/schema";
 
 export const PersonalDetails = () => {
   const session = useSession();
@@ -15,7 +15,7 @@ export const PersonalDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
-  const form = useForm<PersonalDetailsForm>({
+  const form = useForm<PersonalDetailsFormData>({
     resolver: zodResolver(personalDetailsSchema),
     defaultValues: {
       full_name: "",
@@ -51,7 +51,7 @@ export const PersonalDetails = () => {
     fetchProfile();
   }, [session, form]);
 
-  const onSubmit = async (values: PersonalDetailsForm) => {
+  const onSubmit = async (values: PersonalDetailsFormData) => {
     if (!session?.user) return;
 
     setIsLoading(true);
