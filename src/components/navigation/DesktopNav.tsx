@@ -41,15 +41,27 @@ export const DesktopNav = () => {
           <DropdownMenuTrigger className="focus:outline-none">
             <UserCircle2 className="h-8 w-8 text-secondary hover:text-secondary/80 transition-colors" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuItem onClick={() => navigate("/profile")}>
+          <DropdownMenuContent 
+            align="end" 
+            className="w-56 bg-white border border-gray-100 shadow-lg mt-2 z-50"
+          >
+            <DropdownMenuItem 
+              onClick={() => navigate("/profile")}
+              className="hover:bg-muted focus:bg-muted"
+            >
               My Profile
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+            <DropdownMenuItem 
+              onClick={() => navigate("/dashboard")}
+              className="hover:bg-muted focus:bg-muted"
+            >
               Dashboard
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuSeparator className="bg-gray-100" />
+            <DropdownMenuItem 
+              onClick={handleLogout}
+              className="hover:bg-muted focus:bg-muted"
+            >
               Log Out
             </DropdownMenuItem>
           </DropdownMenuContent>
