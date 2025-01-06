@@ -1,4 +1,4 @@
-import { LineChart, BarChart2, FlaskConical, MessagesSquare } from "lucide-react";
+import { FileEdit, Target, Rocket, MessagesSquare } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -9,28 +9,24 @@ import { TaskCard } from "./TaskCard";
 
 const TASKS = [
   {
-    icon: FlaskConical,
-    title: "A/B Testing",
-    description: "Test & validate hypotheses",
-    color: "#1EAEDB", // Bright Blue
+    icon: FileEdit,
+    title: "Create PRD",
+    description: "Get help writing requirements",
   },
   {
-    icon: BarChart2,
-    title: "Data Analytics",
-    description: "Analyze user behavior",
-    color: "#0EA5E9", // Ocean Blue
+    icon: Target,
+    title: "Validate Work",
+    description: "Review deliverables",
   },
   {
-    icon: LineChart,
-    title: "Market Research",
-    description: "Identify opportunities",
-    color: "#33C3F0", // Sky Blue
+    icon: Rocket,
+    title: "Plan Features",
+    description: "Brainstorm and prioritize",
   },
   {
     icon: MessagesSquare,
     title: "Get Feedback",
     description: "Improve decisions",
-    color: "#0FA0CE", // Bright Blue alternative
   },
 ];
 

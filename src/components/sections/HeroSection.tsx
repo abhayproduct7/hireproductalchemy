@@ -47,21 +47,22 @@ export const HeroSection = () => {
                     </div>
                   </div>
                   <div className="grid grid-cols-1 gap-2">
-                    <div className="h-12 bg-[#1EAEDB]/10 rounded-md p-2">
-                      <div className="text-xs font-medium text-[#1EAEDB]">Market Research Report</div>
-                      <div className="text-[10px] text-[#1EAEDB]/80">Expert Analysis + AI Enhancement</div>
+                    <div className="h-12 bg-blue-50 rounded-md p-2">
+                      <div className="text-xs font-medium text-gray-700">Market Research Report</div>
+                      <div className="text-[10px] text-gray-500">Expert Analysis + AI Enhancement</div>
                     </div>
-                    <div className="h-12 bg-[#0EA5E9]/10 rounded-md p-2">
-                      <div className="text-xs font-medium text-[#0EA5E9]">Competitor Analysis</div>
-                      <div className="text-[10px] text-[#0EA5E9]/80">Strategic Insights + AI Data</div>
+                    <div className="h-12 bg-blue-50 rounded-md p-2">
+                      <div className="text-xs font-medium text-gray-700">Competitor Analysis</div>
+                      <div className="text-[10px] text-gray-500">Strategic Insights + AI Data</div>
                     </div>
-                    <div className="h-12 bg-[#33C3F0]/10 rounded-md p-2">
-                      <div className="text-xs font-medium text-[#33C3F0]">User Interviews</div>
-                      <div className="text-[10px] text-[#33C3F0]/80">Human Empathy + AI Processing</div>
+                    <div className="h-12 bg-blue-50 rounded-md p-2">
+                      <div className="text-xs font-medium text-gray-700">User Interviews</div>
+                      <div className="text-[10px] text-gray-500">Human Empathy + AI Processing</div>
                     </div>
                   </div>
                 </div>
 
+                {/* AI Assistant Indicator */}
                 <div className="mb-8 animate-fade-in delay-200">
                   <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-r from-secondary/10 via-secondary/20 to-secondary/10 rounded-lg"></div>
