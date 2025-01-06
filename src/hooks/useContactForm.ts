@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 interface ContactFormData {
@@ -17,7 +17,23 @@ export const useContactForm = () => {
   const handleSubmit = async ({ name, email, companyName }: ContactFormData) => {
     setIsLoading(true);
     try {
-      // First, submit contact form data
+      // First, check if the user already exists in auth
+      const { data: existingUser, error: userCheckError } = await supabase
+        .from("profiles")
+        .select("id")
+        .eq("email", email)
+        .single();
+
+      if (existingUser) {
+        toast({
+          title: "Account already exists",
+          description: "Please sign in with your existing account.",
+        });
+        navigate("/login");
+        return true;
+      }
+
+      // If no existing user, submit contact form data
       const { error: contactError } = await supabase
         .from("producthire")
         .insert([{ name, email, "company name": companyName }]);
