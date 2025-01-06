@@ -6,8 +6,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 export const AIAgentSection = () => {
+  const autoplayOptions = {
+    delay: 3000,
+    rootNode: (emblaRoot: HTMLElement) => emblaRoot.parentElement,
+  };
+
   return (
     <section className="py-24 bg-muted">
       <div className="container max-w-6xl mx-auto px-4">
@@ -74,6 +80,9 @@ export const AIAgentSection = () => {
               align: "start",
               loop: true,
             }}
+            plugins={[
+              Autoplay(autoplayOptions)
+            ]}
             className="w-full"
           >
             <CarouselContent>
