@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Users, Brain, ArrowRight, ChartBar, Search, Shuffle, ArrowDown } from "lucide-react";
+import { Users, Brain, ChartBar, Search, Shuffle, ArrowDown } from "lucide-react";
 
 export const HeroSection = () => {
   return (
@@ -35,25 +35,15 @@ export const HeroSection = () => {
           <div className="hidden md:block relative">
             <div className="relative bg-white rounded-lg shadow-xl p-8 overflow-hidden">
               <div className="relative z-10">
-                {/* Product Manager Profile Section */}
+                {/* Product Tasks Section */}
                 <div className="mb-8 animate-fade-in">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center">
-                      <Users className="w-8 h-8 text-secondary" />
-                    </div>
-                    <div className="text-left">
-                      <h3 className="text-lg font-semibold text-gray-900">Senior Product Manager</h3>
-                      <p className="text-sm text-gray-600">8+ years experience</p>
-                    </div>
-                  </div>
-                  {/* Product Tasks Header */}
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <div className="w-3 h-3 bg-[#33C3F0] rounded-full"></div>
                       <span className="text-sm font-medium text-gray-600">Product Tasks</span>
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 gap-2">
+                  <div className="grid grid-cols-1 gap-3">
                     <div className="h-12 bg-[#33C3F0]/10 rounded-md p-2">
                       <div className="flex items-center">
                         <Search className="w-4 h-4 text-[#33C3F0] mr-2" />
@@ -84,37 +74,34 @@ export const HeroSection = () => {
                   </div>
                 </div>
 
-                {/* Process Flow Arrow */}
-                <div className="flex justify-center mb-4 animate-fade-in delay-100">
-                  <ArrowDown className="w-6 h-6 text-secondary/60" />
+                {/* Process Flow Arrow with enhanced spacing */}
+                <div className="flex justify-center mb-6 animate-fade-in delay-100">
+                  <ArrowDown className="w-8 h-8 text-secondary/40" />
                 </div>
 
-                {/* AI Assistant Indicator */}
-                <div className="mb-4 animate-fade-in delay-200">
+                {/* AI Assistant Indicator with improved styling */}
+                <div className="mb-6 animate-fade-in delay-200">
                   <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-secondary/10 via-secondary/20 to-secondary/10 rounded-lg"></div>
-                    <div className="relative flex items-center justify-center gap-3 py-4">
-                      <span className="text-sm font-medium text-secondary">Powered by AI Assistant</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-secondary/5 via-secondary/10 to-secondary/5 rounded-lg"></div>
+                    <div className="relative flex items-center justify-center gap-3 py-5">
+                      <span className="text-sm font-medium text-secondary">Enhanced by AI Assistant</span>
                       <Brain className="w-5 h-5 text-secondary" />
                     </div>
                   </div>
                 </div>
 
-                {/* Process Flow Arrow */}
-                <div className="flex justify-center mb-4 animate-fade-in delay-300">
-                  <ArrowDown className="w-6 h-6 text-secondary/60" />
+                {/* Process Flow Arrow with enhanced spacing */}
+                <div className="flex justify-center mb-6 animate-fade-in delay-300">
+                  <ArrowDown className="w-8 h-8 text-secondary/40" />
                 </div>
 
-                {/* Results Section */}
+                {/* Results Section with improved spacing */}
                 <div className="animate-fade-in delay-400">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                      <span className="text-sm font-medium text-gray-600">Delivered Results</span>
-                    </div>
-                    <ArrowRight className="w-5 h-5 text-secondary" />
+                  <div className="flex items-center space-x-2 mb-4">
+                    <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                    <span className="text-sm font-medium text-gray-600">Delivered Results</span>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <div className="h-12 bg-green-50 rounded-md p-2">
                       <div className="flex items-center">
                         <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
