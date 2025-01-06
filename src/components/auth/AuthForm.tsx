@@ -3,6 +3,7 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuthForm } from "@/hooks/useAuthForm";
 import { SignUpForm } from "./SignUpForm";
+import { toast } from "@/hooks/use-toast";
 
 export const AuthForm = () => {
   const { view, setView } = useAuthForm();
@@ -10,6 +11,39 @@ export const AuthForm = () => {
   if (view === "sign_up") {
     return <SignUpForm setView={setView} />;
   }
+
+  const handlePasswordReset = async () => {
+    const emailInput = document.querySelector('input[type="email"]') as HTMLInputElement;
+    const email = emailInput?.value?.trim();
+
+    if (!email) {
+      toast({
+        title: "Error",
+        description: "Please enter your email address first",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/login`,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Password reset instructions have been sent to your email",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to send reset instructions",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -55,10 +89,7 @@ export const AuthForm = () => {
       <div className="space-y-4 text-center">
         <button
           type="button"
-          onClick={() => supabase.auth.resetPasswordForEmail(
-            (document.querySelector('input[type="email"]') as HTMLInputElement)?.value || '',
-            { redirectTo: `${window.location.origin}/login` }
-          )}
+          onClick={handlePasswordReset}
           className="w-full text-sm text-accent hover:underline"
         >
           Forgot Password?
