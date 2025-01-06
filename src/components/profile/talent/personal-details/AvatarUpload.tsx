@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
-import { PersonalDetailsForm } from "./schema";
+import { PersonalDetailsFormData } from "./schema";
 import { useSession } from "@supabase/auth-helpers-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
@@ -12,7 +12,7 @@ import { Upload } from "lucide-react";
 interface AvatarUploadProps {
   avatarUrl: string | null;
   setAvatarUrl: (url: string | null) => void;
-  setValue: UseFormSetValue<PersonalDetailsForm>;
+  setValue: UseFormSetValue<PersonalDetailsFormData>;
   fullName: string;
 }
 

@@ -1,5 +1,5 @@
 import { UseFormReturn } from "react-hook-form";
-import { PersonalDetailsForm as FormType } from "./schema";
+import { PersonalDetailsFormData } from "./schema";
 import {
   Form,
   FormControl,
@@ -12,8 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 interface PersonalDetailsFormProps {
-  form: UseFormReturn<FormType>;
-  onSubmit: (values: FormType) => Promise<void>;
+  form: UseFormReturn<PersonalDetailsFormData>;
+  onSubmit: (values: PersonalDetailsFormData) => Promise<void>;
   isLoading: boolean;
 }
 
