@@ -42,11 +42,21 @@ export const HeroSection = () => {
                 <ProfileSection />
                 <ProductTasks />
                 
-                {/* Process Flow with Side Labels */}
-                <div className="flex items-center justify-center py-2 gap-4">
-                  <span className="text-sm font-medium text-secondary text-right w-32">Expert Product Talent</span>
-                  <ArrowDown className="w-6 h-6 text-secondary" />
-                  <span className="text-sm font-medium text-secondary text-left w-32">Enhanced by AI Assistant</span>
+                {/* Process Flow with Modern Design */}
+                <div className="relative flex items-center justify-center py-4">
+                  <div className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-secondary/20 to-transparent"></div>
+                  <div className="flex items-center justify-center gap-4 bg-white px-4">
+                    <span className="text-sm font-medium text-secondary/80 text-right w-32 transition-all hover:text-secondary">
+                      Expert Product Talent
+                    </span>
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-secondary/10 blur-lg rounded-full"></div>
+                      <ArrowDown className="w-6 h-6 text-secondary relative animate-bounce" />
+                    </div>
+                    <span className="text-sm font-medium text-secondary/80 text-left w-32 transition-all hover:text-secondary">
+                      Enhanced by AI Assistant
+                    </span>
+                  </div>
                 </div>
 
                 <DeliveredResults />
