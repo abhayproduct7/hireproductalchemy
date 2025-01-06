@@ -41,14 +41,23 @@ export const HeroSection = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
-                      <span className="text-sm font-medium text-gray-600">Input Data</span>
+                      <span className="text-sm font-medium text-gray-600">Input Tasks</span>
                     </div>
                     <ArrowRight className="w-5 h-5 text-gray-400" />
                   </div>
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="h-8 bg-blue-50 rounded-md animate-pulse"></div>
-                    <div className="h-8 bg-blue-50 rounded-md animate-pulse delay-100"></div>
-                    <div className="h-8 bg-blue-50 rounded-md animate-pulse delay-200"></div>
+                  <div className="grid grid-cols-1 gap-2">
+                    <div className="h-12 bg-blue-50 rounded-md p-2">
+                      <div className="text-xs font-medium text-gray-700">Market Research Report</div>
+                      <div className="text-[10px] text-gray-500">Est. Time: 40 hours</div>
+                    </div>
+                    <div className="h-12 bg-blue-50 rounded-md p-2">
+                      <div className="text-xs font-medium text-gray-700">Competitor Analysis</div>
+                      <div className="text-[10px] text-gray-500">Est. Time: 25 hours</div>
+                    </div>
+                    <div className="h-12 bg-blue-50 rounded-md p-2">
+                      <div className="text-xs font-medium text-gray-700">User Interviews</div>
+                      <div className="text-[10px] text-gray-500">Est. Time: 30 hours</div>
+                    </div>
                   </div>
                 </div>
 
@@ -69,18 +78,37 @@ export const HeroSection = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                      <span className="text-sm font-medium text-gray-600">Optimized Output</span>
+                      <span className="text-sm font-medium text-gray-600">AI-Optimized Output</span>
                     </div>
                     <Zap className="w-5 h-5 text-secondary" />
                   </div>
                   <div className="space-y-2">
-                    <div className="h-8 bg-green-50 rounded-md flex items-center px-3">
-                      <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
-                      <div className="flex-1 bg-green-100 h-4 rounded"></div>
+                    <div className="h-12 bg-green-50 rounded-md p-2">
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                        <div>
+                          <div className="text-xs font-medium text-gray-700">Enhanced Market Analysis</div>
+                          <div className="text-[10px] text-green-600">Completed in 15 hours</div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="h-8 bg-green-50 rounded-md flex items-center px-3">
-                      <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
-                      <div className="flex-1 bg-green-100 h-4 rounded"></div>
+                    <div className="h-12 bg-green-50 rounded-md p-2">
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                        <div>
+                          <div className="text-xs font-medium text-gray-700">AI-Driven Insights</div>
+                          <div className="text-[10px] text-green-600">Completed in 8 hours</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="h-12 bg-green-50 rounded-md p-2">
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                        <div>
+                          <div className="text-xs font-medium text-gray-700">User Feedback Analysis</div>
+                          <div className="text-[10px] text-green-600">Completed in 10 hours</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
