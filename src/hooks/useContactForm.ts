@@ -25,10 +25,13 @@ export const useContactForm = () => {
       if (contactError) throw contactError;
 
       try {
+        // Generate a secure random password that meets minimum requirements
+        const securePassword = `PH${crypto.randomUUID().slice(0, 10)}!2024`;
+        
         // Try to create the user account
         const { data: authData, error: authError } = await supabase.auth.signUp({
           email,
-          password: crypto.randomUUID(),
+          password: securePassword,
           options: {
             data: {
               full_name: name,
