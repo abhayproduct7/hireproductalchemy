@@ -44,7 +44,6 @@ export const TaskCarousel = () => {
           loop: true,
           axis: "y",
           dragFree: true,
-          direction: "ttb",
         }}
         plugins={[Autoplay(autoplayOptions)]}
         className="h-[160px] overflow-hidden"
