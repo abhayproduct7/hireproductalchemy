@@ -31,9 +31,6 @@ export const AuthForm = () => {
             anchor: {
               color: '#1B5E40',
               cursor: 'pointer',
-              '[href="#auth-sign-up"]': {
-                display: 'none',
-              }
             },
             message: {
               color: '#1B5E40',
@@ -43,6 +40,7 @@ export const AuthForm = () => {
         theme="light"
         providers={[]}
         view="sign_in"
+        showLinks={false}
         redirectTo={`${window.location.origin}/login`}
         localization={{
           variables: {
