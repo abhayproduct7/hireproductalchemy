@@ -15,8 +15,8 @@ export const TaskCard: FC<TaskCardProps> = ({ icon: Icon, title, description }) 
           <Icon className="h-3 w-3 text-secondary" />
         </div>
         <div>
-          <h3 className="text-xs font-medium leading-tight">{title}</h3>
-          <p className="text-[10px] text-muted-foreground leading-tight">{description}</p>
+          <h3 className="text-[11px] font-medium leading-tight">{title}</h3>
+          <p className="text-[9px] text-muted-foreground leading-tight">{description}</p>
         </div>
       </div>
     </div>
