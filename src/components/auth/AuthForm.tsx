@@ -1,15 +1,11 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
-import { UserTypeSelector } from "./UserTypeSelector";
 import { useAuthForm } from "@/hooks/useAuthForm";
-import { useState } from "react";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Info } from "lucide-react";
 import { SignUpForm } from "./SignUpForm";
 
 export const AuthForm = () => {
-  const { view, setView, userType, setUserType, returnTo } = useAuthForm();
+  const { view, setView } = useAuthForm();
 
   if (view === "sign_up") {
     return <SignUpForm setView={setView} />;
@@ -34,6 +30,10 @@ export const AuthForm = () => {
             },
             anchor: {
               color: '#1B5E40',
+              cursor: 'pointer',
+            },
+            message: {
+              color: '#1B5E40',
             }
           }
         }}
@@ -49,6 +49,11 @@ export const AuthForm = () => {
               button_label: "Sign In",
             },
           },
+        }}
+        onViewChange={({ view }) => {
+          if (view === "sign_up") {
+            setView("sign_up");
+          }
         }}
       />
     </div>
