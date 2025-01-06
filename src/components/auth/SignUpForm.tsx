@@ -47,12 +47,19 @@ export const SignUpForm = ({ setView }: SignUpFormProps) => {
 
     try {
       // First check if user exists in profiles
-      const { data: profileData } = await supabase
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('id, user_type')
         .eq('email', email)
-        .single();
+        .maybeSingle();
 
+      if (profileError && profileError.code !== 'PGRST116') {
+        throw profileError;
+      }
+
+      // Check if the user exists in auth
+      const { data: { user }, error: userError } = await supabase.auth.admin.getUserByEmail(email);
+      
       if (profileData) {
         // If user exists in profiles but with different user type, show error
         if (profileData.user_type && profileData.user_type !== userType) {
@@ -66,8 +73,28 @@ export const SignUpForm = ({ setView }: SignUpFormProps) => {
         }
       }
       
-      // Proceed with sign up
-      const { error } = await supabase.auth.signUp({
+      // If user exists in auth but not in profiles, create profile
+      if (user && !profileData) {
+        const { error: createProfileError } = await supabase
+          .from('profiles')
+          .insert({
+            id: user.id,
+            email: email,
+            user_type: userType,
+          });
+
+        if (createProfileError) throw createProfileError;
+        
+        toast({
+          title: "Account exists",
+          description: "Please sign in with your existing account",
+        });
+        setView("sign_in");
+        return;
+      }
+      
+      // Proceed with sign up if user doesn't exist
+      const { error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -77,20 +104,29 @@ export const SignUpForm = ({ setView }: SignUpFormProps) => {
         },
       });
 
-      if (error) {
-        handleSignUpError({ error, onSignInClick: () => setView("sign_in") });
-      } else {
-        toast({
-          title: "Success",
-          description: "Please check your email to verify your account",
-        });
-        setView("sign_in");
+      if (signUpError) {
+        if (signUpError.message?.includes("User already registered")) {
+          toast({
+            title: "Account exists",
+            description: "Please sign in with your existing account",
+          });
+          setView("sign_in");
+          return;
+        }
+        throw signUpError;
       }
+
+      toast({
+        title: "Success",
+        description: "Please check your email to verify your account",
+      });
+      setView("sign_in");
+      
     } catch (error: any) {
       console.error("Signup error:", error);
       toast({
         title: "Error",
-        description: "An unexpected error occurred. Please try again.",
+        description: error.message || "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
     } finally {
