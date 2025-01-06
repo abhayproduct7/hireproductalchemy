@@ -52,7 +52,7 @@ export const HeroSection = () => {
                         <Logo showText={false} />
                       </div>
                       <span className="text-secondary text-sm">
-                        Our Product Specialists Enhanced by AI Assistant
+                        Product Management Enhanced with AI
                       </span>
                     </div>
                     <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-secondary/20 to-transparent"></div>
