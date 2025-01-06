@@ -26,7 +26,7 @@ export const useSkills = (applicationId: string | null) => {
         if (error) throw error;
 
         if (skillsData) {
-          const skillNames = skillsData.map((item: { skills: { name: string } }) => item.skills.name);
+          const skillNames = skillsData.map(item => item.skills.name);
           setState({ skills: skillNames, isLoadingSkills: false });
         }
       } catch (error) {
