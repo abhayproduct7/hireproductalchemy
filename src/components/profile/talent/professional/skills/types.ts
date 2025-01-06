@@ -16,8 +16,5 @@ export interface SkillsState {
 
 // This represents the actual structure returned by Supabase
 export interface SkillsResponse {
-  skills: {
-    id: string;
-    name: string;
-  };
+  skills: Skill;
 }
