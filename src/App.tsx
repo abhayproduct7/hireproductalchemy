@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
+import { supabase } from "@/integrations/supabase/client";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import HireTalent from "./pages/HireTalent";
@@ -11,19 +13,21 @@ import { ChatBot } from "./components/ChatBot";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/hire" element={<HireTalent />} />
-        <Route path="/join" element={<JoinCommunity />} />
-        <Route path="/requirements" element={<RequirementsCapture />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
-        <Route path="/thank-you" element={<ThankYou />} />
-      </Routes>
-      <ChatBot />
-    </Router>
+    <SessionContextProvider supabaseClient={supabase}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/hire" element={<HireTalent />} />
+          <Route path="/join" element={<JoinCommunity />} />
+          <Route path="/requirements" element={<RequirementsCapture />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/thank-you" element={<ThankYou />} />
+        </Routes>
+        <ChatBot />
+      </Router>
+    </SessionContextProvider>
   );
 }
 

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserCircle2 } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import {
