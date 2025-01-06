@@ -43,19 +43,6 @@ export const AuthForm = () => {
     }
   }, [view]);
 
-  // Monitor auth state changes
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_IN" && session) {
-        console.log("User signed in:", session);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
   return (
     <div className="space-y-6">
       {view === "sign_up" && (
@@ -96,12 +83,27 @@ export const AuthForm = () => {
               borderRadius: '4px',
               border: '1px solid #e2e8f0',
               padding: '8px 12px',
+            },
+            button: {
+              border: 'none',
+              backgroundColor: '#1B5E40',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: '#0F4C35',
+              }
+            },
+            anchor: {
+              color: '#1B5E40',
+              '&:hover': {
+                color: '#0F4C35',
+              }
             }
           }
         }}
         theme="light"
         providers={[]}
         view={view}
+        onViewChange={setView}
         redirectTo={`${window.location.origin}/login`}
         localization={{
           variables: {
