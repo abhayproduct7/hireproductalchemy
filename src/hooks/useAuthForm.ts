@@ -17,9 +17,11 @@ export const useAuthForm = () => {
       localStorage.setItem("returnTo", returnTo);
     }
 
+    // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === "SIGNED_IN" && session) {
-        if (view === "sign_up" && userType) {
+        // Handle user type setting for new sign ups
+        if (userType) {
           const { error } = await supabase
             .from('profiles')
             .update({ user_type: userType })
@@ -35,6 +37,7 @@ export const useAuthForm = () => {
           }
         }
 
+        // Handle navigation after successful sign in
         localStorage.removeItem("returnTo");
         navigate(returnTo);
         toast({
@@ -47,7 +50,13 @@ export const useAuthForm = () => {
     return () => {
       subscription.unsubscribe();
     };
-  }, [navigate, returnTo, view, userType]);
+  }, [navigate, returnTo, userType]);
+
+  // Listen for view changes through URL
+  useEffect(() => {
+    const currentView = location.pathname.includes("sign-up") ? "sign_up" : "sign_in";
+    setView(currentView);
+  }, [location]);
 
   return {
     view,

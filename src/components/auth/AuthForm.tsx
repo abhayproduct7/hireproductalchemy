@@ -3,9 +3,23 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 import { UserTypeSelector } from "./UserTypeSelector";
 import { useAuthForm } from "@/hooks/useAuthForm";
+import { useEffect } from "react";
 
 export const AuthForm = () => {
   const { view, setView, userType, setUserType, returnTo } = useAuthForm();
+
+  // Use useEffect to monitor Auth component's view changes
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN" && session) {
+        console.log("User signed in:", session);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -23,12 +37,6 @@ export const AuthForm = () => {
         providers={[]}
         view={view}
         redirectTo={`${window.location.origin}/login`}
-        onChange={({ view: newView }) => {
-          setView(newView as "sign_in" | "sign_up");
-          if (newView === "sign_in") {
-            setUserType(null);
-          }
-        }}
         localization={{
           variables: {
             sign_up: {
