@@ -1,8 +1,11 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 export const AuthForm = () => {
+  const { toast } = useToast();
+
   return (
     <Auth
       supabaseClient={supabase}
@@ -43,10 +46,14 @@ export const AuthForm = () => {
         },
       }}
       providers={["google"]}
-      redirectTo={window.location.origin + "/login"}
+      redirectTo={`${window.location.origin}/login`}
       localization={{
         variables: {
           sign_in: {
+            email_label: "Email",
+            password_label: "Password",
+          },
+          sign_up: {
             email_label: "Email",
             password_label: "Password",
           },

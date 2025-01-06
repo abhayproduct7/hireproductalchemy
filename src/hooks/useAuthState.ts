@@ -11,6 +11,22 @@ export const useAuthState = () => {
     console.log("Setting up auth state listener");
     console.log("Current URL:", window.location.href);
 
+    // Check initial session
+    const checkInitialSession = async () => {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      console.log('Initial session check:', session ? 'Session exists' : 'No session');
+      if (error) {
+        console.error('Error checking initial session:', error);
+        toast({
+          title: "Authentication Error",
+          description: "There was an error checking your session. Please try again.",
+          variant: "destructive",
+        });
+      }
+    };
+
+    checkInitialSession();
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event: AuthChangeEvent, session: Session | null) => {
       console.log('Auth event:', event);
       console.log('Session:', session);
@@ -41,7 +57,6 @@ export const useAuthState = () => {
         });
       }
 
-      // Check for error events
       if (event === 'TOKEN_REFRESHED') {
         console.log('Token refreshed');
       }
@@ -50,17 +65,6 @@ export const useAuthState = () => {
         console.log('Initial session loaded:', session ? 'Session exists' : 'No session');
       }
     });
-
-    // Get initial session
-    const checkInitialSession = async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      console.log('Initial session check:', session ? 'Session exists' : 'No session');
-      if (error) {
-        console.error('Error checking initial session:', error);
-      }
-    };
-
-    checkInitialSession();
 
     return () => {
       console.log("Cleaning up auth state listener");
