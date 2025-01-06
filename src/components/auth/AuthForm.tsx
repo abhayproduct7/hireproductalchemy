@@ -55,6 +55,26 @@ export const AuthForm = () => {
 
   return (
     <div className="space-y-6">
+      {view === "sign_up" && (
+        <div className="space-y-4 mb-6">
+          <Label className="text-base font-medium">Join as:</Label>
+          <RadioGroup
+            value={userType || ""}
+            onValueChange={(value) => setUserType(value as "talent" | "employer")}
+            className="grid grid-cols-2 gap-4"
+          >
+            <div className="flex items-center space-x-2 border rounded-md p-4 hover:bg-gray-50 cursor-pointer">
+              <RadioGroupItem value="talent" id="talent" />
+              <Label htmlFor="talent" className="cursor-pointer">Talent</Label>
+            </div>
+            <div className="flex items-center space-x-2 border rounded-md p-4 hover:bg-gray-50 cursor-pointer">
+              <RadioGroupItem value="employer" id="employer" />
+              <Label htmlFor="employer" className="cursor-pointer">Employer</Label>
+            </div>
+          </RadioGroup>
+        </div>
+      )}
+      
       <Auth
         supabaseClient={supabase}
         appearance={{ theme: ThemeSupa }}
@@ -83,26 +103,6 @@ export const AuthForm = () => {
           },
         }}
       />
-      
-      {view === "sign_up" && (
-        <div className="space-y-4 pt-4 border-t">
-          <Label className="text-base">Join as:</Label>
-          <RadioGroup
-            value={userType || ""}
-            onValueChange={(value) => setUserType(value as "talent" | "employer")}
-            className="grid grid-cols-2 gap-4"
-          >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="talent" id="talent" />
-              <Label htmlFor="talent">Talent</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="employer" id="employer" />
-              <Label htmlFor="employer">Employer</Label>
-            </div>
-          </RadioGroup>
-        </div>
-      )}
     </div>
   );
 };
