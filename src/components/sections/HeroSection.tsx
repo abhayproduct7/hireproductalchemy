@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Users, Brain, ArrowRight } from "lucide-react";
+import { Users, Brain, ArrowDown } from "lucide-react";
 import { ProfileSection } from "./hero/ProfileSection";
 import { ProductTasks } from "./hero/ProductTasks";
 import { DeliveredResults } from "./hero/DeliveredResults";
@@ -42,10 +42,10 @@ export const HeroSection = () => {
                 <ProfileSection />
                 <ProductTasks />
                 
-                {/* Process Flow with Text */}
-                <div className="flex items-center justify-center py-4 space-x-4">
+                {/* Process Flow with Vertical Arrow */}
+                <div className="flex flex-col items-center justify-center py-2 space-y-2">
                   <span className="text-sm font-medium text-secondary">Expert Product Talent</span>
-                  <ArrowRight className="w-5 h-5 text-secondary" />
+                  <ArrowDown className="w-6 h-6 text-secondary" />
                   <span className="text-sm font-medium text-secondary">Enhanced by AI Assistant</span>
                 </div>
 
