@@ -46,11 +46,11 @@ export const TaskCarousel = () => {
           slidesToScroll: 1,
         }}
         plugins={[Autoplay(autoplayOptions)]}
-        className="h-[40px] overflow-hidden"
+        className="h-[42px] overflow-hidden"
       >
         <CarouselContent className="-mt-1">
           {TASKS.map((task, index) => (
-            <CarouselItem key={index} className="pt-1 h-[40px]">
+            <CarouselItem key={index} className="pt-1">
               <TaskCard {...task} />
             </CarouselItem>
           ))}
