@@ -52,10 +52,14 @@ export const AuthForm = () => {
           sign_in: {
             email_label: "Email",
             password_label: "Password",
+            email_input_placeholder: "Your email address",
+            password_input_placeholder: "Your password",
           },
           sign_up: {
             email_label: "Email",
             password_label: "Password",
+            email_input_placeholder: "Your email address",
+            password_input_placeholder: "Create a password",
           },
         },
       }}

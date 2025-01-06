@@ -13,15 +13,19 @@ export const useAuthState = () => {
 
     // Check initial session
     const checkInitialSession = async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      console.log('Initial session check:', session ? 'Session exists' : 'No session');
-      if (error) {
-        console.error('Error checking initial session:', error);
-        toast({
-          title: "Authentication Error",
-          description: "There was an error checking your session. Please try again.",
-          variant: "destructive",
-        });
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        console.log('Initial session check:', session ? 'Session exists' : 'No session');
+        if (error) {
+          console.error('Error checking initial session:', error);
+          toast({
+            title: "Authentication Error",
+            description: error.message,
+            variant: "destructive",
+          });
+        }
+      } catch (err) {
+        console.error('Unexpected error during session check:', err);
       }
     };
 
