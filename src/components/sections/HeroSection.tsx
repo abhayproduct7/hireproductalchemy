@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Users, Brain, ArrowRight, ChartBar, Search, Shuffle, ArrowDown } from "lucide-react";
+import { Users, Brain, ArrowDown, ChartBar, Search, Shuffle } from "lucide-react";
 
 export const HeroSection = () => {
   return (
@@ -112,7 +112,6 @@ export const HeroSection = () => {
                       <div className="w-3 h-3 bg-green-400 rounded-full"></div>
                       <span className="text-sm font-medium text-gray-600">Delivered Results</span>
                     </div>
-                    <ArrowRight className="w-5 h-5 text-secondary" />
                   </div>
                   <div className="space-y-2">
                     <div className="h-12 bg-green-50 rounded-md p-2">
