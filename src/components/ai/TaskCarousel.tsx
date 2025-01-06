@@ -37,7 +37,7 @@ export const TaskCarousel = () => {
   };
 
   return (
-    <div className="w-40">
+    <div className="w-52">
       <Carousel
         opts={{
           align: "start",
