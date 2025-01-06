@@ -2,14 +2,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { SkillsResponse } from "./types";
 
 export const skillsService = {
-  async fetchSkills(applicationId: string) {
+  async fetchSkills(applicationId: string): Promise<SkillsResponse[]> {
     const { data, error } = await supabase
       .from('candidate_skills')
       .select('skills(id, name)')
       .eq('application_id', applicationId);
     
     if (error) throw error;
-    return data as SkillsResponse[];
+    
+    // Explicitly type and transform the response
+    return (data as unknown as SkillsResponse[]);
   },
 
   async addSkill(applicationId: string, skillName: string) {
