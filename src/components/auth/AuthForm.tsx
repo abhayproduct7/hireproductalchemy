@@ -30,13 +30,6 @@ export const AuthForm = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Custom styles to inject into the Auth component
-  const customStyles = {
-    input: {
-      className: "focus-visible:ring-2 focus-visible:ring-offset-2",
-    },
-  };
-
   return (
     <div className="space-y-6">
       {view === "sign_up" && (
@@ -46,10 +39,10 @@ export const AuthForm = () => {
             onUserTypeChange={setUserType}
           />
           {showRequirements && (
-            <Alert variant="info" className="bg-blue-50 border-blue-200">
-              <Info className="h-4 w-4 text-blue-500" />
+            <Alert variant="info">
+              <Info className="h-4 w-4" />
               <AlertDescription>
-                <div className="text-sm text-blue-700 mt-1">
+                <div className="text-sm mt-1">
                   Password requirements:
                   <ul className="list-disc pl-5 mt-1 space-y-1">
                     {requirements.map((req, index) => (
@@ -72,7 +65,13 @@ export const AuthForm = () => {
         supabaseClient={supabase}
         appearance={{ 
           theme: ThemeSupa,
-          style: customStyles
+          style: {
+            input: {
+              borderRadius: '4px',
+              border: '1px solid #e2e8f0',
+              padding: '8px 12px',
+            }
+          }
         }}
         theme="light"
         providers={[]}
