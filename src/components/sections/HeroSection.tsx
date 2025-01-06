@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Users, Brain, ArrowRight, ChartBar, Search, Shuffle } from "lucide-react";
+import { Users, Brain, ArrowRight, ChartBar, Search, Shuffle, ArrowDown } from "lucide-react";
 
 export const HeroSection = () => {
   return (
@@ -84,8 +84,13 @@ export const HeroSection = () => {
                   </div>
                 </div>
 
+                {/* Process Flow Arrow */}
+                <div className="flex justify-center mb-4 animate-fade-in delay-100">
+                  <ArrowDown className="w-6 h-6 text-secondary/60" />
+                </div>
+
                 {/* AI Assistant Indicator */}
-                <div className="mb-8 animate-fade-in delay-200">
+                <div className="mb-4 animate-fade-in delay-200">
                   <div className="relative">
                     <div className="absolute inset-0 bg-gradient-to-r from-secondary/10 via-secondary/20 to-secondary/10 rounded-lg"></div>
                     <div className="relative flex items-center justify-center gap-3 py-4">
@@ -93,6 +98,11 @@ export const HeroSection = () => {
                       <Brain className="w-5 h-5 text-secondary" />
                     </div>
                   </div>
+                </div>
+
+                {/* Process Flow Arrow */}
+                <div className="flex justify-center mb-4 animate-fade-in delay-300">
+                  <ArrowDown className="w-6 h-6 text-secondary/60" />
                 </div>
 
                 {/* Results Section */}
