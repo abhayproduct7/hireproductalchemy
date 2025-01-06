@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { Navigation } from "@/components/Navigation";
@@ -40,6 +40,7 @@ const RoleBasedDashboard = ({ userId }: { userId: string }) => {
   const supabase = useSupabaseClient();
   const [userType, setUserType] = useState<'employer' | 'talent' | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserType = async () => {
