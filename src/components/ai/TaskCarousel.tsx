@@ -37,7 +37,7 @@ export const TaskCarousel = () => {
   };
 
   return (
-    <div className="w-48">
+    <div className="w-40">
       <Carousel
         opts={{
           align: "start",
@@ -49,9 +49,9 @@ export const TaskCarousel = () => {
         ]}
         className="w-full"
       >
-        <CarouselContent className="-mt-2 h-[200px]">
+        <CarouselContent className="-mt-1 h-[180px]">
           {TASKS.map((task, index) => (
-            <CarouselItem key={index} className="pt-2 basis-full">
+            <CarouselItem key={index} className="pt-1 basis-full">
               <TaskCard {...task} />
             </CarouselItem>
           ))}

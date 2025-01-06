@@ -14,9 +14,11 @@ export const AIAgentSection = () => {
             </p>
           </div>
           
-          <div className="flex gap-4 items-center justify-center">
-            <AILogo />
-            <TaskCarousel />
+          <div className="flex items-center justify-center gap-0">
+            <AILogo className="w-72 h-72" />
+            <div className="-ml-8">
+              <TaskCarousel />
+            </div>
           </div>
         </div>
 
