@@ -151,6 +151,7 @@ export type Database = {
           full_name: string | null
           id: string
           updated_at: string | null
+          user_type: Database["public"]["Enums"]["user_type"] | null
         }
         Insert: {
           company_name?: string | null
@@ -159,6 +160,7 @@ export type Database = {
           full_name?: string | null
           id: string
           updated_at?: string | null
+          user_type?: Database["public"]["Enums"]["user_type"] | null
         }
         Update: {
           company_name?: string | null
@@ -167,6 +169,7 @@ export type Database = {
           full_name?: string | null
           id?: string
           updated_at?: string | null
+          user_type?: Database["public"]["Enums"]["user_type"] | null
         }
         Relationships: []
       }
@@ -346,6 +349,7 @@ export type Database = {
     }
     Enums: {
       availability_type: "full_time" | "part_time" | "fractional"
+      user_type: "employer" | "talent"
     }
     CompositeTypes: {
       [_ in never]: never
