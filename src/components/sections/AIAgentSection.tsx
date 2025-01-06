@@ -1,4 +1,4 @@
-import { Brain, Users, CheckCircle } from "lucide-react";
+import { Brain, Users, CheckCircle, FileEdit, MessagesSquare, Target, Rocket } from "lucide-react";
 
 export const AIAgentSection = () => {
   return (
@@ -64,44 +64,48 @@ export const AIAgentSection = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {/* Skill Assessment Card */}
-          <div className="bg-background rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
-            <div className="mb-6">
-              <div className="bg-secondary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <Brain className="h-6 w-6 text-secondary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Skillset Assessment</h3>
-              <p className="text-muted-foreground">
-                Karma analyzes your project requirements and helps identify the exact skillset and experience level needed for your product manager
-              </p>
+        {/* PM-Focused Prompt Cards */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div className="bg-background rounded-xl p-6 shadow-sm hover:shadow-md transition-all cursor-pointer group">
+            <div className="bg-secondary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+              <FileEdit className="h-6 w-6 text-secondary" />
             </div>
+            <h3 className="text-xl font-semibold mb-3 group-hover:text-secondary transition-colors">Need help with documentation?</h3>
+            <p className="text-muted-foreground mb-4">I can help you create and refine:</p>
+            <ul className="text-sm text-muted-foreground space-y-2">
+              <li>• Product Requirements Documents (PRDs)</li>
+              <li>• User Stories</li>
+              <li>• Feature Specifications</li>
+              <li>• Release Notes</li>
+            </ul>
           </div>
 
-          {/* Talent Support Card */}
-          <div className="bg-background rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
-            <div className="mb-6">
-              <div className="bg-secondary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <Users className="h-6 w-6 text-secondary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Talent Empowerment</h3>
-              <p className="text-muted-foreground">
-                Assists product managers with frameworks, tools, and best practices to deliver exceptional product strategy and management
-              </p>
+          <div className="bg-background rounded-xl p-6 shadow-sm hover:shadow-md transition-all cursor-pointer group">
+            <div className="bg-secondary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+              <Target className="h-6 w-6 text-secondary" />
             </div>
+            <h3 className="text-xl font-semibold mb-3 group-hover:text-secondary transition-colors">Need validation support?</h3>
+            <p className="text-muted-foreground mb-4">I can help review and validate:</p>
+            <ul className="text-sm text-muted-foreground space-y-2">
+              <li>• Product Strategy</li>
+              <li>• Market Research</li>
+              <li>• Competitive Analysis</li>
+              <li>• User Research Findings</li>
+            </ul>
           </div>
 
-          {/* Work Validation Card */}
-          <div className="bg-background rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
-            <div className="mb-6">
-              <div className="bg-secondary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <CheckCircle className="h-6 w-6 text-secondary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Quality Assurance</h3>
-              <p className="text-muted-foreground">
-                Helps non-technical teams assess and validate work quality, ensuring alignment with business objectives
-              </p>
+          <div className="bg-background rounded-xl p-6 shadow-sm hover:shadow-md transition-all cursor-pointer group">
+            <div className="bg-secondary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+              <Rocket className="h-6 w-6 text-secondary" />
             </div>
+            <h3 className="text-xl font-semibold mb-3 group-hover:text-secondary transition-colors">Planning ahead?</h3>
+            <p className="text-muted-foreground mb-4">I can assist with:</p>
+            <ul className="text-sm text-muted-foreground space-y-2">
+              <li>• Product Roadmap Planning</li>
+              <li>• Feature Prioritization</li>
+              <li>• Sprint Planning</li>
+              <li>• Resource Allocation</li>
+            </ul>
           </div>
         </div>
 
