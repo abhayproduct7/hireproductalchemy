@@ -10,7 +10,7 @@ export const useAuthForm = () => {
   const [userType, setUserType] = useState<"talent" | "employer" | null>(null);
   
   const searchParams = new URLSearchParams(location.search);
-  const returnTo = searchParams.get("returnTo") || localStorage.getItem("returnTo") || "/";
+  const returnTo = searchParams.get("returnTo") || localStorage.getItem("returnTo") || "/dashboard";
 
   useEffect(() => {
     if (returnTo && returnTo !== "/") {
@@ -39,7 +39,7 @@ export const useAuthForm = () => {
 
         // Handle navigation after successful sign in
         localStorage.removeItem("returnTo");
-        navigate(returnTo);
+        navigate("/dashboard");
         toast({
           title: "Welcome!",
           description: "You have successfully signed in.",

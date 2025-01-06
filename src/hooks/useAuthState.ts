@@ -37,8 +37,8 @@ export const useAuthState = () => {
       console.log('Current pathname:', window.location.pathname);
       
       if (event === 'SIGNED_IN') {
-        console.log('Sign in successful, navigating to home');
-        navigate("/");
+        console.log('Sign in successful, navigating to dashboard');
+        navigate("/dashboard");
         toast({
           title: "Successfully signed in",
           description: "Welcome back!",
@@ -47,6 +47,7 @@ export const useAuthState = () => {
       
       if (event === 'SIGNED_OUT') {
         console.log('Sign out detected');
+        navigate("/login");
         toast({
           title: "Signed out",
           description: "You have been signed out successfully.",
