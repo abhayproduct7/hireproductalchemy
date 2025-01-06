@@ -91,11 +91,18 @@ export const AuthForm = () => {
             },
           },
         }}
-        onInputChange={(e) => {
-          if (e.target.type === 'password') {
-            setPassword(e.target.value);
-            setShowRequirements(true);
-          }
+        onViewChange={(newView) => {
+          // Listen for password input changes through the form elements
+          setTimeout(() => {
+            const passwordInput = document.querySelector('input[type="password"]');
+            if (passwordInput) {
+              passwordInput.addEventListener('input', (e) => {
+                const target = e.target as HTMLInputElement;
+                setPassword(target.value);
+                setShowRequirements(true);
+              });
+            }
+          }, 100);
         }}
       />
     </div>
