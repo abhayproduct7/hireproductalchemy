@@ -8,8 +8,3 @@ export interface CandidateSkill {
   skill_id: string;
   skills: Skill;
 }
-
-export interface SkillsState {
-  skills: string[];
-  isLoadingSkills: boolean;
-}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
-import { SkillsState, CandidateSkill } from "../../types";
+import { SkillsState } from "./types";
+import { skillsService } from "./skillsService";
 
 export const useSkills = (applicationId: string | null) => {
   const { toast } = useToast();
@@ -18,17 +18,9 @@ export const useSkills = (applicationId: string | null) => {
       }
 
       try {
-        const { data: skillsData, error } = await supabase
-          .from('candidate_skills')
-          .select('skills(id, name)')
-          .eq('application_id', applicationId);
-
-        if (error) throw error;
-
-        if (skillsData) {
-          const skills = (skillsData as CandidateSkill[]).map(item => item.skills.name);
-          setState({ skills, isLoadingSkills: false });
-        }
+        const skillsData = await skillsService.fetchSkills(applicationId);
+        const skills = skillsData.map(item => item.skills.name);
+        setState({ skills, isLoadingSkills: false });
       } catch (error) {
         console.error('Error fetching skills:', error);
         toast({
@@ -47,37 +39,8 @@ export const useSkills = (applicationId: string | null) => {
     if (!applicationId || !newSkill.trim()) return;
 
     try {
-      let { data: existingSkill } = await supabase
-        .from('skills')
-        .select('id')
-        .eq('name', newSkill.trim())
-        .maybeSingle();
-
-      let skillId;
-
-      if (!existingSkill) {
-        const { data: newSkillData, error: newSkillError } = await supabase
-          .from('skills')
-          .insert({ name: newSkill.trim() })
-          .select('id')
-          .single();
-
-        if (newSkillError) throw newSkillError;
-        skillId = newSkillData.id;
-      } else {
-        skillId = existingSkill.id;
-      }
-
-      const { error: linkError } = await supabase
-        .from('candidate_skills')
-        .insert({
-          application_id: applicationId,
-          skill_id: skillId,
-        });
-
-      if (linkError) throw linkError;
-
-      setState(prev => ({ ...prev, skills: [...prev.skills, newSkill.trim()] }));
+      const addedSkill = await skillsService.addSkill(applicationId, newSkill);
+      setState(prev => ({ ...prev, skills: [...prev.skills, addedSkill] }));
       
       toast({
         title: "Success",
@@ -97,31 +60,16 @@ export const useSkills = (applicationId: string | null) => {
     if (!applicationId) return;
 
     try {
-      const { data: skillData } = await supabase
-        .from('skills')
-        .select('id')
-        .eq('name', skillToRemove)
-        .single();
-
-      if (skillData) {
-        const { error } = await supabase
-          .from('candidate_skills')
-          .delete()
-          .eq('application_id', applicationId)
-          .eq('skill_id', skillData.id);
-
-        if (error) throw error;
-
-        setState(prev => ({
-          ...prev,
-          skills: prev.skills.filter(skill => skill !== skillToRemove)
-        }));
-        
-        toast({
-          title: "Success",
-          description: "Skill removed successfully.",
-        });
-      }
+      await skillsService.removeSkill(applicationId, skillToRemove);
+      setState(prev => ({
+        ...prev,
+        skills: prev.skills.filter(skill => skill !== skillToRemove)
+      }));
+      
+      toast({
+        title: "Success",
+        description: "Skill removed successfully.",
+      });
     } catch (error) {
       console.error('Error removing skill:', error);
       toast({
