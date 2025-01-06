@@ -54,20 +54,6 @@ export const AuthForm = () => {
           description: "You have successfully signed in.",
         });
       }
-
-      if (event === "USER_UPDATED") {
-        toast({
-          title: "Profile Updated",
-          description: "Your profile has been successfully updated.",
-        });
-      }
-
-      if (event === "SIGNED_OUT") {
-        toast({
-          title: "Signed Out",
-          description: "You have been successfully signed out.",
-        });
-      }
     });
 
     return () => {
