@@ -8,10 +8,22 @@ interface HandleSignUpErrorProps {
 }
 
 export const handleSignUpError = ({ error, onSignInClick }: HandleSignUpErrorProps) => {
-  // Check if the error message contains the specific error code or message
-  if (error.message.includes("User already registered") || 
-      (typeof error === 'object' && 'body' in error && 
-       JSON.parse((error as any).body).code === "user_already_exists")) {
+  // Parse the error body if it exists
+  let errorBody;
+  try {
+    errorBody = error.message && typeof error.message === 'string' 
+      ? JSON.parse(error.message)
+      : null;
+  } catch {
+    errorBody = null;
+  }
+
+  // Check for user already exists error
+  const isUserExistsError = 
+    errorBody?.code === "user_already_exists" ||
+    error.message?.includes("User already registered");
+
+  if (isUserExistsError) {
     toast({
       title: "Account Already Exists",
       description: "This email is already registered. Please sign in instead.",
@@ -28,7 +40,7 @@ export const handleSignUpError = ({ error, onSignInClick }: HandleSignUpErrorPro
   } else {
     toast({
       title: "Error",
-      description: error.message,
+      description: errorBody?.message || error.message || "An error occurred during sign up",
       variant: "destructive",
     });
   }
