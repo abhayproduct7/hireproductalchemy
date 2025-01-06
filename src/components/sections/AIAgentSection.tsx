@@ -1,4 +1,4 @@
-import { Brain, CheckCircle2, Users, Brain as BrainIcon } from "lucide-react";
+import { Wand, CheckCircle2, Users, Brain } from "lucide-react";
 import { AILogo } from "../ai/AILogo";
 import { TaskCarousel } from "../ai/TaskCarousel";
 
@@ -9,7 +9,7 @@ export const AIAgentSection = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Brain className="w-4 h-4 text-secondary" />
+              <Wand className="w-4 h-4 text-secondary" />
               <span className="text-sm font-medium text-secondary/80">PRODUCT MANAGEMENT AI</span>
             </div>
             <h2 className="text-4xl font-bold mb-4">AI Assist for Product Managers</h2>
@@ -43,7 +43,7 @@ export const AIAgentSection = () => {
           <div className="group">
             <div className="flex items-center gap-3 mb-3">
               <div className="bg-muted/50 p-2.5 rounded-full">
-                <BrainIcon className="w-4 h-4 text-secondary" />
+                <Brain className="w-4 h-4 text-secondary" />
               </div>
               <h3 className="text-lg font-medium group-hover:text-secondary transition-colors">
                 Skillset Assessment
