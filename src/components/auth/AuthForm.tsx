@@ -31,7 +31,9 @@ export const AuthForm = () => {
             anchor: {
               color: '#1B5E40',
               cursor: 'pointer',
-              display: 'none', // Hide the default "Don't have an account?" link
+              '&[href="#auth-sign-up"]': {  // Only target the sign-up link
+                display: 'none',
+              },
             },
             message: {
               color: '#1B5E40',
