@@ -23,7 +23,7 @@ export const AuthForm = () => {
         providers={[]}
         view={view}
         redirectTo={`${window.location.origin}/login`}
-        viewChange={(newView) => {
+        onViewChange={(newView) => {
           setView(newView as "sign_in" | "sign_up");
           if (newView === "sign_in") {
             setUserType(null);
