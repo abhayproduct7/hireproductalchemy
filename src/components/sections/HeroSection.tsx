@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Zap, Clock, X, CheckCircle } from "lucide-react";
+import { Zap, Brain, ArrowRight } from "lucide-react";
 
 export const HeroSection = () => {
   return (
@@ -33,65 +33,62 @@ export const HeroSection = () => {
             </div>
           </div>
           <div className="hidden md:block relative">
-            <div className="relative rounded-lg shadow-xl overflow-hidden">
-              <div className="grid grid-cols-2 h-full">
-                {/* Before Side */}
-                <div className="relative p-6 bg-gray-100">
-                  <div className="absolute top-4 left-4 bg-white/90 text-gray-700 px-3 py-1 rounded-full text-sm">
-                    Before AI
+            <div className="relative bg-white rounded-lg shadow-xl p-8 overflow-hidden">
+              {/* AI Processing Visualization */}
+              <div className="relative z-10">
+                {/* Input Data Section */}
+                <div className="mb-8 animate-fade-in">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+                      <span className="text-sm font-medium text-gray-600">Input Data</span>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-gray-400" />
                   </div>
-                  <div className="space-y-4">
-                    <div className="h-12 bg-white rounded flex items-center px-4 border border-gray-200">
-                      <Clock className="w-4 h-4 text-gray-400 mr-2" />
-                      <span className="text-sm text-gray-600">Manual Research: 4hrs</span>
-                      <X className="w-4 h-4 text-red-400 ml-auto" />
-                    </div>
-                    <div className="h-12 bg-white rounded flex items-center px-4 border border-gray-200">
-                      <Clock className="w-4 h-4 text-gray-400 mr-2" />
-                      <span className="text-sm text-gray-600">Data Analysis: 6hrs</span>
-                      <X className="w-4 h-4 text-red-400 ml-auto" />
-                    </div>
-                    <div className="h-12 bg-white rounded flex items-center px-4 border border-gray-200">
-                      <Clock className="w-4 h-4 text-gray-400 mr-2" />
-                      <span className="text-sm text-gray-600">Documentation: 3hrs</span>
-                      <X className="w-4 h-4 text-red-400 ml-auto" />
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="h-8 bg-blue-50 rounded-md animate-pulse"></div>
+                    <div className="h-8 bg-blue-50 rounded-md animate-pulse delay-100"></div>
+                    <div className="h-8 bg-blue-50 rounded-md animate-pulse delay-200"></div>
+                  </div>
+                </div>
+
+                {/* AI Processing Section */}
+                <div className="mb-8 animate-fade-in delay-200">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-secondary/20 via-secondary/30 to-secondary/20 rounded-lg animate-pulse"></div>
+                    <div className="relative flex items-center justify-center py-6">
+                      <Brain className="w-12 h-12 text-secondary animate-pulse" />
+                      <div className="absolute inset-0 bg-secondary/5 rounded-lg transform rotate-3 animate-pulse"></div>
+                      <div className="absolute inset-0 bg-secondary/5 rounded-lg transform -rotate-3 animate-pulse"></div>
                     </div>
                   </div>
                 </div>
-                {/* After Side */}
-                <div className="relative p-6 bg-gradient-to-br from-secondary/20 to-secondary/10">
-                  <div className="absolute top-4 right-4 bg-secondary text-white px-3 py-1 rounded-full text-sm">
-                    With AI
+
+                {/* Output Section */}
+                <div className="animate-fade-in delay-400">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                      <span className="text-sm font-medium text-gray-600">Optimized Output</span>
+                    </div>
+                    <Zap className="w-5 h-5 text-secondary" />
                   </div>
-                  <div className="space-y-4">
-                    <div className="h-12 bg-white/90 rounded flex items-center px-4">
-                      <Zap className="w-4 h-4 text-secondary mr-2" />
-                      <span className="text-sm">Research: 1hr</span>
-                      <CheckCircle className="w-4 h-4 text-secondary ml-auto" />
+                  <div className="space-y-2">
+                    <div className="h-8 bg-green-50 rounded-md flex items-center px-3">
+                      <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                      <div className="flex-1 bg-green-100 h-4 rounded"></div>
                     </div>
-                    <div className="h-12 bg-white/90 rounded flex items-center px-4">
-                      <Zap className="w-4 h-4 text-secondary mr-2" />
-                      <span className="text-sm">Analysis: 2hrs</span>
-                      <CheckCircle className="w-4 h-4 text-secondary ml-auto" />
-                    </div>
-                    <div className="h-12 bg-white/90 rounded flex items-center px-4">
-                      <Zap className="w-4 h-4 text-secondary mr-2" />
-                      <span className="text-sm">Docs: 30min</span>
-                      <CheckCircle className="w-4 h-4 text-secondary ml-auto" />
+                    <div className="h-8 bg-green-50 rounded-md flex items-center px-3">
+                      <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                      <div className="flex-1 bg-green-100 h-4 rounded"></div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-white/20 backdrop-blur-sm rounded-full">
-                    <Zap className="w-5 h-5 text-white" />
-                  </div>
-                  <p className="text-white text-sm font-medium">
-                    2x Faster Product Development with AI Assistance
-                  </p>
                 </div>
               </div>
+
+              {/* Background Decoration */}
+              <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-secondary/10 rounded-full blur-xl"></div>
+              <div className="absolute bottom-0 left-0 -mb-4 -ml-4 w-32 h-32 bg-secondary/10 rounded-full blur-xl"></div>
             </div>
           </div>
         </div>
