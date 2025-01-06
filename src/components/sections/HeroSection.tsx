@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Zap } from "lucide-react";
+import { Zap, Clock, X, CheckCircle } from "lucide-react";
 
 export const HeroSection = () => {
   return (
@@ -41,9 +41,21 @@ export const HeroSection = () => {
                     Before AI
                   </div>
                   <div className="space-y-4">
-                    <div className="h-8 bg-gray-300 rounded animate-pulse"></div>
-                    <div className="h-8 bg-gray-300 rounded animate-pulse"></div>
-                    <div className="h-8 bg-gray-300 rounded animate-pulse"></div>
+                    <div className="h-12 bg-white rounded flex items-center px-4 border border-gray-200">
+                      <Clock className="w-4 h-4 text-gray-400 mr-2" />
+                      <span className="text-sm text-gray-600">Manual Research: 4hrs</span>
+                      <X className="w-4 h-4 text-red-400 ml-auto" />
+                    </div>
+                    <div className="h-12 bg-white rounded flex items-center px-4 border border-gray-200">
+                      <Clock className="w-4 h-4 text-gray-400 mr-2" />
+                      <span className="text-sm text-gray-600">Data Analysis: 6hrs</span>
+                      <X className="w-4 h-4 text-red-400 ml-auto" />
+                    </div>
+                    <div className="h-12 bg-white rounded flex items-center px-4 border border-gray-200">
+                      <Clock className="w-4 h-4 text-gray-400 mr-2" />
+                      <span className="text-sm text-gray-600">Documentation: 3hrs</span>
+                      <X className="w-4 h-4 text-red-400 ml-auto" />
+                    </div>
                   </div>
                 </div>
                 {/* After Side */}
@@ -52,17 +64,20 @@ export const HeroSection = () => {
                     With AI
                   </div>
                   <div className="space-y-4">
-                    <div className="h-8 bg-white/80 rounded flex items-center px-3">
+                    <div className="h-12 bg-white/90 rounded flex items-center px-4">
                       <Zap className="w-4 h-4 text-secondary mr-2" />
-                      <span className="text-sm">Optimized</span>
+                      <span className="text-sm">Research: 1hr</span>
+                      <CheckCircle className="w-4 h-4 text-secondary ml-auto" />
                     </div>
-                    <div className="h-8 bg-white/80 rounded flex items-center px-3">
+                    <div className="h-12 bg-white/90 rounded flex items-center px-4">
                       <Zap className="w-4 h-4 text-secondary mr-2" />
-                      <span className="text-sm">Enhanced</span>
+                      <span className="text-sm">Analysis: 2hrs</span>
+                      <CheckCircle className="w-4 h-4 text-secondary ml-auto" />
                     </div>
-                    <div className="h-8 bg-white/80 rounded flex items-center px-3">
+                    <div className="h-12 bg-white/90 rounded flex items-center px-4">
                       <Zap className="w-4 h-4 text-secondary mr-2" />
-                      <span className="text-sm">Efficient</span>
+                      <span className="text-sm">Docs: 30min</span>
+                      <CheckCircle className="w-4 h-4 text-secondary ml-auto" />
                     </div>
                   </div>
                 </div>
