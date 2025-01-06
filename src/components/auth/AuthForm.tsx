@@ -40,7 +40,7 @@ export const AuthForm = () => {
         theme="light"
         providers={[]}
         view="sign_in"
-        showLinks={true}
+        showLinks={false}
         redirectTo={`${window.location.origin}/login`}
         localization={{
           variables: {
@@ -48,18 +48,29 @@ export const AuthForm = () => {
               email_label: "Email",
               password_label: "Password",
               button_label: "Sign In",
-              forgotten_password_label: "Forgot Password?",
             },
           },
         }}
       />
-      <button
-        type="button"
-        onClick={() => setView("sign_up")}
-        className="w-full text-center text-sm text-accent hover:underline mt-4"
-      >
-        Don't have an account? Sign up
-      </button>
+      <div className="space-y-4 text-center">
+        <button
+          type="button"
+          onClick={() => supabase.auth.resetPasswordForEmail(
+            (document.querySelector('input[type="email"]') as HTMLInputElement)?.value || '',
+            { redirectTo: `${window.location.origin}/login` }
+          )}
+          className="w-full text-sm text-accent hover:underline"
+        >
+          Forgot Password?
+        </button>
+        <button
+          type="button"
+          onClick={() => setView("sign_up")}
+          className="w-full text-sm text-accent hover:underline"
+        >
+          Don't have an account? Sign up
+        </button>
+      </div>
     </div>
   );
 };
