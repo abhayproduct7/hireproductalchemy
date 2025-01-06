@@ -24,9 +24,10 @@ export const AIAgentSection = () => {
               Powered by advanced AI, Karma ensures successful product development by supporting both hiring teams and product talent
             </p>
           </div>
-          <div className="flex justify-center">
+          
+          <div className="flex gap-8 items-center justify-center">
             {/* Hexagonal AI Logo */}
-            <div className="w-64 h-64 relative animate-pulse">
+            <div className="w-48 h-48 relative animate-pulse">
               <svg
                 viewBox="0 0 32 32"
                 xmlns="http://www.w3.org/2000/svg"
@@ -70,73 +71,80 @@ export const AIAgentSection = () => {
                 <circle cx="10" cy="12" r="2" fill="white" opacity="0.7" />
               </svg>
             </div>
+
+            {/* Vertical Carousel */}
+            <div className="w-64">
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                  axis: "y"
+                }}
+                plugins={[
+                  Autoplay(autoplayOptions)
+                ]}
+                className="w-full"
+              >
+                <CarouselContent className="-mt-2 h-[200px]">
+                  <CarouselItem className="pt-2 basis-full">
+                    <div className="bg-background rounded-lg p-3 border border-secondary/10">
+                      <div className="flex items-center gap-2">
+                        <div className="bg-secondary/10 w-6 h-6 rounded-full flex items-center justify-center">
+                          <FileEdit className="h-3 w-3 text-secondary" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-medium">Create PRD</h3>
+                          <p className="text-xs text-muted-foreground">Get help writing requirements</p>
+                        </div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+
+                  <CarouselItem className="pt-2 basis-full">
+                    <div className="bg-background rounded-lg p-3 border border-secondary/10">
+                      <div className="flex items-center gap-2">
+                        <div className="bg-secondary/10 w-6 h-6 rounded-full flex items-center justify-center">
+                          <Target className="h-3 w-3 text-secondary" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-medium">Validate Work</h3>
+                          <p className="text-xs text-muted-foreground">Review deliverables</p>
+                        </div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+
+                  <CarouselItem className="pt-2 basis-full">
+                    <div className="bg-background rounded-lg p-3 border border-secondary/10">
+                      <div className="flex items-center gap-2">
+                        <div className="bg-secondary/10 w-6 h-6 rounded-full flex items-center justify-center">
+                          <Rocket className="h-3 w-3 text-secondary" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-medium">Plan Features</h3>
+                          <p className="text-xs text-muted-foreground">Brainstorm and prioritize</p>
+                        </div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+
+                  <CarouselItem className="pt-2 basis-full">
+                    <div className="bg-background rounded-lg p-3 border border-secondary/10">
+                      <div className="flex items-center gap-2">
+                        <div className="bg-secondary/10 w-6 h-6 rounded-full flex items-center justify-center">
+                          <MessagesSquare className="h-3 w-3 text-secondary" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-medium">Get Feedback</h3>
+                          <p className="text-xs text-muted-foreground">Improve decisions</p>
+                        </div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                </CarouselContent>
+              </Carousel>
+            </div>
           </div>
-        </div>
-
-        {/* PM-Focused Prompt Cards in Carousel */}
-        <div className="max-w-4xl mx-auto">
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            plugins={[
-              Autoplay(autoplayOptions)
-            ]}
-            className="w-full"
-          >
-            <CarouselContent>
-              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                <div className="bg-background rounded-lg p-4 h-full border border-secondary/10">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
-                      <FileEdit className="h-4 w-4 text-secondary" />
-                    </div>
-                    <h3 className="font-medium group-hover:text-secondary transition-colors">Create PRD</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Get help writing product requirements</p>
-                </div>
-              </CarouselItem>
-
-              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                <div className="bg-background rounded-lg p-4 h-full border border-secondary/10">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
-                      <Target className="h-4 w-4 text-secondary" />
-                    </div>
-                    <h3 className="font-medium group-hover:text-secondary transition-colors">Validate Work</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Review and improve your deliverables</p>
-                </div>
-              </CarouselItem>
-
-              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                <div className="bg-background rounded-lg p-4 h-full border border-secondary/10">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
-                      <Rocket className="h-4 w-4 text-secondary" />
-                    </div>
-                    <h3 className="font-medium group-hover:text-secondary transition-colors">Plan Features</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Brainstorm and prioritize features</p>
-                </div>
-              </CarouselItem>
-
-              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                <div className="bg-background rounded-lg p-4 h-full border border-secondary/10">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
-                      <MessagesSquare className="h-4 w-4 text-secondary" />
-                    </div>
-                    <h3 className="font-medium group-hover:text-secondary transition-colors">Get Feedback</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Improve your product decisions</p>
-                </div>
-              </CarouselItem>
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
         </div>
 
         <div className="mt-16 text-center bg-background rounded-xl p-8 max-w-3xl mx-auto">
