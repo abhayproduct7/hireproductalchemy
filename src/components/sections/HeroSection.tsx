@@ -16,7 +16,7 @@ export const HeroSection = () => {
               Elite Product Talent
             </span>
             <h1 className="animate-fade-up text-4xl md:text-6xl font-bold text-primary mb-6">
-              Expert Product Managers, Enhanced by AI
+              Hire Expert Product Managers, Enhanced by AI
             </h1>
             <p className="animate-fade-up text-lg text-gray-600 mb-8 leading-relaxed">
               Connect with seasoned product managers who leverage AI to deliver exceptional results. Get the perfect blend of human expertise and AI assistance to drive your product success.
