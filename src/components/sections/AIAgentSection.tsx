@@ -26,7 +26,6 @@ export const AIAgentSection = () => {
                   </linearGradient>
                 </defs>
                 
-                {/* Main hexagonal shape */}
                 <path
                   d="M16 4 L26 10 L26 22 L16 28 L6 22 L6 10 Z"
                   fill="url(#karmaGradient)"
@@ -34,7 +33,6 @@ export const AIAgentSection = () => {
                   className="animate-pulse"
                 />
                 
-                {/* Connecting lines representing AI/neural networks */}
                 <path
                   d="M16 8 L22 12 M16 8 L10 12 M16 24 L22 20 M16 24 L10 20"
                   stroke="white"
@@ -42,7 +40,6 @@ export const AIAgentSection = () => {
                   opacity="0.6"
                 />
                 
-                {/* Central node */}
                 <circle
                   cx="16"
                   cy="16"
@@ -52,7 +49,6 @@ export const AIAgentSection = () => {
                   className="animate-pulse"
                 />
                 
-                {/* Smaller nodes */}
                 <circle cx="16" cy="8" r="2" fill="white" opacity="0.7" />
                 <circle cx="22" cy="12" r="2" fill="white" opacity="0.7" />
                 <circle cx="22" cy="20" r="2" fill="white" opacity="0.7" />
@@ -64,48 +60,46 @@ export const AIAgentSection = () => {
           </div>
         </div>
 
-        {/* PM-Focused Prompt Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          <div className="bg-background rounded-xl p-6 shadow-sm hover:shadow-md transition-all cursor-pointer group">
-            <div className="bg-secondary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-              <FileEdit className="h-6 w-6 text-secondary" />
+        {/* Sleeker PM-Focused Prompt Cards in a single row */}
+        <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
+          <div className="min-w-[280px] flex-shrink-0 snap-start bg-background rounded-lg p-4 hover:shadow-md transition-all cursor-pointer group border border-secondary/10">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
+                <FileEdit className="h-4 w-4 text-secondary" />
+              </div>
+              <h3 className="font-medium group-hover:text-secondary transition-colors">Create PRD</h3>
             </div>
-            <h3 className="text-xl font-semibold mb-3 group-hover:text-secondary transition-colors">Need help with documentation?</h3>
-            <p className="text-muted-foreground mb-4">I can help you create and refine:</p>
-            <ul className="text-sm text-muted-foreground space-y-2">
-              <li>• Product Requirements Documents (PRDs)</li>
-              <li>• User Stories</li>
-              <li>• Feature Specifications</li>
-              <li>• Release Notes</li>
-            </ul>
+            <p className="text-sm text-muted-foreground">Get help writing product requirements</p>
           </div>
 
-          <div className="bg-background rounded-xl p-6 shadow-sm hover:shadow-md transition-all cursor-pointer group">
-            <div className="bg-secondary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-              <Target className="h-6 w-6 text-secondary" />
+          <div className="min-w-[280px] flex-shrink-0 snap-start bg-background rounded-lg p-4 hover:shadow-md transition-all cursor-pointer group border border-secondary/10">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
+                <Target className="h-4 w-4 text-secondary" />
+              </div>
+              <h3 className="font-medium group-hover:text-secondary transition-colors">Validate Work</h3>
             </div>
-            <h3 className="text-xl font-semibold mb-3 group-hover:text-secondary transition-colors">Need validation support?</h3>
-            <p className="text-muted-foreground mb-4">I can help review and validate:</p>
-            <ul className="text-sm text-muted-foreground space-y-2">
-              <li>• Product Strategy</li>
-              <li>• Market Research</li>
-              <li>• Competitive Analysis</li>
-              <li>• User Research Findings</li>
-            </ul>
+            <p className="text-sm text-muted-foreground">Review and improve your deliverables</p>
           </div>
 
-          <div className="bg-background rounded-xl p-6 shadow-sm hover:shadow-md transition-all cursor-pointer group">
-            <div className="bg-secondary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-              <Rocket className="h-6 w-6 text-secondary" />
+          <div className="min-w-[280px] flex-shrink-0 snap-start bg-background rounded-lg p-4 hover:shadow-md transition-all cursor-pointer group border border-secondary/10">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
+                <Rocket className="h-4 w-4 text-secondary" />
+              </div>
+              <h3 className="font-medium group-hover:text-secondary transition-colors">Plan Features</h3>
             </div>
-            <h3 className="text-xl font-semibold mb-3 group-hover:text-secondary transition-colors">Planning ahead?</h3>
-            <p className="text-muted-foreground mb-4">I can assist with:</p>
-            <ul className="text-sm text-muted-foreground space-y-2">
-              <li>• Product Roadmap Planning</li>
-              <li>• Feature Prioritization</li>
-              <li>• Sprint Planning</li>
-              <li>• Resource Allocation</li>
-            </ul>
+            <p className="text-sm text-muted-foreground">Brainstorm and prioritize features</p>
+          </div>
+
+          <div className="min-w-[280px] flex-shrink-0 snap-start bg-background rounded-lg p-4 hover:shadow-md transition-all cursor-pointer group border border-secondary/10">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="bg-secondary/10 w-8 h-8 rounded-full flex items-center justify-center">
+                <MessagesSquare className="h-4 w-4 text-secondary" />
+              </div>
+              <h3 className="font-medium group-hover:text-secondary transition-colors">Get Feedback</h3>
+            </div>
+            <p className="text-sm text-muted-foreground">Improve your product decisions</p>
           </div>
         </div>
 
