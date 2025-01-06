@@ -47,12 +47,12 @@ export const HeroSection = () => {
                     </div>
                   </div>
                   <div className="grid grid-cols-1 gap-2">
-                    <div className="h-12 bg-[#1EAEDB]/10 rounded-md p-2">
+                    <div className="h-12 bg-[#33C3F0]/10 rounded-md p-2">
                       <div className="flex items-center">
-                        <Shuffle className="w-4 h-4 text-[#1EAEDB] mr-2" />
+                        <Search className="w-4 h-4 text-[#33C3F0] mr-2" />
                         <div>
-                          <div className="text-xs font-medium text-gray-700">A/B Testing</div>
-                          <div className="text-[10px] text-gray-500">Data-Driven Decisions</div>
+                          <div className="text-xs font-medium text-gray-700">Market Research</div>
+                          <div className="text-[10px] text-gray-500">Strategic Analysis</div>
                         </div>
                       </div>
                     </div>
@@ -65,12 +65,12 @@ export const HeroSection = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="h-12 bg-[#33C3F0]/10 rounded-md p-2">
+                    <div className="h-12 bg-[#1EAEDB]/10 rounded-md p-2">
                       <div className="flex items-center">
-                        <Search className="w-4 h-4 text-[#33C3F0] mr-2" />
+                        <Shuffle className="w-4 h-4 text-[#1EAEDB] mr-2" />
                         <div>
-                          <div className="text-xs font-medium text-gray-700">Market Research</div>
-                          <div className="text-[10px] text-gray-500">Strategic Analysis</div>
+                          <div className="text-xs font-medium text-gray-700">A/B Testing</div>
+                          <div className="text-[10px] text-gray-500">Data-Driven Decisions</div>
                         </div>
                       </div>
                     </div>
