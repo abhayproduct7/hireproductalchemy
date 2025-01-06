@@ -13,22 +13,16 @@ export const AuthForm = () => {
   const [view, setView] = useState<"sign_in" | "sign_up">("sign_in");
   const [userType, setUserType] = useState<"talent" | "employer" | null>(null);
   
-  // Get the return URL from the query parameters or localStorage
   const searchParams = new URLSearchParams(location.search);
   const returnTo = searchParams.get("returnTo") || localStorage.getItem("returnTo") || "/";
 
   useEffect(() => {
-    // Store the return URL in localStorage
     if (returnTo && returnTo !== "/") {
       localStorage.setItem("returnTo", returnTo);
     }
 
-    // Set up auth state change listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log("Auth state changed:", event, session);
-      
       if (event === "SIGNED_IN" && session) {
-        // If signing up, update the user's profile with the selected user type
         if (view === "sign_up" && userType) {
           const { error } = await supabase
             .from('profiles')
@@ -45,9 +39,7 @@ export const AuthForm = () => {
           }
         }
 
-        // Clear the stored return URL
         localStorage.removeItem("returnTo");
-        // Navigate to the return URL
         navigate(returnTo);
         toast({
           title: "Welcome!",
@@ -63,8 +55,37 @@ export const AuthForm = () => {
 
   return (
     <div className="space-y-6">
+      <Auth
+        supabaseClient={supabase}
+        appearance={{ theme: ThemeSupa }}
+        theme="light"
+        providers={[]}
+        view={view}
+        redirectTo={`${window.location.origin}/login`}
+        onViewChange={(newView) => {
+          setView(newView as "sign_in" | "sign_up");
+          if (newView === "sign_in") {
+            setUserType(null);
+          }
+        }}
+        localization={{
+          variables: {
+            sign_up: {
+              email_label: "Email",
+              password_label: "Password",
+              button_label: "Sign Up",
+            },
+            sign_in: {
+              email_label: "Email",
+              password_label: "Password",
+              button_label: "Sign In",
+            },
+          },
+        }}
+      />
+      
       {view === "sign_up" && (
-        <div className="space-y-4">
+        <div className="space-y-4 pt-4 border-t">
           <Label className="text-base">Join as:</Label>
           <RadioGroup
             value={userType || ""}
@@ -82,35 +103,6 @@ export const AuthForm = () => {
           </RadioGroup>
         </div>
       )}
-      
-      <Auth
-        supabaseClient={supabase}
-        appearance={{ theme: ThemeSupa }}
-        theme="light"
-        providers={[]}
-        view={view}
-        redirectTo={`${window.location.origin}/login`}
-        viewChange={(newView) => {
-          setView(newView as "sign_in" | "sign_up");
-          // Reset user type when switching views
-          if (newView === "sign_in") {
-            setUserType(null);
-          }
-        }}
-        localization={{
-          variables: {
-            sign_up: {
-              email_label: "Email",
-              password_label: "Password",
-              button_label: userType ? "Sign Up" : "Please select a role above",
-            },
-            sign_in: {
-              email_label: "Email",
-              password_label: "Password",
-            },
-          },
-        }}
-      />
     </div>
   );
 };
