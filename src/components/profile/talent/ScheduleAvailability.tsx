@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScheduleForm } from "./schedule/ScheduleForm";
-import type { ScheduleForm as ScheduleFormType } from "./schedule/ScheduleForm";
+import type { ScheduleFormType } from "./schedule/types";
 
 export const ScheduleAvailability = () => {
   const session = useSession();
@@ -26,7 +26,6 @@ export const ScheduleAvailability = () => {
       if (!session?.user) return;
 
       try {
-        // First try to get existing application
         const { data: existingApp, error: fetchError } = await supabase
           .from("candidate_applications")
           .select("id, availability_type, earliest_start_date, preferred_schedule")
@@ -35,7 +34,6 @@ export const ScheduleAvailability = () => {
 
         if (fetchError) throw fetchError;
 
-        // If no application exists, create one
         if (!existingApp) {
           const { data: newApp, error: insertError } = await supabase
             .from("candidate_applications")
@@ -55,7 +53,6 @@ export const ScheduleAvailability = () => {
           return;
         }
 
-        // If application exists, set the form values
         setApplicationId(existingApp.id);
         if (existingApp.availability_type || existingApp.earliest_start_date || existingApp.preferred_schedule) {
           defaultValues.availability_type = existingApp.availability_type;
@@ -78,7 +75,7 @@ export const ScheduleAvailability = () => {
     fetchSchedule();
   }, [session, toast]);
 
-  const onSubmit = async (values: ScheduleForm) => {
+  const onSubmit = async (values: ScheduleFormType) => {
     if (!session?.user) return;
 
     setIsLoading(true);
