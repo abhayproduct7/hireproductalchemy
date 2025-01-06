@@ -3,77 +3,20 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 import { UserTypeSelector } from "./UserTypeSelector";
 import { useAuthForm } from "@/hooks/useAuthForm";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
+import { SignUpForm } from "./SignUpForm";
 
 export const AuthForm = () => {
   const { view, setView, userType, setUserType, returnTo } = useAuthForm();
-  const [password, setPassword] = useState("");
-  const [showRequirements, setShowRequirements] = useState(false);
 
-  // Password requirements
-  const requirements = [
-    { met: password.length >= 6, text: "At least 6 characters long" },
-  ];
-
-  // Monitor password input using useEffect
-  useEffect(() => {
-    if (view === "sign_up") {
-      const checkPasswordInput = () => {
-        const passwordInput = document.querySelector('input[type="password"]') as HTMLInputElement;
-        if (passwordInput) {
-          const currentValue = passwordInput.value;
-          setPassword(currentValue);
-          setShowRequirements(currentValue.length > 0);
-        }
-      };
-
-      // Initial check
-      checkPasswordInput();
-
-      // Set up an interval to periodically check the password input
-      const intervalId = setInterval(checkPasswordInput, 500);
-
-      return () => {
-        clearInterval(intervalId);
-      };
-    } else {
-      setShowRequirements(false);
-    }
-  }, [view]);
+  if (view === "sign_up") {
+    return <SignUpForm setView={setView} />;
+  }
 
   return (
     <div className="space-y-6">
-      {view === "sign_up" && (
-        <>
-          <UserTypeSelector
-            userType={userType}
-            onUserTypeChange={setUserType}
-          />
-          {showRequirements && (
-            <Alert variant="info" className="animate-fade-in">
-              <Info className="h-4 w-4" />
-              <AlertDescription>
-                <div className="text-sm mt-1">
-                  Password requirements:
-                  <ul className="list-disc pl-5 mt-1 space-y-1">
-                    {requirements.map((req, index) => (
-                      <li
-                        key={index}
-                        className={req.met ? "text-green-600" : "text-blue-600"}
-                      >
-                        {req.text} {req.met && "✓"}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </AlertDescription>
-            </Alert>
-          )}
-        </>
-      )}
-      
       <Auth
         supabaseClient={supabase}
         appearance={{ 
@@ -88,30 +31,18 @@ export const AuthForm = () => {
               border: 'none',
               backgroundColor: '#1B5E40',
               color: 'white',
-              '&:hover': {
-                backgroundColor: '#0F4C35',
-              }
             },
             anchor: {
               color: '#1B5E40',
-              '&:hover': {
-                color: '#0F4C35',
-              }
             }
           }
         }}
         theme="light"
         providers={[]}
-        view={view}
-        onViewChange={setView}
+        view="sign_in"
         redirectTo={`${window.location.origin}/login`}
         localization={{
           variables: {
-            sign_up: {
-              email_label: "Email",
-              password_label: "Password",
-              button_label: "Sign Up",
-            },
             sign_in: {
               email_label: "Email",
               password_label: "Password",
