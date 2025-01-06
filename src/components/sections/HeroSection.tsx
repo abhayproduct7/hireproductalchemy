@@ -34,19 +34,46 @@ export const HeroSection = () => {
           </div>
           <div className="hidden md:block relative">
             <div className="relative rounded-lg shadow-xl overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e"
-                alt="AI-enhanced product management"
-                className="w-full aspect-[4/3] object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-tr from-secondary/80 to-transparent mix-blend-multiply"></div>
+              <div className="grid grid-cols-2 h-full">
+                {/* Before Side */}
+                <div className="relative p-6 bg-gray-100">
+                  <div className="absolute top-4 left-4 bg-white/90 text-gray-700 px-3 py-1 rounded-full text-sm">
+                    Before AI
+                  </div>
+                  <div className="space-y-4">
+                    <div className="h-8 bg-gray-300 rounded animate-pulse"></div>
+                    <div className="h-8 bg-gray-300 rounded animate-pulse"></div>
+                    <div className="h-8 bg-gray-300 rounded animate-pulse"></div>
+                  </div>
+                </div>
+                {/* After Side */}
+                <div className="relative p-6 bg-gradient-to-br from-secondary/20 to-secondary/10">
+                  <div className="absolute top-4 right-4 bg-secondary text-white px-3 py-1 rounded-full text-sm">
+                    With AI
+                  </div>
+                  <div className="space-y-4">
+                    <div className="h-8 bg-white/80 rounded flex items-center px-3">
+                      <Zap className="w-4 h-4 text-secondary mr-2" />
+                      <span className="text-sm">Optimized</span>
+                    </div>
+                    <div className="h-8 bg-white/80 rounded flex items-center px-3">
+                      <Zap className="w-4 h-4 text-secondary mr-2" />
+                      <span className="text-sm">Enhanced</span>
+                    </div>
+                    <div className="h-8 bg-white/80 rounded flex items-center px-3">
+                      <Zap className="w-4 h-4 text-secondary mr-2" />
+                      <span className="text-sm">Efficient</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-white/20 backdrop-blur-sm rounded-full">
                     <Zap className="w-5 h-5 text-white" />
                   </div>
                   <p className="text-white text-sm font-medium">
-                    AI-powered assistance for enhanced productivity
+                    2x Faster Product Development with AI Assistance
                   </p>
                 </div>
               </div>
