@@ -44,8 +44,13 @@ export const AuthForm = () => {
       }}
       providers={["google"]}
       redirectTo={window.location.origin + "/login"}
-      onError={(error) => {
-        console.error("Auth error:", error);
+      localization={{
+        variables: {
+          sign_in: {
+            email_label: "Email",
+            password_label: "Password",
+          },
+        },
       }}
       view="sign_in"
     />
