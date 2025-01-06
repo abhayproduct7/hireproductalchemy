@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
-import { SkillsState } from "../../types";
+import { SkillsState, SkillResponse } from "../../types";
 
 export const useSkills = (applicationId: string | null) => {
   const { toast } = useToast();
@@ -26,7 +26,7 @@ export const useSkills = (applicationId: string | null) => {
         if (error) throw error;
 
         if (skillsData) {
-          const skillNames = skillsData.map(item => item.skills.name);
+          const skillNames = skillsData.map((item: SkillResponse) => item.skills.name);
           setState({ skills: skillNames, isLoadingSkills: false });
         }
       } catch (error) {
