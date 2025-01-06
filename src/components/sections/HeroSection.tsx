@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { Users, Brain } from "lucide-react";
+import { Users } from "lucide-react";
 import { ProfileSection } from "./hero/ProfileSection";
 import { ProductTasks } from "./hero/ProductTasks";
 import { DeliveredResults } from "./hero/DeliveredResults";
+import Logo from "../Logo";
 
 export const HeroSection = () => {
   return (
@@ -47,8 +48,10 @@ export const HeroSection = () => {
                   <button className="w-full group relative overflow-hidden rounded-lg bg-gradient-to-r from-secondary/5 via-secondary/10 to-secondary/5 px-8 py-4 transition-all hover:shadow-lg">
                     <div className="absolute inset-0 bg-secondary/5 transform transition-transform group-hover:scale-105"></div>
                     <div className="relative flex items-center justify-center gap-3">
-                      <Brain className="w-5 h-5 text-secondary" />
-                      <span className="text-secondary font-medium">
+                      <div className="w-5 h-5">
+                        <Logo />
+                      </div>
+                      <span className="text-secondary text-sm">
                         Our Product Specialists Enhanced by AI Assistant
                       </span>
                     </div>
