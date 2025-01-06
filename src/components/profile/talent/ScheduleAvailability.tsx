@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScheduleForm, type ScheduleForm } from "./schedule/ScheduleForm";
+import { ScheduleForm } from "./schedule/ScheduleForm";
+import type { ScheduleForm as ScheduleFormType } from "./schedule/ScheduleForm";
 
 export const ScheduleAvailability = () => {
   const session = useSession();
@@ -11,7 +12,7 @@ export const ScheduleAvailability = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [applicationId, setApplicationId] = useState<string | null>(null);
 
-  const defaultValues: ScheduleForm = {
+  const defaultValues: ScheduleFormType = {
     availability_type: "full_time",
     earliest_start_date: new Date(),
     preferred_schedule: {
