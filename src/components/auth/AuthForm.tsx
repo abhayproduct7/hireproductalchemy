@@ -79,7 +79,7 @@ export const AuthForm = () => {
     <div className="space-y-6">
       {view === "sign_up" && (
         <div className="space-y-4">
-          <Label className="text-base">I want to join as:</Label>
+          <Label className="text-base">Join as:</Label>
           <RadioGroup
             value={userType || ""}
             onValueChange={(value) => setUserType(value as "talent" | "employer")}
@@ -104,7 +104,7 @@ export const AuthForm = () => {
         providers={[]}
         view={view}
         redirectTo={`${window.location.origin}/login`}
-        viewChange={(newView) => {
+        onViewChange={(newView) => {
           setView(newView as "sign_in" | "sign_up");
           // Reset user type when switching views
           if (newView === "sign_in") {
