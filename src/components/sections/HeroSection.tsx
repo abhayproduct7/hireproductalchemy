@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Users, Brain, ArrowDown, ChartBar, Search, Shuffle } from "lucide-react";
+import { Users, Brain, ArrowDown, ChartBar, Search, Shuffle, Target, Lightbulb, Code } from "lucide-react";
 
 export const HeroSection = () => {
   return (
@@ -32,6 +32,7 @@ export const HeroSection = () => {
               </Link>
             </div>
           </div>
+
           <div className="hidden md:block relative">
             <div className="relative bg-white rounded-lg shadow-xl p-8 overflow-hidden">
               <div className="relative z-10">
@@ -46,6 +47,7 @@ export const HeroSection = () => {
                       <p className="text-sm text-gray-600">8+ years experience</p>
                     </div>
                   </div>
+
                   {/* Product Tasks Header */}
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
@@ -53,7 +55,7 @@ export const HeroSection = () => {
                       <span className="text-sm font-medium text-gray-600">Product Tasks</span>
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 gap-2">
+                  <div className="grid grid-cols-2 gap-2">
                     <div className="h-12 bg-[#33C3F0]/10 rounded-md p-2">
                       <div className="flex items-center">
                         <Search className="w-4 h-4 text-[#33C3F0] mr-2" />
@@ -78,6 +80,33 @@ export const HeroSection = () => {
                         <div>
                           <div className="text-xs font-medium text-gray-700">A/B Testing</div>
                           <div className="text-[10px] text-gray-500">Data-Driven Decisions</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="h-12 bg-[#33C3F0]/10 rounded-md p-2">
+                      <div className="flex items-center">
+                        <Target className="w-4 h-4 text-[#33C3F0] mr-2" />
+                        <div>
+                          <div className="text-xs font-medium text-gray-700">User Research</div>
+                          <div className="text-[10px] text-gray-500">Customer Insights</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="h-12 bg-[#0EA5E9]/10 rounded-md p-2">
+                      <div className="flex items-center">
+                        <Lightbulb className="w-4 h-4 text-[#0EA5E9] mr-2" />
+                        <div>
+                          <div className="text-xs font-medium text-gray-700">Feature Planning</div>
+                          <div className="text-[10px] text-gray-500">Innovation Strategy</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="h-12 bg-[#1EAEDB]/10 rounded-md p-2">
+                      <div className="flex items-center">
+                        <Code className="w-4 h-4 text-[#1EAEDB] mr-2" />
+                        <div>
+                          <div className="text-xs font-medium text-gray-700">Tech Alignment</div>
+                          <div className="text-[10px] text-gray-500">Development Sync</div>
                         </div>
                       </div>
                     </div>
@@ -113,13 +142,13 @@ export const HeroSection = () => {
                       <span className="text-sm font-medium text-gray-600">Delivered Results</span>
                     </div>
                   </div>
-                  <div className="space-y-2">
+                  <div className="grid grid-cols-2 gap-2">
                     <div className="h-12 bg-green-50 rounded-md p-2">
                       <div className="flex items-center">
                         <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
                         <div>
                           <div className="text-xs font-medium text-gray-700">Strategic Market Insights</div>
-                          <div className="text-[10px] text-green-600">Expert Analysis + Data-Driven Validation</div>
+                          <div className="text-[10px] text-green-600">Expert Analysis + AI Validation</div>
                         </div>
                       </div>
                     </div>
@@ -127,8 +156,17 @@ export const HeroSection = () => {
                       <div className="flex items-center">
                         <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
                         <div>
-                          <div className="text-xs font-medium text-gray-700">Competitive Edge</div>
-                          <div className="text-[10px] text-green-600">Human Strategy + AI-Powered Research</div>
+                          <div className="text-xs font-medium text-gray-700">Performance Metrics</div>
+                          <div className="text-[10px] text-green-600">Data-Driven Optimization</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="h-12 bg-green-50 rounded-md p-2">
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                        <div>
+                          <div className="text-xs font-medium text-gray-700">Conversion Improvements</div>
+                          <div className="text-[10px] text-green-600">Testing + Implementation</div>
                         </div>
                       </div>
                     </div>
@@ -137,7 +175,25 @@ export const HeroSection = () => {
                         <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
                         <div>
                           <div className="text-xs font-medium text-gray-700">User-Centric Solutions</div>
-                          <div className="text-[10px] text-green-600">Deep Understanding + Pattern Recognition</div>
+                          <div className="text-[10px] text-green-600">Validated Improvements</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="h-12 bg-green-50 rounded-md p-2">
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                        <div>
+                          <div className="text-xs font-medium text-gray-700">Product Innovation</div>
+                          <div className="text-[10px] text-green-600">Market-Ready Features</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="h-12 bg-green-50 rounded-md p-2">
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-green-400 rounded-full mr-2"></div>
+                        <div>
+                          <div className="text-xs font-medium text-gray-700">Technical Roadmap</div>
+                          <div className="text-[10px] text-green-600">Optimized Development</div>
                         </div>
                       </div>
                     </div>
