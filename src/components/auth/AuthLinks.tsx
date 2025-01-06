@@ -1,3 +1,5 @@
+import { PasswordResetButton } from "./PasswordResetButton";
+
 interface AuthLinksProps {
   setView: (view: "sign_in" | "sign_up") => void;
 }
