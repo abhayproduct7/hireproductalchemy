@@ -1,3 +1,4 @@
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,26 +13,30 @@ import JoinCommunity from "./pages/JoinCommunity";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import { ChatBot } from "./components/ChatBot";
+import { Toaster } from "@/components/ui/toaster";
 
 function App() {
   return (
-    <SessionContextProvider supabaseClient={supabase}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/hire" element={<HireTalent />} />
-          <Route path="/join" element={<JoinCommunity />} />
-          <Route path="/requirements" element={<RequirementsCapture />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/thank-you" element={<ThankYou />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
-        <ChatBot />
-      </Router>
-    </SessionContextProvider>
+    <React.StrictMode>
+      <SessionContextProvider supabaseClient={supabase}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/hire" element={<HireTalent />} />
+            <Route path="/join" element={<JoinCommunity />} />
+            <Route path="/requirements" element={<RequirementsCapture />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/thank-you" element={<ThankYou />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+          <ChatBot />
+          <Toaster />
+        </Router>
+      </SessionContextProvider>
+    </React.StrictMode>
   );
 }
 
