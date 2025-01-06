@@ -33,7 +33,7 @@ export const SkillsSection = ({ applicationId }: SkillsSectionProps) => {
         if (error) throw error;
 
         if (skillsData) {
-          const skillNames = skillsData.map((item: SkillResponse) => item.skills.name);
+          const skillNames = skillsData.map((item: { skills: { name: string } }) => item.skills.name);
           setSkills(skillNames);
         }
       } catch (error) {

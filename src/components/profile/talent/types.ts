@@ -3,5 +3,7 @@ export interface Skill {
 }
 
 export interface SkillResponse {
-  skills: Skill;
+  skills: {
+    name: string;
+  };
 }
