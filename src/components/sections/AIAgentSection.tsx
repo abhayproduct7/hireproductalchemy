@@ -8,9 +8,10 @@ export const AIAgentSection = () => {
       <div className="container max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           <div>
-            <h2 className="text-4xl font-bold mb-4">Meet Karma, Your AI Product Assistant</h2>
+            <span className="text-sm font-medium text-secondary/80 mb-4 block">PRODUCT MANAGEMENT AI</span>
+            <h2 className="text-4xl font-bold mb-4">AI Assist for Product Managers</h2>
             <p className="text-lg text-muted-foreground">
-              Powered by advanced AI, Karma ensures successful product development by supporting both hiring teams and product talent
+              Powered by advanced AI, our assistant ensures successful product development by supporting both hiring teams and product talent
             </p>
           </div>
           
@@ -27,11 +28,11 @@ export const AIAgentSection = () => {
         <div className="mt-16 text-center bg-background rounded-xl p-8 max-w-3xl mx-auto mb-20">
           <h3 className="text-2xl font-semibold mb-4">Experience the Power of AI-Enhanced Product Management</h3>
           <p className="text-muted-foreground mb-6">
-            Whether you're hiring or part of our talent community, Karma is here to ensure your product development journey is smooth and successful
+            Whether you're hiring or part of our talent community, our AI assistant is here to ensure your product development journey is smooth and successful
           </p>
           <div className="animate-pulse inline-flex items-center gap-2 text-secondary">
             <Brain className="h-5 w-5" />
-            <span className="font-medium">Karma is actively learning and evolving</span>
+            <span className="font-medium">AI is actively learning and evolving</span>
           </div>
         </div>
 
@@ -46,7 +47,7 @@ export const AIAgentSection = () => {
               </h3>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed pl-[52px]">
-              Karma analyzes your project requirements and helps identify the exact skillset and experience level needed for your product manager
+              Our AI analyzes your project requirements and helps identify the exact skillset and experience level needed for your product manager
             </p>
           </div>
 
