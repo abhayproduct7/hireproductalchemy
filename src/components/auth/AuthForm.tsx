@@ -91,9 +91,11 @@ export const AuthForm = () => {
             },
           },
         }}
-        onPasswordInput={(e) => {
-          setPassword(e.target.value);
-          setShowRequirements(true);
+        onInputChange={(e) => {
+          if (e.target.type === 'password') {
+            setPassword(e.target.value);
+            setShowRequirements(true);
+          }
         }}
       />
     </div>
