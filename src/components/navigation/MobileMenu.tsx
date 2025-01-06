@@ -47,7 +47,7 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
         {session ? (
           <button
             onClick={handleLogout}
-            className="block w-full px-3 py-2 rounded-md text-sm btn-secondary text-center"
+            className="block w-full text-left px-3 py-2 rounded-md text-sm nav-link"
           >
             Log Out
           </button>

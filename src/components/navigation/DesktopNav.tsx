@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { UserCircle2 } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const DesktopNav = () => {
   const session = useSession();
@@ -29,12 +36,16 @@ export const DesktopNav = () => {
         Resources
       </Link>
       {session ? (
-        <button
-          onClick={handleLogout}
-          className="btn-secondary px-4 py-2 rounded-md font-medium text-sm"
-        >
-          Log Out
-        </button>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="focus:outline-none">
+            <UserCircle2 className="h-8 w-8 text-secondary hover:text-secondary/80 transition-colors" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={handleLogout}>
+              Log Out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ) : (
         <Link
           to="/login"
