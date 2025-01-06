@@ -46,11 +46,14 @@ export const ContactSection = () => {
 
       if (authError) throw authError;
 
-      // Update the user's profile with company name
+      // Update the user's profile with company name and user type
       if (authData.user) {
         const { error: profileError } = await supabase
           .from('profiles')
-          .update({ company_name: companyName })
+          .update({ 
+            company_name: companyName,
+            user_type: 'employer'
+          })
           .eq('id', authData.user.id);
 
         if (profileError) throw profileError;

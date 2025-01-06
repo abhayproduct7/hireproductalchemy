@@ -41,6 +41,14 @@ export const JoinApplicationForm = () => {
 
     setIsLoading(true);
     try {
+      // Update user type to 'talent'
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ user_type: 'talent' })
+        .eq('id', session.user.id);
+
+      if (profileError) throw profileError;
+
       let cvUrl = null;
       
       // Upload CV if provided
