@@ -57,9 +57,6 @@ export const SignUpForm = ({ setView }: SignUpFormProps) => {
         throw profileError;
       }
 
-      // Check if the user exists in auth
-      const { data: { user }, error: userError } = await supabase.auth.admin.getUserByEmail(email);
-      
       if (profileData) {
         // If user exists in profiles but with different user type, show error
         if (profileData.user_type && profileData.user_type !== userType) {
@@ -73,27 +70,7 @@ export const SignUpForm = ({ setView }: SignUpFormProps) => {
         }
       }
       
-      // If user exists in auth but not in profiles, create profile
-      if (user && !profileData) {
-        const { error: createProfileError } = await supabase
-          .from('profiles')
-          .insert({
-            id: user.id,
-            email: email,
-            user_type: userType,
-          });
-
-        if (createProfileError) throw createProfileError;
-        
-        toast({
-          title: "Account exists",
-          description: "Please sign in with your existing account",
-        });
-        setView("sign_in");
-        return;
-      }
-      
-      // Proceed with sign up if user doesn't exist
+      // Proceed with sign up
       const { error: signUpError } = await supabase.auth.signUp({
         email,
         password,
