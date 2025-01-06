@@ -18,8 +18,6 @@ export const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      console.log("Attempting to insert contact form data...");
-      
       // First insert the contact form data
       const { error: contactError } = await supabase
         .from("producthire")
@@ -33,47 +31,33 @@ export const ContactSection = () => {
 
       if (contactError) throw contactError;
 
-      // Check if user already exists
-      const { data: userData, error: userCheckError } = await supabase
-        .auth.admin.getUserByEmail(email);
+      // Try to create the user account
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email,
+        password: crypto.randomUUID(), // Generate a random password
+        options: {
+          data: {
+            full_name: name,
+          },
+        },
+      });
 
-      if (userCheckError && userCheckError.message !== "User not found") {
-        throw userCheckError;
+      // If user already exists, that's fine - we'll just update their profile
+      if (authError && !authError.message.includes("User already registered")) {
+        throw authError;
       }
 
-      let userId;
-
-      if (!userData) {
-        // Create new user if they don't exist
-        const { data: authData, error: authError } = await supabase.auth.signUp({
-          email,
-          password: crypto.randomUUID(), // Generate a random password
-          options: {
-            data: {
-              full_name: name,
-            },
-          },
+      // Update or create profile
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .upsert({ 
+          id: authData?.user?.id, // Will be undefined if user already exists, which is fine for upsert
+          full_name: name,
+          company_name: companyName,
+          user_type: 'employer'
         });
 
-        if (authError) throw authError;
-        userId = authData.user?.id;
-      } else {
-        userId = userData.id;
-      }
-
-      // Update the profile if we have a user ID
-      if (userId) {
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .upsert({ 
-            id: userId,
-            full_name: name,
-            company_name: companyName,
-            user_type: 'employer'
-          });
-
-        if (profileError) throw profileError;
-      }
+      if (profileError) throw profileError;
 
       toast({
         title: "Form submitted successfully!",
