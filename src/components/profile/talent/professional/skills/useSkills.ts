@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
-import { SkillsState, SkillResponse } from "../../types";
+import { SkillsState, CandidateSkill } from "../../types";
 
 export const useSkills = (applicationId: string | null) => {
   const { toast } = useToast();
@@ -20,14 +20,14 @@ export const useSkills = (applicationId: string | null) => {
       try {
         const { data: skillsData, error } = await supabase
           .from('candidate_skills')
-          .select('skills(name)')
+          .select('skills(id, name)')
           .eq('application_id', applicationId);
 
         if (error) throw error;
 
         if (skillsData) {
-          const skillNames = skillsData.map((item: SkillResponse) => item.skills.name);
-          setState({ skills: skillNames, isLoadingSkills: false });
+          const skills = (skillsData as CandidateSkill[]).map(item => item.skills.name);
+          setState({ skills, isLoadingSkills: false });
         }
       } catch (error) {
         console.error('Error fetching skills:', error);
