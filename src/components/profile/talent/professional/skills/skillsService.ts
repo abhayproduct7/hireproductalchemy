@@ -7,7 +7,7 @@ export const skillsService = {
       .from('candidate_skills')
       .select(`
         skill_id,
-        skills (
+        skills:skills!inner (
           name
         )
       `)
@@ -15,8 +15,13 @@ export const skillsService = {
     
     if (error) throw error;
     
-    // Transform the response to get just the skill names
-    return (data as CandidateSkillResponse[]).map(item => item.skills.name);
+    // Safely type and transform the response
+    const typedData = data as unknown as Array<{
+      skill_id: string;
+      skills: { name: string };
+    }>;
+    
+    return typedData.map(item => item.skills.name);
   },
 
   async addSkill(applicationId: string, skillName: string) {
