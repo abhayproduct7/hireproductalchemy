@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -40,7 +41,14 @@ export const DesktopNav = () => {
           <DropdownMenuTrigger className="focus:outline-none">
             <UserCircle2 className="h-8 w-8 text-secondary hover:text-secondary/80 transition-colors" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuItem onClick={() => navigate("/profile")}>
+              My Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+              Dashboard
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout}>
               Log Out
             </DropdownMenuItem>

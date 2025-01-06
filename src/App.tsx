@@ -9,6 +9,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import ThankYou from "./pages/ThankYou";
 import JoinCommunity from "./pages/JoinCommunity";
+import Profile from "./pages/Profile";
+import Dashboard from "./pages/Dashboard";
 import { ChatBot } from "./components/ChatBot";
 
 function App() {
@@ -24,6 +26,8 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
         <ChatBot />
       </Router>

@@ -45,12 +45,26 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
           Resources
         </Link>
         {session ? (
-          <button
-            onClick={handleLogout}
-            className="block w-full text-left px-3 py-2 rounded-md text-sm nav-link"
-          >
-            Log Out
-          </button>
+          <>
+            <Link
+              to="/profile"
+              className="block px-3 py-2 rounded-md text-sm nav-link"
+            >
+              My Profile
+            </Link>
+            <Link
+              to="/dashboard"
+              className="block px-3 py-2 rounded-md text-sm nav-link"
+            >
+              Dashboard
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="block w-full text-left px-3 py-2 rounded-md text-sm nav-link"
+            >
+              Log Out
+            </button>
+          </>
         ) : (
           <Link
             to="/login"
