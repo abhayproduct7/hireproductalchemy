@@ -7,3 +7,8 @@ export interface SkillResponse {
     name: string;
   };
 }
+
+export interface SkillsState {
+  skills: string[];
+  isLoadingSkills: boolean;
+}
