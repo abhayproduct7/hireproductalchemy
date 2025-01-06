@@ -17,19 +17,6 @@ export const useContactForm = () => {
   const handleSubmit = async ({ name, email, companyName }: ContactFormData) => {
     setIsLoading(true);
     try {
-      // First, check if the email exists in auth system
-      const { data: { users }, error: adminError } = await supabase.auth.admin.listUsers();
-      const existingUser = users?.find(user => user.email === email);
-
-      if (existingUser) {
-        toast({
-          title: "Account already exists",
-          description: "Please sign in with your existing account.",
-        });
-        navigate("/login");
-        return true;
-      }
-
       // Submit contact form data to producthire table
       const { error: contactError } = await supabase
         .from("producthire")
@@ -53,7 +40,18 @@ export const useContactForm = () => {
           },
         });
 
-        if (authError) throw authError;
+        if (authError) {
+          // If user already exists, redirect to login
+          if (authError.message?.includes("User already registered")) {
+            toast({
+              title: "Account already exists",
+              description: "Please sign in with your existing account.",
+            });
+            navigate("/login");
+            return true;
+          }
+          throw authError;
+        }
 
         // The profile will be automatically created by the handle_new_user trigger
         // We just need to update it with additional information
