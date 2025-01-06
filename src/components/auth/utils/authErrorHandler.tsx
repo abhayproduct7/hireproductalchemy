@@ -11,7 +11,7 @@ export const handleSignUpError = ({ error, onSignInClick }: HandleSignUpErrorPro
   // Parse the error body if it exists
   let errorBody;
   try {
-    errorBody = error.message && typeof error.message === 'string' 
+    errorBody = error.message && error.message.includes("{") 
       ? JSON.parse(error.message)
       : null;
   } catch {
@@ -20,8 +20,8 @@ export const handleSignUpError = ({ error, onSignInClick }: HandleSignUpErrorPro
 
   // Check for user already exists error
   const isUserExistsError = 
-    errorBody?.code === "user_already_exists" ||
-    error.message?.includes("User already registered");
+    (errorBody?.code === "user_already_exists") ||
+    (error.message?.includes("User already registered"));
 
   if (isUserExistsError) {
     toast({
