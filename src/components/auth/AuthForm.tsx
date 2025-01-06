@@ -53,28 +53,38 @@ export const AuthForm = () => {
     };
   }, [navigate, returnTo]);
 
+  const handleError = (error: Error) => {
+    console.error("Auth error:", error);
+    if (error.message.includes("User already registered")) {
+      toast({
+        title: "Account Already Exists",
+        description: "Please sign in instead of signing up.",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Authentication Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Auth
       supabaseClient={supabase}
       appearance={{ theme: ThemeSupa }}
       theme="light"
       providers={[]}
-      onError={(error) => {
-        console.error("Auth error:", error);
-        if (error.message.includes("User already registered")) {
-          toast({
-            title: "Account Already Exists",
-            description: "Please sign in instead of signing up.",
-            variant: "destructive",
-          });
-        } else {
-          toast({
-            title: "Authentication Error",
-            description: error.message,
-            variant: "destructive",
-          });
-        }
+      localization={{
+        variables: {
+          sign_in: {
+            email_label: "Email",
+            password_label: "Password",
+          },
+        },
       }}
+      onAuthError={handleError}
     />
   );
 };
