@@ -10,58 +10,45 @@ const Logo = () => {
         xmlns="http://www.w3.org/2000/svg"
         className="flex-shrink-0"
       >
-        {/* Neural network inspired background */}
+        {/* Gradient background */}
         <defs>
-          <linearGradient id="neuralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0F4C35" stopOpacity="0.1" />
-            <stop offset="100%" stopColor="#1A1A1A" stopOpacity="0.1" />
+          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#0F4C35" />
+            <stop offset="100%" stopColor="#1B5E40" />
           </linearGradient>
         </defs>
         
-        {/* Background circle with gradient */}
-        <circle 
-          cx="16" 
-          cy="16" 
-          r="15" 
-          fill="url(#neuralGradient)"
-          stroke="#1A1A1A"
-          strokeWidth="1"
+        {/* Main hexagonal shape */}
+        <path
+          d="M16 4 L26 10 L26 22 L16 28 L6 22 L6 10 Z"
+          fill="url(#logoGradient)"
+          opacity="0.9"
         />
 
-        {/* Abstract neural network connections */}
+        {/* Connecting lines representing AI/neural networks */}
         <path
-          d="M8 12 Q16 8 24 12 Q16 16 8 20 Q16 24 24 20"
-          fill="none"
-          stroke="#0F4C35"
+          d="M16 8 L22 12 M16 8 L10 12 M16 24 L22 20 M16 24 L10 20"
+          stroke="white"
           strokeWidth="0.75"
-          strokeLinecap="round"
           opacity="0.6"
         />
 
-        {/* Main logo shape - abstract P */}
-        <path
-          d="M12 10 C16 10 20 12 20 16 C20 20 16 22 12 22 L12 10"
-          fill="none"
-          stroke="#1A1A1A"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+        {/* Central node */}
+        <circle
+          cx="16"
+          cy="16"
+          r="4"
+          fill="white"
+          opacity="0.9"
         />
 
-        {/* Secondary shape - abstract H */}
-        <path
-          d="M16 14 L22 14 M19 11 L19 20"
-          fill="none"
-          stroke="#0F4C35"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        {/* Decorative nodes */}
-        <circle cx="12" cy="10" r="1" fill="#1A1A1A" />
-        <circle cx="22" cy="14" r="1" fill="#0F4C35" />
-        <circle cx="12" cy="22" r="1" fill="#1A1A1A" />
+        {/* Smaller nodes */}
+        <circle cx="16" cy="8" r="2" fill="white" opacity="0.7" />
+        <circle cx="22" cy="12" r="2" fill="white" opacity="0.7" />
+        <circle cx="22" cy="20" r="2" fill="white" opacity="0.7" />
+        <circle cx="16" cy="24" r="2" fill="white" opacity="0.7" />
+        <circle cx="10" cy="20" r="2" fill="white" opacity="0.7" />
+        <circle cx="10" cy="12" r="2" fill="white" opacity="0.7" />
       </svg>
       <div className="text-lg font-semibold">
         <span className="text-primary">Product</span>
