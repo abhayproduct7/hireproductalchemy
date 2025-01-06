@@ -18,8 +18,7 @@ export const useSkills = (applicationId: string | null) => {
       }
 
       try {
-        const skillsData = await skillsService.fetchSkills(applicationId);
-        const skills = skillsData.map(item => item.skills.name);
+        const skills = await skillsService.fetchSkills(applicationId);
         setState({ skills, isLoadingSkills: false });
       } catch (error) {
         console.error('Error fetching skills:', error);

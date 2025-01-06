@@ -1,16 +1,17 @@
 import { supabase } from "@/integrations/supabase/client";
-import { SkillsResponse } from "./types";
+import { CandidateSkill } from "./types";
 
 export const skillsService = {
-  async fetchSkills(applicationId: string): Promise<SkillsResponse[]> {
+  async fetchSkills(applicationId: string): Promise<string[]> {
     const { data, error } = await supabase
       .from('candidate_skills')
-      .select('skills(id, name)')
+      .select('skills(name)')
       .eq('application_id', applicationId);
     
     if (error) throw error;
     
-    return data as SkillsResponse[];
+    // Transform the response to get just the skill names
+    return (data as CandidateSkill[]).map(item => item.skills.name);
   },
 
   async addSkill(applicationId: string, skillName: string) {
