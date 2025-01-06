@@ -53,23 +53,6 @@ export const AuthForm = () => {
     };
   }, [navigate, returnTo]);
 
-  const handleError = (error: Error) => {
-    console.error("Auth error:", error);
-    if (error.message.includes("User already registered")) {
-      toast({
-        title: "Account Already Exists",
-        description: "Please sign in instead of signing up.",
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Authentication Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
-  };
-
   return (
     <Auth
       supabaseClient={supabase}
@@ -84,7 +67,6 @@ export const AuthForm = () => {
           },
         },
       }}
-      onAuthError={handleError}
     />
   );
 };
