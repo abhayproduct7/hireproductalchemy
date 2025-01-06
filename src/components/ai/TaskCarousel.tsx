@@ -46,7 +46,7 @@ export const TaskCarousel = () => {
           slidesToScroll: 1,
         }}
         plugins={[Autoplay(autoplayOptions)]}
-        className="h-[42px] overflow-hidden"
+        className="h-[46px] overflow-hidden"
       >
         <CarouselContent className="-mt-1">
           {TASKS.map((task, index) => (
