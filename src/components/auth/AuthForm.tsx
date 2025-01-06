@@ -46,7 +46,7 @@ export const AuthForm = () => {
         },
       }}
       providers={["google"]}
-      redirectTo={`${window.location.origin}/login`}
+      redirectTo="https://ae82674f-facd-4030-8450-06fd05686c12.lovableproject.com/login"
       localization={{
         variables: {
           sign_in: {
