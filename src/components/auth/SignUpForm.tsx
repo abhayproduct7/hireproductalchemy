@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { UserTypeSelector } from "./UserTypeSelector";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Info } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { handleSignUpError } from "./utils/authErrorHandler";
+import { PasswordRequirements } from "./PasswordRequirements";
+import { SignUpFormFields } from "./SignUpFormFields";
 
 interface SignUpFormProps {
   setView: (view: "sign_in" | "sign_up") => void;
@@ -22,8 +21,6 @@ export const SignUpForm = ({ setView }: SignUpFormProps) => {
   const requirements = [
     { met: password.length >= 6, text: "At least 6 characters long" },
   ];
-
-  const showRequirements = password.length > 0;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,27 +56,7 @@ export const SignUpForm = ({ setView }: SignUpFormProps) => {
     });
 
     if (error) {
-      if (error.message.includes("User already registered")) {
-        toast({
-          title: "Account Already Exists",
-          description: "This email is already registered. Please sign in instead.",
-          action: (
-            <Button 
-              variant="outline" 
-              onClick={() => setView("sign_in")}
-              className="ml-2"
-            >
-              Sign In
-            </Button>
-          ),
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: error.message,
-          variant: "destructive",
-        });
-      }
+      handleSignUpError({ error, onSignInClick: () => setView("sign_in") });
     } else {
       toast({
         title: "Success",
@@ -95,48 +72,17 @@ export const SignUpForm = ({ setView }: SignUpFormProps) => {
     <form onSubmit={handleSubmit} className="space-y-6">
       <UserTypeSelector userType={userType} onUserTypeChange={setUserType} />
       
-      <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
+      <SignUpFormFields
+        email={email}
+        password={password}
+        onEmailChange={setEmail}
+        onPasswordChange={setPassword}
+      />
 
-      <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
-        <Input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-
-      {showRequirements && (
-        <Alert variant="info" className="animate-fade-in">
-          <Info className="h-4 w-4" />
-          <AlertDescription>
-            <div className="text-sm mt-1">
-              Password requirements:
-              <ul className="list-disc pl-5 mt-1 space-y-1">
-                {requirements.map((req, index) => (
-                  <li
-                    key={index}
-                    className={req.met ? "text-green-600" : "text-blue-600"}
-                  >
-                    {req.text} {req.met && "✓"}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </AlertDescription>
-        </Alert>
-      )}
+      <PasswordRequirements
+        requirements={requirements}
+        show={password.length > 0}
+      />
 
       <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading ? "Signing up..." : "Sign Up"}
