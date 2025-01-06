@@ -10,8 +10,7 @@ export const skillsService = {
     
     if (error) throw error;
     
-    // Explicitly type and transform the response
-    return (data as unknown as SkillsResponse[]);
+    return data as SkillsResponse[];
   },
 
   async addSkill(applicationId: string, skillName: string) {
