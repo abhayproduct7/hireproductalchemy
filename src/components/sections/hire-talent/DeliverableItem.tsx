@@ -1,5 +1,4 @@
 import { LucideIcon } from "lucide-react";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
 interface DeliverableItemProps {
   title: string;
@@ -29,19 +28,17 @@ export const DeliverableItem = ({
         </div>
       </div>
 
-      {/* Title with hover card for description */}
-      <HoverCard>
-        <HoverCardTrigger asChild>
-          <h3 className="text-base font-medium text-secondary group-hover:text-secondary/80 transition-colors cursor-pointer">
-            {title}
-          </h3>
-        </HoverCardTrigger>
-        <HoverCardContent className="w-80 p-4">
+      {/* Content container with hover effect */}
+      <div className="overflow-hidden">
+        <h3 className="text-base font-medium text-secondary group-hover:text-secondary/80 transition-colors cursor-pointer mb-1">
+          {title}
+        </h3>
+        <div className="h-0 group-hover:h-auto opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out">
           <p className="text-sm text-gray-600 leading-relaxed">
             {description}
           </p>
-        </HoverCardContent>
-      </HoverCard>
+        </div>
+      </div>
     </div>
   );
 };
