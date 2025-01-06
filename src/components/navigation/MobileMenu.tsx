@@ -38,12 +38,6 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
         >
           Join Our Community
         </Link>
-        <Link
-          to="/resources"
-          className="block px-3 py-2 rounded-md text-sm nav-link"
-        >
-          Resources
-        </Link>
         {session ? (
           <>
             <Link

@@ -36,9 +36,6 @@ export const DesktopNav = () => {
       <Link to="/join" className="nav-link text-sm">
         Join Our Community
       </Link>
-      <Link to="/resources" className="nav-link text-sm">
-        Resources
-      </Link>
       {session ? (
         <DropdownMenu>
           <DropdownMenuTrigger className="focus:outline-none">
