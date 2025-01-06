@@ -46,6 +46,13 @@ export const HeroSection = () => {
                       <p className="text-sm text-gray-600">8+ years experience</p>
                     </div>
                   </div>
+                  {/* Product Tasks Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-3 h-3 bg-[#33C3F0] rounded-full"></div>
+                      <span className="text-sm font-medium text-gray-600">Product Tasks</span>
+                    </div>
+                  </div>
                   <div className="grid grid-cols-1 gap-2">
                     <div className="h-12 bg-[#33C3F0]/10 rounded-md p-2">
                       <div className="flex items-center">
