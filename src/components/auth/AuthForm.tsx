@@ -30,7 +30,14 @@ export const AuthForm = () => {
         redirectTo: `${window.location.origin}/login`,
       });
 
-      if (error) throw error;
+      if (error) {
+        toast({
+          title: "Error",
+          description: error.message || "Failed to send reset instructions",
+          variant: "destructive",
+        });
+        return;
+      }
 
       toast({
         title: "Success",
