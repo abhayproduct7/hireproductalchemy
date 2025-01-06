@@ -17,14 +17,11 @@ export const useContactForm = () => {
   const handleSubmit = async ({ name, email, companyName }: ContactFormData) => {
     setIsLoading(true);
     try {
-      // First, check if the user already exists in profiles
-      const { data: existingProfile } = await supabase
-        .from("profiles")
-        .select("id")
-        .eq("email", email)
-        .single();
+      // First, check if the email exists in auth system
+      const { data: { users }, error: adminError } = await supabase.auth.admin.listUsers();
+      const existingUser = users?.find(user => user.email === email);
 
-      if (existingProfile) {
+      if (existingUser) {
         toast({
           title: "Account already exists",
           description: "Please sign in with your existing account.",
@@ -81,6 +78,17 @@ export const useContactForm = () => {
         return true;
       } catch (authError: any) {
         console.error("Auth error:", authError);
+        
+        // Check if user already exists in auth system
+        if (authError.message?.includes("User already registered")) {
+          toast({
+            title: "Account already exists",
+            description: "Please sign in with your existing account.",
+          });
+          navigate("/login");
+          return true;
+        }
+        
         toast({
           title: "Error",
           description: "There was a problem creating your account.",
