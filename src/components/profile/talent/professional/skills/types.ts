@@ -3,10 +3,11 @@ export interface Skill {
   name: string;
 }
 
-export interface CandidateSkill {
-  application_id: string;
+export interface CandidateSkillResponse {
   skill_id: string;
-  skills: Skill;
+  skills: {
+    name: string;
+  };
 }
 
 export interface SkillsState {

@@ -1,5 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
-import { CandidateSkill } from "./types";
+import { CandidateSkillResponse } from "./types";
 
 export const skillsService = {
   async fetchSkills(applicationId: string): Promise<string[]> {
@@ -16,7 +16,7 @@ export const skillsService = {
     if (error) throw error;
     
     // Transform the response to get just the skill names
-    return (data as CandidateSkill[]).map(item => item.skills.name);
+    return (data as CandidateSkillResponse[]).map(item => item.skills.name);
   },
 
   async addSkill(applicationId: string, skillName: string) {
