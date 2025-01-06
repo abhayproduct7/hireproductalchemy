@@ -57,11 +57,11 @@ export const ScheduleForm = ({ defaultValues, onSubmit, isLoading }: ScheduleFor
               <FormLabel>Availability Type</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-background">
                     <SelectValue placeholder="Select availability type" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent className="bg-background border shadow-lg z-50">
                   <SelectItem value="full_time">Full Time</SelectItem>
                   <SelectItem value="part_time">Part Time / Fractional</SelectItem>
                 </SelectContent>
@@ -95,7 +95,7 @@ export const ScheduleForm = ({ defaultValues, onSubmit, isLoading }: ScheduleFor
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent className="bg-background border shadow-lg p-0 z-50" align="start">
                   <Calendar
                     mode="single"
                     selected={field.value}
