@@ -17,14 +17,14 @@ export const useContactForm = () => {
   const handleSubmit = async ({ name, email, companyName }: ContactFormData) => {
     setIsLoading(true);
     try {
-      // First, check if the user already exists in auth
-      const { data: existingUser, error: userCheckError } = await supabase
+      // First, check if the user already exists in profiles
+      const { data: existingProfile } = await supabase
         .from("profiles")
         .select("id")
         .eq("email", email)
         .single();
 
-      if (existingUser) {
+      if (existingProfile) {
         toast({
           title: "Account already exists",
           description: "Please sign in with your existing account.",
@@ -33,7 +33,7 @@ export const useContactForm = () => {
         return true;
       }
 
-      // If no existing user, submit contact form data
+      // Submit contact form data to producthire table
       const { error: contactError } = await supabase
         .from("producthire")
         .insert([{ name, email, "company name": companyName }]);
@@ -44,39 +44,30 @@ export const useContactForm = () => {
         // Generate a secure random password that meets minimum requirements
         const securePassword = `PH${crypto.randomUUID().slice(0, 10)}!2024`;
         
-        // Try to create the user account
+        // Create the user account in auth
         const { data: authData, error: authError } = await supabase.auth.signUp({
           email,
           password: securePassword,
           options: {
             data: {
               full_name: name,
+              user_type: "employer",
             },
           },
         });
 
-        if (authError) {
-          if (authError.message.includes("User already registered")) {
-            toast({
-              title: "Account already exists",
-              description: "Please sign in with your existing account.",
-            });
-            navigate("/login");
-            return true;
-          }
-          throw authError;
-        }
+        if (authError) throw authError;
 
-        // Only try to update profile if we successfully created a new user
+        // The profile will be automatically created by the handle_new_user trigger
+        // We just need to update it with additional information
         if (authData?.user?.id) {
           const { error: profileError } = await supabase
             .from("profiles")
-            .upsert({
-              id: authData.user.id,
-              full_name: name,
+            .update({
               company_name: companyName,
               user_type: "employer",
-            });
+            })
+            .eq("id", authData.user.id);
 
           if (profileError) throw profileError;
         }
@@ -89,13 +80,12 @@ export const useContactForm = () => {
         navigate("/login");
         return true;
       } catch (authError: any) {
-        if (!authError.message?.includes("User already registered")) {
-          toast({
-            title: "Authentication error",
-            description: "There was a problem creating your account.",
-            variant: "destructive",
-          });
-        }
+        console.error("Auth error:", authError);
+        toast({
+          title: "Error",
+          description: "There was a problem creating your account.",
+          variant: "destructive",
+        });
         return false;
       }
     } catch (error: any) {
