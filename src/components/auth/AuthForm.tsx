@@ -31,10 +31,8 @@ export const AuthForm = () => {
             anchor: {
               color: '#1B5E40',
               cursor: 'pointer',
-              selectors: {
-                '[href="#auth-sign-up"]': {
-                  display: 'none',
-                }
+              '&[href="#auth-sign-up"]': {
+                display: 'none',
               }
             },
             message: {
