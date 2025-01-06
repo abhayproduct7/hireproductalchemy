@@ -2,21 +2,15 @@ import { Clock } from "lucide-react";
 
 export const DeliveredResults = () => {
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in mt-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-2">
           <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-          <span className="text-sm font-medium text-gray-600">Delivered Results</span>
+          <span className="text-sm font-medium text-gray-600">AI-Enhanced Results</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1">
-            <Clock className="h-3 w-3 text-muted-foreground" />
-            <span className="text-xs text-muted-foreground line-through">24h</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Clock className="h-3 w-3 text-green-500" />
-            <span className="text-xs text-green-500 font-medium">8h</span>
-          </div>
+          <Clock className="h-3 w-3 text-green-500" />
+          <span className="text-xs text-green-500 font-medium">10h</span>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2">
