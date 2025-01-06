@@ -47,20 +47,20 @@ export const DesktopNav = () => {
           >
             <DropdownMenuItem 
               onClick={() => navigate("/profile")}
-              className="hover:bg-muted focus:bg-muted"
+              className="hover:bg-secondary/10 focus:bg-secondary/10 text-gray-700 hover:text-secondary"
             >
               My Profile
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={() => navigate("/dashboard")}
-              className="hover:bg-muted focus:bg-muted"
+              className="hover:bg-secondary/10 focus:bg-secondary/10 text-gray-700 hover:text-secondary"
             >
               Dashboard
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-gray-100" />
             <DropdownMenuItem 
               onClick={handleLogout}
-              className="hover:bg-muted focus:bg-muted"
+              className="hover:bg-secondary/10 focus:bg-secondary/10 text-gray-700 hover:text-secondary"
             >
               Log Out
             </DropdownMenuItem>
