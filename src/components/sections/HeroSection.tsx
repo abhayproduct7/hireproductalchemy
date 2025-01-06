@@ -49,7 +49,7 @@ export const HeroSection = () => {
                     <div className="absolute inset-0 bg-secondary/5 transform transition-transform group-hover:scale-105"></div>
                     <div className="relative flex items-center justify-center gap-3">
                       <div className="w-5 h-5">
-                        <Logo />
+                        <Logo showText={false} />
                       </div>
                       <span className="text-secondary text-sm">
                         Our Product Specialists Enhanced by AI Assistant

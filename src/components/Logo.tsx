@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
-const Logo = () => {
+interface LogoProps {
+  showText?: boolean;
+}
+
+const Logo = ({ showText = true }: LogoProps) => {
   return (
     <div className="flex items-center gap-2">
       <svg
@@ -50,10 +54,12 @@ const Logo = () => {
         <circle cx="10" cy="20" r="2" fill="white" opacity="0.7" />
         <circle cx="10" cy="12" r="2" fill="white" opacity="0.7" />
       </svg>
-      <div className="text-lg font-semibold">
-        <span className="text-primary">Product</span>
-        <span className="text-secondary">Hire</span>
-      </div>
+      {showText && (
+        <div className="text-lg font-semibold">
+          <span className="text-primary">Product</span>
+          <span className="text-secondary">Hire</span>
+        </div>
+      )}
     </div>
   );
 };
