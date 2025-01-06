@@ -27,7 +27,10 @@ export const DesktopNav = () => {
 
   return (
     <div className="hidden md:flex items-center space-x-8">
-      <Link to="/hire" className="nav-link text-sm">
+      <Link
+        to="/hire"
+        className="btn-secondary px-4 py-2 rounded-md font-medium text-sm"
+      >
         Hire Talent
       </Link>
       <Link to="/join" className="nav-link text-sm">
