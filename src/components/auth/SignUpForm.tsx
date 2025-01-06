@@ -44,28 +44,58 @@ export const SignUpForm = ({ setView }: SignUpFormProps) => {
     }
 
     setIsLoading(true);
-    
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          user_type: userType,
-        },
-      },
-    });
 
-    if (error) {
-      handleSignUpError({ error, onSignInClick: () => setView("sign_in") });
-    } else {
-      toast({
-        title: "Success",
-        description: "Please check your email to verify your account",
+    try {
+      // First check if user exists in profiles
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('id, user_type')
+        .eq('email', email)
+        .single();
+
+      if (profileData) {
+        // If user exists in profiles but with different user type, show error
+        if (profileData.user_type && profileData.user_type !== userType) {
+          toast({
+            title: "Account type mismatch",
+            description: `You already have an account as a ${profileData.user_type}. Please sign in instead.`,
+            variant: "destructive",
+          });
+          setView("sign_in");
+          return;
+        }
+      }
+      
+      // Proceed with sign up
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            user_type: userType,
+          },
+        },
       });
-      setView("sign_in");
+
+      if (error) {
+        handleSignUpError({ error, onSignInClick: () => setView("sign_in") });
+      } else {
+        toast({
+          title: "Success",
+          description: "Please check your email to verify your account",
+        });
+        setView("sign_in");
+      }
+    } catch (error: any) {
+      console.error("Signup error:", error);
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
   return (
