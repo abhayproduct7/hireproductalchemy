@@ -3,8 +3,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -25,9 +23,9 @@ export const AIAgentSection = () => {
             </p>
           </div>
           
-          <div className="flex gap-8 items-center justify-center">
+          <div className="flex gap-4 items-center justify-center">
             {/* Hexagonal AI Logo */}
-            <div className="w-48 h-48 relative animate-pulse">
+            <div className="w-64 h-64 relative animate-pulse">
               <svg
                 viewBox="0 0 32 32"
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +71,7 @@ export const AIAgentSection = () => {
             </div>
 
             {/* Vertical Carousel */}
-            <div className="w-64">
+            <div className="w-48">
               <Carousel
                 opts={{
                   align: "start",
@@ -87,56 +85,56 @@ export const AIAgentSection = () => {
               >
                 <CarouselContent className="-mt-2 h-[200px]">
                   <CarouselItem className="pt-2 basis-full">
-                    <div className="bg-background rounded-lg p-3 border border-secondary/10">
+                    <div className="bg-background rounded-lg p-2 border border-secondary/10">
                       <div className="flex items-center gap-2">
-                        <div className="bg-secondary/10 w-6 h-6 rounded-full flex items-center justify-center">
+                        <div className="bg-secondary/10 w-5 h-5 rounded-full flex items-center justify-center">
                           <FileEdit className="h-3 w-3 text-secondary" />
                         </div>
                         <div>
-                          <h3 className="text-sm font-medium">Create PRD</h3>
-                          <p className="text-xs text-muted-foreground">Get help writing requirements</p>
+                          <h3 className="text-xs font-medium">Create PRD</h3>
+                          <p className="text-[10px] text-muted-foreground">Get help writing requirements</p>
                         </div>
                       </div>
                     </div>
                   </CarouselItem>
 
                   <CarouselItem className="pt-2 basis-full">
-                    <div className="bg-background rounded-lg p-3 border border-secondary/10">
+                    <div className="bg-background rounded-lg p-2 border border-secondary/10">
                       <div className="flex items-center gap-2">
-                        <div className="bg-secondary/10 w-6 h-6 rounded-full flex items-center justify-center">
+                        <div className="bg-secondary/10 w-5 h-5 rounded-full flex items-center justify-center">
                           <Target className="h-3 w-3 text-secondary" />
                         </div>
                         <div>
-                          <h3 className="text-sm font-medium">Validate Work</h3>
-                          <p className="text-xs text-muted-foreground">Review deliverables</p>
+                          <h3 className="text-xs font-medium">Validate Work</h3>
+                          <p className="text-[10px] text-muted-foreground">Review deliverables</p>
                         </div>
                       </div>
                     </div>
                   </CarouselItem>
 
                   <CarouselItem className="pt-2 basis-full">
-                    <div className="bg-background rounded-lg p-3 border border-secondary/10">
+                    <div className="bg-background rounded-lg p-2 border border-secondary/10">
                       <div className="flex items-center gap-2">
-                        <div className="bg-secondary/10 w-6 h-6 rounded-full flex items-center justify-center">
+                        <div className="bg-secondary/10 w-5 h-5 rounded-full flex items-center justify-center">
                           <Rocket className="h-3 w-3 text-secondary" />
                         </div>
                         <div>
-                          <h3 className="text-sm font-medium">Plan Features</h3>
-                          <p className="text-xs text-muted-foreground">Brainstorm and prioritize</p>
+                          <h3 className="text-xs font-medium">Plan Features</h3>
+                          <p className="text-[10px] text-muted-foreground">Brainstorm and prioritize</p>
                         </div>
                       </div>
                     </div>
                   </CarouselItem>
 
                   <CarouselItem className="pt-2 basis-full">
-                    <div className="bg-background rounded-lg p-3 border border-secondary/10">
+                    <div className="bg-background rounded-lg p-2 border border-secondary/10">
                       <div className="flex items-center gap-2">
-                        <div className="bg-secondary/10 w-6 h-6 rounded-full flex items-center justify-center">
+                        <div className="bg-secondary/10 w-5 h-5 rounded-full flex items-center justify-center">
                           <MessagesSquare className="h-3 w-3 text-secondary" />
                         </div>
                         <div>
-                          <h3 className="text-sm font-medium">Get Feedback</h3>
-                          <p className="text-xs text-muted-foreground">Improve decisions</p>
+                          <h3 className="text-xs font-medium">Get Feedback</h3>
+                          <p className="text-[10px] text-muted-foreground">Improve decisions</p>
                         </div>
                       </div>
                     </div>
