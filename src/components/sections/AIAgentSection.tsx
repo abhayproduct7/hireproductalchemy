@@ -8,7 +8,10 @@ export const AIAgentSection = () => {
       <div className="container max-w-6xl mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           <div>
-            <span className="text-sm font-medium text-secondary/80 mb-4 block">PRODUCT MANAGEMENT AI</span>
+            <div className="flex items-center gap-2 mb-4">
+              <Brain className="w-4 h-4 text-secondary" />
+              <span className="text-sm font-medium text-secondary/80">PRODUCT MANAGEMENT AI</span>
+            </div>
             <h2 className="text-4xl font-bold mb-4">AI Assist for Product Managers</h2>
             <p className="text-lg text-muted-foreground">
               Powered by advanced AI, our assistant ensures successful product development by supporting both hiring teams and product talent
