@@ -5,7 +5,12 @@ export const skillsService = {
   async fetchSkills(applicationId: string): Promise<string[]> {
     const { data, error } = await supabase
       .from('candidate_skills')
-      .select('skills(name)')
+      .select(`
+        skill_id,
+        skills (
+          name
+        )
+      `)
       .eq('application_id', applicationId);
     
     if (error) throw error;
