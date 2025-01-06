@@ -43,14 +43,15 @@ export const TaskCarousel = () => {
           align: "start",
           loop: true,
           axis: "y",
-          dragFree: false,
+          dragFree: true,
+          direction: "ttb",
         }}
         plugins={[Autoplay(autoplayOptions)]}
-        className="h-[120px] overflow-hidden"
+        className="h-[160px] overflow-hidden"
       >
-        <CarouselContent className="-mt-2 space-y-2">
+        <CarouselContent className="-mt-2 flex flex-col gap-2">
           {TASKS.map((task, index) => (
-            <CarouselItem key={index} className="pt-0 h-[40px]">
+            <CarouselItem key={index} className="pt-0 min-h-[40px]">
               <TaskCard {...task} />
             </CarouselItem>
           ))}

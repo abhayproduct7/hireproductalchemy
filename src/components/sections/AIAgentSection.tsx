@@ -17,7 +17,7 @@ export const AIAgentSection = () => {
           <div className="flex items-center justify-center">
             <div className="relative flex items-center">
               <AILogo className="w-40 h-40" />
-              <div className="absolute left-32">
+              <div className="absolute left-44">
                 <TaskCarousel />
               </div>
             </div>
