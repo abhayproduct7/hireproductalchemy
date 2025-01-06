@@ -33,28 +33,44 @@ export const ContactSection = () => {
 
       if (contactError) throw contactError;
 
-      // Then create the user account
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email,
-        password: crypto.randomUUID(), // Generate a random password
-        options: {
-          data: {
-            full_name: name,
+      // Check if user already exists
+      const { data: userData, error: userCheckError } = await supabase
+        .auth.admin.getUserByEmail(email);
+
+      if (userCheckError && userCheckError.message !== "User not found") {
+        throw userCheckError;
+      }
+
+      let userId;
+
+      if (!userData) {
+        // Create new user if they don't exist
+        const { data: authData, error: authError } = await supabase.auth.signUp({
+          email,
+          password: crypto.randomUUID(), // Generate a random password
+          options: {
+            data: {
+              full_name: name,
+            },
           },
-        },
-      });
+        });
 
-      if (authError) throw authError;
+        if (authError) throw authError;
+        userId = authData.user?.id;
+      } else {
+        userId = userData.id;
+      }
 
-      // Update the user's profile with company name and user type
-      if (authData.user) {
+      // Update the profile if we have a user ID
+      if (userId) {
         const { error: profileError } = await supabase
           .from('profiles')
-          .update({ 
+          .upsert({ 
+            id: userId,
+            full_name: name,
             company_name: companyName,
             user_type: 'employer'
-          })
-          .eq('id', authData.user.id);
+          });
 
         if (profileError) throw profileError;
       }
@@ -71,8 +87,19 @@ export const ContactSection = () => {
       
       // Redirect to login page
       navigate("/login");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Detailed error:", error);
+      
+      // Handle user already exists error gracefully
+      if (error.message?.includes("User already registered")) {
+        toast({
+          title: "Account already exists",
+          description: "Please try signing in instead.",
+        });
+        navigate("/login");
+        return;
+      }
+
       toast({
         title: "Something went wrong",
         description: "Please try again later.",
