@@ -59,11 +59,27 @@ export const SignUpForm = ({ setView }: SignUpFormProps) => {
     });
 
     if (error) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
+      if (error.message.includes("User already registered")) {
+        toast({
+          title: "Account Already Exists",
+          description: "This email is already registered. Please sign in instead.",
+          action: (
+            <Button 
+              variant="outline" 
+              onClick={() => setView("sign_in")}
+              className="ml-2"
+            >
+              Sign In
+            </Button>
+          ),
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     } else {
       toast({
         title: "Success",
