@@ -48,8 +48,7 @@ export const AuthForm = () => {
               email_label: "Email",
               password_label: "Password",
               button_label: "Sign In",
-              link_text: "Already have an account? Sign in",
-              password_label_forgotten: "Forgot your password?",
+              password_label_forgotten: "Forgot Password?",
             },
           },
         }}
