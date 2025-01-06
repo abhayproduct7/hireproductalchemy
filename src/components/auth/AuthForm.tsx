@@ -50,12 +50,15 @@ export const AuthForm = () => {
             },
           },
         }}
-        onViewChange={({ view }) => {
-          if (view === "sign_up") {
-            setView("sign_up");
-          }
-        }}
-      />
+      >
+        <button
+          type="button"
+          onClick={() => setView("sign_up")}
+          className="w-full text-center text-sm text-accent hover:underline mt-4"
+        >
+          Don't have an account? Sign up
+        </button>
+      </Auth>
     </div>
   );
 };
