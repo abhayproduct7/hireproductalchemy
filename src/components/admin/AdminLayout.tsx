@@ -1,27 +1,74 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const supabase = useSupabaseClient();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkAdminStatus = async () => {
-      const { data: adminData, error } = await supabase
-        .from('admin_users')
-        .select('user_id')
-        .maybeSingle();
+      try {
+        // First get the current user
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        
+        if (userError) {
+          console.error('Error getting current user:', userError);
+          throw userError;
+        }
 
-      if (error || !adminData) {
-        console.log('Not an admin user, redirecting...');
-        navigate('/');
+        console.log('Current user ID:', user?.id);
+
+        // Then check admin status
+        const { data: adminData, error: adminError } = await supabase
+          .from('admin_users')
+          .select('user_id')
+          .eq('user_id', user?.id)
+          .maybeSingle();
+
+        console.log('Admin check result:', { adminData, adminError });
+
+        if (adminError) {
+          console.error('Error checking admin status:', adminError);
+          throw adminError;
+        }
+
+        if (!adminData) {
+          console.log('Not an admin user, redirecting...');
+          toast({
+            title: "Access Denied",
+            description: "You don't have permission to access the admin dashboard.",
+            variant: "destructive",
+          });
+          navigate('/');
+        }
+      } catch (error) {
+        console.error('Error in admin check:', error);
+        toast({
+          title: "Authentication Error",
+          description: "Please try logging in again.",
+          variant: "destructive",
+        });
+        navigate('/login');
+      } finally {
+        setIsLoading(false);
       }
     };
 
     checkAdminStatus();
-  }, [supabase, navigate]);
+  }, [supabase, navigate, toast]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
