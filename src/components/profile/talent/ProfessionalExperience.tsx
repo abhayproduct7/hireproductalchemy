@@ -6,7 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Upload } from "lucide-react";
+import { Loader2, Upload, Save } from "lucide-react";
 import { SkillsSection } from "./professional/SkillsSection";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -14,10 +14,12 @@ export const ProfessionalExperience = () => {
   const session = useSession();
   const { toast } = useToast();
   const [isUploading, setIsUploading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [applicationId, setApplicationId] = useState<string | null>(null);
   const [professionalSummary, setProfessionalSummary] = useState("");
   const [yearsExperience, setYearsExperience] = useState<number | null>(null);
+  const [currentCvUrl, setCurrentCvUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -29,14 +31,16 @@ export const ProfessionalExperience = () => {
           .from('candidate_applications')
           .select('id, professional_summary, years_experience, cv_url')
           .eq('user_id', session.user.id)
-          .maybeSingle();
+          .limit(1)
+          .single();
 
         if (error) throw error;
 
         if (applicationData) {
           setApplicationId(applicationData.id);
-          setProfessionalSummary(applicationData.professional_summary);
-          setYearsExperience(applicationData.years_experience);
+          setProfessionalSummary(applicationData.professional_summary || '');
+          setYearsExperience(applicationData.years_experience || null);
+          setCurrentCvUrl(applicationData.cv_url);
         }
         setIsLoading(false);
       } catch (error) {
@@ -78,6 +82,8 @@ export const ProfessionalExperience = () => {
         .from('assets')
         .getPublicUrl(filePath);
 
+      setCurrentCvUrl(publicUrl);
+
       const { error: updateError } = await supabase
         .from('candidate_applications')
         .update({ cv_url: publicUrl })
@@ -89,6 +95,8 @@ export const ProfessionalExperience = () => {
         title: "Success",
         description: "Your CV has been uploaded successfully.",
       });
+      
+      setCvFile(null);
     } catch (error) {
       console.error('Upload error:', error);
       toast({
@@ -98,6 +106,37 @@ export const ProfessionalExperience = () => {
       });
     } finally {
       setIsUploading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!session?.user) return;
+
+    setIsSaving(true);
+    try {
+      const { error } = await supabase
+        .from('candidate_applications')
+        .update({
+          professional_summary: professionalSummary,
+          years_experience: yearsExperience,
+        })
+        .eq('user_id', session.user.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Your profile has been updated successfully.",
+      });
+    } catch (error) {
+      console.error('Save error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save changes. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -121,17 +160,36 @@ export const ProfessionalExperience = () => {
             <Input
               type="number"
               value={yearsExperience || ''}
-              disabled
+              onChange={(e) => setYearsExperience(Number(e.target.value))}
+              placeholder="Enter your years of experience"
             />
           </div>
           <div className="space-y-2">
             <Label>Summary</Label>
             <Textarea
               value={professionalSummary}
-              disabled
+              onChange={(e) => setProfessionalSummary(e.target.value)}
+              placeholder="Write a summary of your professional experience..."
               className="min-h-[150px]"
             />
           </div>
+          <Button 
+            onClick={handleSave} 
+            disabled={isSaving}
+            className="w-full"
+          >
+            {isSaving ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save className="mr-2 h-4 w-4" />
+                Save Changes
+              </>
+            )}
+          </Button>
         </CardContent>
       </Card>
 
@@ -140,6 +198,11 @@ export const ProfessionalExperience = () => {
           <CardTitle>Resume / CV</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          {currentCvUrl && (
+            <div className="text-sm text-muted-foreground mb-4">
+              Current CV: <a href={currentCvUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">View CV</a>
+            </div>
+          )}
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor="cv">Upload CV</Label>
             <Input
