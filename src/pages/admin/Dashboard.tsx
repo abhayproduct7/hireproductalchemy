@@ -18,37 +18,81 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch employers with their requirements by joining through user_id
-      const { data: employerData, error: employerError } = await supabase
+      // First fetch employer profiles
+      const { data: employerProfiles, error: employerProfileError } = await supabase
         .from('profiles')
-        .select(`
-          *,
-          employer_requirements:requirements(*)
-        `)
+        .select('*')
         .eq('user_type', 'employer');
-      
-      if (employerError) {
-        console.error('Error fetching employers:', employerError);
-      } else if (employerData) {
-        setEmployers(employerData);
+
+      if (employerProfileError) {
+        console.error('Error fetching employer profiles:', employerProfileError);
+        return;
       }
 
-      // Fetch talents with their profile information and related data
-      const { data: talentData, error: talentError } = await supabase
+      // Then fetch their requirements separately
+      if (employerProfiles) {
+        const employersWithRequirements = await Promise.all(
+          employerProfiles.map(async (employer) => {
+            const { data: requirements } = await supabase
+              .from('requirements')
+              .select('*')
+              .eq('user_id', employer.id);
+            return {
+              ...employer,
+              requirements: requirements || []
+            };
+          })
+        );
+        setEmployers(employersWithRequirements);
+      }
+
+      // First fetch all candidate applications
+      const { data: applications, error: applicationsError } = await supabase
         .from('candidate_applications')
-        .select(`
-          *,
-          talent_profile:profiles(*),
-          candidate_skills(
-            skills(name)
-          ),
-          work_experiences(*)
-        `);
-      
-      if (talentError) {
-        console.error('Error fetching talents:', talentError);
-      } else if (talentData) {
-        setTalents(talentData);
+        .select('*');
+
+      if (applicationsError) {
+        console.error('Error fetching applications:', applicationsError);
+        return;
+      }
+
+      if (applications) {
+        // Then fetch all related data for each application
+        const talentsWithDetails = await Promise.all(
+          applications.map(async (application) => {
+            const [
+              { data: profile },
+              { data: skills },
+              { data: experiences }
+            ] = await Promise.all([
+              // Get profile
+              supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', application.user_id)
+                .single(),
+              // Get skills
+              supabase
+                .from('candidate_skills')
+                .select('skills(name)')
+                .eq('application_id', application.id),
+              // Get work experiences
+              supabase
+                .from('work_experiences')
+                .select('*')
+                .eq('application_id', application.id)
+            ]);
+
+            return {
+              ...application,
+              profile,
+              skills: skills || [],
+              work_experiences: experiences || []
+            };
+          })
+        );
+
+        setTalents(talentsWithDetails);
       }
     };
 
@@ -82,7 +126,7 @@ const AdminDashboard = () => {
                     <TableCell>{employer.location || 'N/A'}</TableCell>
                     <TableCell>{employer.phone || 'N/A'}</TableCell>
                     <TableCell>
-                      {employer.employer_requirements?.map((req: any, index: number) => (
+                      {employer.requirements?.map((req: any, index: number) => (
                         <div key={req.id} className="mb-2">
                           <p><strong>Requirement {index + 1}:</strong></p>
                           <p>Type: {req.answers?.type || 'N/A'}</p>
@@ -122,9 +166,9 @@ const AdminDashboard = () => {
               <TableBody>
                 {talents.map((talent) => (
                   <TableRow key={talent.id}>
-                    <TableCell>{talent.talent_profile?.full_name}</TableCell>
-                    <TableCell>{talent.talent_profile?.email}</TableCell>
-                    <TableCell>{talent.talent_profile?.location || 'N/A'}</TableCell>
+                    <TableCell>{talent.profile?.full_name}</TableCell>
+                    <TableCell>{talent.profile?.email}</TableCell>
+                    <TableCell>{talent.profile?.location || 'N/A'}</TableCell>
                     <TableCell>{talent.years_experience} years</TableCell>
                     <TableCell>{talent.availability_type}</TableCell>
                     <TableCell>
@@ -141,7 +185,7 @@ const AdminDashboard = () => {
                       ) : 'N/A'}
                     </TableCell>
                     <TableCell>
-                      {talent.candidate_skills?.map((skill: any) => (
+                      {talent.skills?.map((skill: any) => (
                         <span key={skill.skills.name} className="inline-block bg-gray-100 rounded px-2 py-1 text-sm mr-1 mb-1">
                           {skill.skills.name}
                         </span>
