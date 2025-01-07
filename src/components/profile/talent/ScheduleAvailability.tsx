@@ -5,21 +5,21 @@ import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScheduleForm } from "./schedule/ScheduleForm";
 import type { ScheduleFormType } from "./schedule/types";
+import { Loader2 } from "lucide-react";
 
 export const ScheduleAvailability = () => {
   const session = useSession();
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [applicationId, setApplicationId] = useState<string | null>(null);
-
-  const defaultValues: ScheduleFormType = {
+  const [formData, setFormData] = useState<ScheduleFormType>({
     availability_type: "full_time",
     earliest_start_date: new Date(),
     preferred_schedule: {
       hoursPerWeek: "",
       timeZone: "",
     },
-  };
+  });
 
   useEffect(() => {
     const fetchSchedule = async () => {
@@ -34,34 +34,18 @@ export const ScheduleAvailability = () => {
 
         if (fetchError) throw fetchError;
 
-        if (!existingApp) {
-          const { data: newApp, error: insertError } = await supabase
-            .from("candidate_applications")
-            .insert({
-              user_id: session.user.id,
-              years_experience: 0,
-              professional_summary: "",
-              availability_type: defaultValues.availability_type,
-              earliest_start_date: defaultValues.earliest_start_date,
-              preferred_schedule: defaultValues.preferred_schedule,
-            })
-            .select("id")
-            .single();
-
-          if (insertError) throw insertError;
-          setApplicationId(newApp.id);
-          return;
+        if (existingApp) {
+          setApplicationId(existingApp.id);
+          setFormData({
+            availability_type: existingApp.availability_type || "full_time",
+            earliest_start_date: existingApp.earliest_start_date ? new Date(existingApp.earliest_start_date) : new Date(),
+            preferred_schedule: existingApp.preferred_schedule || {
+              hoursPerWeek: "",
+              timeZone: "",
+            },
+          });
         }
-
-        setApplicationId(existingApp.id);
-        if (existingApp.availability_type || existingApp.earliest_start_date || existingApp.preferred_schedule) {
-          defaultValues.availability_type = existingApp.availability_type;
-          defaultValues.earliest_start_date = existingApp.earliest_start_date ? new Date(existingApp.earliest_start_date) : new Date();
-          defaultValues.preferred_schedule = existingApp.preferred_schedule || {
-            hoursPerWeek: "",
-            timeZone: "",
-          };
-        }
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching schedule:", error);
         toast({
@@ -69,6 +53,7 @@ export const ScheduleAvailability = () => {
           description: "Failed to load schedule data. Please try again.",
           variant: "destructive",
         });
+        setIsLoading(false);
       }
     };
 
@@ -95,6 +80,7 @@ export const ScheduleAvailability = () => {
         title: "Success",
         description: "Your schedule has been updated.",
       });
+      setFormData(values);
     } catch (error) {
       console.error("Update error:", error);
       toast({
@@ -107,6 +93,14 @@ export const ScheduleAvailability = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -114,7 +108,7 @@ export const ScheduleAvailability = () => {
       </CardHeader>
       <CardContent>
         <ScheduleForm
-          defaultValues={defaultValues}
+          defaultValues={formData}
           onSubmit={onSubmit}
           isLoading={isLoading}
         />

@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Upload } from "lucide-react";
 import { SkillsSection } from "./professional/SkillsSection";
+import { Textarea } from "@/components/ui/textarea";
 
 export const ProfessionalExperience = () => {
   const session = useSession();
@@ -15,21 +16,29 @@ export const ProfessionalExperience = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [applicationId, setApplicationId] = useState<string | null>(null);
+  const [professionalSummary, setProfessionalSummary] = useState("");
+  const [yearsExperience, setYearsExperience] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchApplication = async () => {
       if (!session?.user) return;
 
       try {
-        const { data: applicationData } = await supabase
+        const { data: applicationData, error } = await supabase
           .from('candidate_applications')
-          .select('id')
+          .select('id, professional_summary, years_experience, cv_url')
           .eq('user_id', session.user.id)
           .maybeSingle();
 
+        if (error) throw error;
+
         if (applicationData) {
           setApplicationId(applicationData.id);
+          setProfessionalSummary(applicationData.professional_summary);
+          setYearsExperience(applicationData.years_experience);
         }
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching application:', error);
         toast({
@@ -37,6 +46,7 @@ export const ProfessionalExperience = () => {
           description: "Failed to load application data. Please try again.",
           variant: "destructive",
         });
+        setIsLoading(false);
       }
     };
 
@@ -91,8 +101,40 @@ export const ProfessionalExperience = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Professional Summary</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label>Years of Experience</Label>
+            <Input
+              type="number"
+              value={yearsExperience || ''}
+              disabled
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Summary</Label>
+            <Textarea
+              value={professionalSummary}
+              disabled
+              className="min-h-[150px]"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>Resume / CV</CardTitle>
