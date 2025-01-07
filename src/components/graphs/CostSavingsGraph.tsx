@@ -22,7 +22,7 @@ export const CostSavingsGraph = () => {
               <CircleDollarSign className="w-5 h-5 text-muted-foreground" />
               <span className="font-medium">Traditional Product Management</span>
             </div>
-            <span className="text-xl font-bold text-muted-foreground">$150,000</span>
+            <span className="text-xl font-bold text-muted-foreground">£150,000</span>
           </div>
           <Progress value={100} className="h-3 bg-muted" />
         </div>
@@ -33,7 +33,7 @@ export const CostSavingsGraph = () => {
               <TrendingDown className="w-5 h-5 text-primary" />
               <span className="font-medium">AI-Enhanced Product Management</span>
             </div>
-            <span className="text-xl font-bold text-primary">$90,000</span>
+            <span className="text-xl font-bold text-primary">£90,000</span>
           </div>
           <Progress value={60} className="h-3" />
           <div className="flex justify-end">
@@ -60,26 +60,26 @@ export const CostSavingsGraph = () => {
             
             <CollapsibleContent className="mt-4 space-y-4">
               <div className="text-sm space-y-3">
-                <h4 className="font-semibold">Traditional Product Management Costs (Per Quarter: $150,000):</h4>
+                <h4 className="font-semibold">Traditional Product Management Costs (Per Quarter: £150,000):</h4>
                 <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                  <li>Market Research & Analysis: $30,000</li>
-                  <li>Requirements Documentation: $25,000</li>
-                  <li>Feature Planning & Prioritization: $35,000</li>
-                  <li>Stakeholder Management: $30,000</li>
-                  <li>Quality Assurance & Testing: $30,000</li>
+                  <li>Market Research & Analysis: £30,000</li>
+                  <li>Requirements Documentation: £25,000</li>
+                  <li>Feature Planning & Prioritization: £35,000</li>
+                  <li>Stakeholder Management: £30,000</li>
+                  <li>Quality Assurance & Testing: £30,000</li>
                 </ul>
                 
-                <h4 className="font-semibold mt-4">AI-Enhanced Product Management Costs (Per Quarter: $90,000):</h4>
+                <h4 className="font-semibold mt-4">AI-Enhanced Product Management Costs (Per Quarter: £90,000):</h4>
                 <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
-                  <li>Market Research & Analysis (AI-Assisted): $15,000</li>
-                  <li>Requirements Documentation (AI-Generated): $10,000</li>
-                  <li>Feature Planning & Prioritization (AI-Optimized): $25,000</li>
-                  <li>Stakeholder Management: $25,000</li>
-                  <li>Quality Assurance & Testing (AI-Enhanced): $15,000</li>
+                  <li>Market Research & Analysis (AI-Assisted): £15,000</li>
+                  <li>Requirements Documentation (AI-Generated): £10,000</li>
+                  <li>Feature Planning & Prioritization (AI-Optimized): £25,000</li>
+                  <li>Stakeholder Management: £25,000</li>
+                  <li>Quality Assurance & Testing (AI-Enhanced): £15,000</li>
                 </ul>
                 
                 <div className="mt-4 p-3 bg-primary/5 rounded-lg">
-                  <p className="text-primary font-medium">Quarterly Savings: $60,000</p>
+                  <p className="text-primary font-medium">Quarterly Savings: £60,000</p>
                   <p className="text-xs text-muted-foreground mt-1">
                     AI-enhanced product managers leverage advanced tools and automation to significantly reduce time spent on documentation, research, and analysis while improving accuracy. This allows them to focus more on strategic decision-making and stakeholder relationships, resulting in both cost savings and better product outcomes.
                   </p>
