@@ -32,9 +32,7 @@ const AdminDashboard = () => {
         .from('candidate_applications')
         .select(`
           *,
-          user:user_id (
-            profiles:profiles(*)
-          )
+          profiles!candidate_applications_user_id_fkey(*)
         `);
       
       if (talentData) {
@@ -89,7 +87,7 @@ const AdminDashboard = () => {
               <TableBody>
                 {talents.map((talent) => (
                   <TableRow key={talent.id}>
-                    <TableCell>{talent.user?.profiles?.full_name}</TableCell>
+                    <TableCell>{talent.profiles?.full_name}</TableCell>
                     <TableCell>{talent.years_experience} years</TableCell>
                     <TableCell>{talent.availability_type}</TableCell>
                     <TableCell>{new Date(talent.created_at).toLocaleDateString()}</TableCell>
