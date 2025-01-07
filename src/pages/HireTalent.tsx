@@ -6,6 +6,7 @@ import { FAQSection } from "@/components/sections/FAQSection";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { ProcessComparisonGraph } from "@/components/graphs/ProcessComparisonGraph";
 
 const HireTalent = () => {
   const navigate = useNavigate();
@@ -20,6 +21,14 @@ const HireTalent = () => {
       <Navigation />
       <HireTalentHero />
       <TrustedBrandsSection />
+      
+      {/* Process Comparison Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <ProcessComparisonGraph />
+        </div>
+      </section>
+
       <HowItWorksSection />
       
       {/* CTA Section */}
