@@ -6,7 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Upload, Save } from "lucide-react";
+import { Loader2, Upload } from "lucide-react";
 import { SkillsSection } from "./professional/SkillsSection";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -109,7 +109,8 @@ export const ProfessionalExperience = () => {
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!session?.user) return;
 
     setIsSaving(true);
@@ -126,7 +127,7 @@ export const ProfessionalExperience = () => {
 
       toast({
         title: "Success",
-        description: "Your profile has been updated successfully.",
+        description: "Your professional experience has been updated.",
       });
     } catch (error) {
       console.error('Save error:', error);
@@ -150,48 +151,33 @@ export const ProfessionalExperience = () => {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Professional Summary</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label>Years of Experience</Label>
-            <Input
-              type="number"
-              value={yearsExperience || ''}
-              onChange={(e) => setYearsExperience(Number(e.target.value))}
-              placeholder="Enter your years of experience"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label>Summary</Label>
-            <Textarea
-              value={professionalSummary}
-              onChange={(e) => setProfessionalSummary(e.target.value)}
-              placeholder="Write a summary of your professional experience..."
-              className="min-h-[150px]"
-            />
-          </div>
-          <Button 
-            onClick={handleSave} 
-            disabled={isSaving}
-            className="w-full"
-          >
-            {isSaving ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              <>
-                <Save className="mr-2 h-4 w-4" />
-                Save Changes
-              </>
-            )}
-          </Button>
-        </CardContent>
-      </Card>
+      <form onSubmit={handleSave} data-form-type="professional">
+        <Card>
+          <CardHeader>
+            <CardTitle>Professional Summary</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label>Years of Experience</Label>
+              <Input
+                type="number"
+                value={yearsExperience || ''}
+                onChange={(e) => setYearsExperience(Number(e.target.value))}
+                placeholder="Enter your years of experience"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Summary</Label>
+              <Textarea
+                value={professionalSummary}
+                onChange={(e) => setProfessionalSummary(e.target.value)}
+                placeholder="Write a summary of your professional experience..."
+                className="min-h-[150px]"
+              />
+            </div>
+          </CardContent>
+        </Card>
+      </form>
 
       <Card>
         <CardHeader>
