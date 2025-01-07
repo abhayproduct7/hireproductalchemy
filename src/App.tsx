@@ -13,6 +13,7 @@ import ThankYou from "./pages/ThankYou";
 import JoinCommunity from "./pages/JoinCommunity";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
+import AdminDashboard from "./pages/admin/Dashboard";
 import { ChatBot } from "./components/ChatBot";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -36,6 +37,7 @@ function App() {
               <Route path="/thank-you" element={<ThankYou />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/admin" element={<AdminDashboard />} />
             </Routes>
             <ChatBot />
             <Toaster />
