@@ -23,9 +23,9 @@ const JoinCommunity = () => {
             .from("candidate_applications")
             .select("id")
             .eq("user_id", session.user.id)
-            .single();
+            .maybeSingle();
 
-          if (error && error.code !== "PGRST116") {
+          if (error) {
             console.error("Error checking application:", error);
           }
 
