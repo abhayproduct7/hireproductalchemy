@@ -9,12 +9,12 @@ import { Label } from "@/components/ui/label";
 import { Loader2, Upload } from "lucide-react";
 import { SkillsSection } from "./professional/SkillsSection";
 import { Textarea } from "@/components/ui/textarea";
+import { CaseStudiesSection } from "./professional/case-studies/CaseStudiesSection";
 
 export const ProfessionalExperience = () => {
   const session = useSession();
   const { toast } = useToast();
   const [isUploading, setIsUploading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [applicationId, setApplicationId] = useState<string | null>(null);
   const [professionalSummary, setProfessionalSummary] = useState("");
@@ -113,7 +113,6 @@ export const ProfessionalExperience = () => {
     e.preventDefault();
     if (!session?.user) return;
 
-    setIsSaving(true);
     try {
       const { error } = await supabase
         .from('candidate_applications')
@@ -136,8 +135,6 @@ export const ProfessionalExperience = () => {
         description: "Failed to save changes. Please try again.",
         variant: "destructive",
       });
-    } finally {
-      setIsSaving(false);
     }
   };
 
@@ -224,18 +221,7 @@ export const ProfessionalExperience = () => {
       </Card>
 
       <SkillsSection applicationId={applicationId} />
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Case Studies</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground mb-4">
-            Share your product management case studies to showcase your experience.
-          </p>
-          <Button>Add Case Study</Button>
-        </CardContent>
-      </Card>
+      <CaseStudiesSection applicationId={applicationId} />
     </div>
   );
 };
