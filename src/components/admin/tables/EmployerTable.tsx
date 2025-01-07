@@ -26,10 +26,15 @@ export const EmployerTable = () => {
         return;
       }
 
+      console.log('Fetched employer profiles:', employerProfiles); // Debug log
+
       if (employerProfiles) {
         // Then fetch their requirements separately
         const employersWithRequirements = await Promise.all(
           employerProfiles.map(async (employer) => {
+            // Debug log the employer ID being queried
+            console.log('Fetching requirements for employer ID:', employer.id);
+            
             const { data: requirements, error: reqError } = await supabase
               .from('requirements')
               .select('*')
@@ -39,7 +44,8 @@ export const EmployerTable = () => {
               console.error('Error fetching requirements for employer:', employer.id, reqError);
             }
             
-            console.log('Requirements for employer:', employer.id, requirements); // Debug log
+            // Log the raw requirements data
+            console.log('Raw requirements data for employer:', employer.id, requirements);
             
             return {
               ...employer,
@@ -48,7 +54,7 @@ export const EmployerTable = () => {
           })
         );
 
-        console.log('Final employers data:', employersWithRequirements); // Debug log
+        console.log('Final employers data:', employersWithRequirements);
         setEmployers(employersWithRequirements);
       }
     };
