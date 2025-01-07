@@ -11,13 +11,10 @@ const data = [
 
 export const CostSavingsGraph = () => {
   return (
-    <div className="w-full h-[400px] bg-white rounded-xl p-6 shadow-sm">
-      <h3 className="text-2xl font-semibold text-primary mb-2">Cost Efficiency with AI</h3>
-      <p className="text-muted-foreground mb-6">
-        See how our AI-enhanced product managers help reduce project costs while maintaining quality
-      </p>
-      <ResponsiveContainer width="100%" height={300}>
-        <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+    <div className="w-full h-[300px] bg-white rounded-xl p-4">
+      <h3 className="text-xl font-semibold text-primary mb-1">Cost Efficiency with AI</h3>
+      <ResponsiveContainer width="100%" height={250}>
+        <AreaChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="traditional" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#E6EFE9" stopOpacity={0.8} />
@@ -30,36 +27,57 @@ export const CostSavingsGraph = () => {
           </defs>
           <XAxis
             dataKey="projects"
-            label={{ value: 'Number of Projects', position: 'bottom', offset: 0 }}
-            tick={{ fill: '#666' }}
+            label={{ value: 'PROJECTS', position: 'bottom', offset: -5, style: { fontSize: '12px' } }}
+            tick={{ fontSize: 11 }}
+            axisLine={{ stroke: '#666' }}
           />
           <YAxis
-            label={{ value: 'Relative Cost', angle: -90, position: 'left' }}
-            tick={{ fill: '#666' }}
+            label={{ 
+              value: 'COST', 
+              angle: -90, 
+              position: 'insideLeft',
+              offset: 10,
+              style: { fontSize: '12px' }
+            }}
+            tick={{ fontSize: 11 }}
+            axisLine={{ stroke: '#666' }}
           />
           <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
           <Tooltip
             contentStyle={{
               backgroundColor: 'white',
               border: '1px solid #e2e8f0',
-              borderRadius: '8px',
+              borderRadius: '4px',
+              fontSize: '12px',
             }}
           />
+          <text
+            x="70%"
+            y="15%"
+            textAnchor="middle"
+            style={{ 
+              fontFamily: 'serif',
+              fontSize: '16px',
+              fontStyle: 'italic'
+            }}
+          >
+            Savings from AI
+          </text>
           <Area
             type="monotone"
             dataKey="traditional"
+            name="Traditional Projects"
             stroke="#8B9D93"
             fillOpacity={1}
             fill="url(#traditional)"
-            name="Traditional Projects"
           />
           <Area
             type="monotone"
             dataKey="aiEnhanced"
+            name="AI-Enhanced Projects"
             stroke="#0F4C35"
             fillOpacity={1}
             fill="url(#aiEnhanced)"
-            name="AI-Enhanced Projects"
           />
         </AreaChart>
       </ResponsiveContainer>
