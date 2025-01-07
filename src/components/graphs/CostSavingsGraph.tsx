@@ -1,37 +1,48 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { CircleDollarSign, TrendingDown } from "lucide-react";
 
 export const CostSavingsGraph = () => {
   return (
-    <div className="w-full space-y-4 bg-white rounded-xl p-6">
+    <div className="w-full space-y-6 bg-white rounded-xl p-6">
       <h3 className="text-xl font-semibold text-primary mb-4">Cost Comparison</h3>
       
-      <div className="grid grid-cols-2 gap-4">
-        <Card className="border-2 border-muted p-4">
-          <CardContent className="p-0 space-y-3">
-            <div className="flex items-center justify-center bg-muted/20 rounded-full w-12 h-12">
-              <CircleDollarSign className="w-6 h-6 text-muted-foreground" />
+      <div className="space-y-8">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <CircleDollarSign className="w-5 h-5 text-muted-foreground" />
+              <span className="font-medium">Traditional Hiring</span>
             </div>
-            <h4 className="font-semibold text-lg">Traditional Hiring</h4>
-            <div className="text-3xl font-bold text-muted-foreground">$15,000</div>
-            <p className="text-sm text-muted-foreground">per month</p>
-          </CardContent>
-        </Card>
+            <span className="text-xl font-bold text-muted-foreground">$15,000</span>
+          </div>
+          <Progress value={100} className="h-3 bg-muted" />
+        </div>
 
-        <Card className="border-2 border-primary p-4 bg-primary/5">
-          <CardContent className="p-0 space-y-3">
-            <div className="flex items-center justify-center bg-primary/20 rounded-full w-12 h-12">
-              <TrendingDown className="w-6 h-6 text-primary" />
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <TrendingDown className="w-5 h-5 text-primary" />
+              <span className="font-medium">AI-Enhanced Hiring</span>
             </div>
-            <h4 className="font-semibold text-lg">AI-Enhanced</h4>
-            <div className="text-3xl font-bold text-primary">$6,000</div>
-            <p className="text-sm text-primary">per month</p>
-            <div className="mt-2 inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
+            <span className="text-xl font-bold text-primary">$6,000</span>
+          </div>
+          <Progress value={40} className="h-3" />
+          <div className="flex justify-end">
+            <div className="bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium">
               60% Cost Savings
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
+
+      <Card className="mt-6 border-2 border-muted bg-muted/5">
+        <CardContent className="p-4">
+          <p className="text-sm text-muted-foreground">
+            Switch to AI-enhanced hiring and save up to $9,000 per month while maintaining high-quality talent acquisition.
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 };
