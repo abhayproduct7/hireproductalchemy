@@ -1,4 +1,5 @@
 import { Zap, Users, Bot } from "lucide-react";
+import { CostSavingsGraph } from "../graphs/CostSavingsGraph";
 
 export const FeaturesSection = () => {
   const features = [
@@ -28,7 +29,7 @@ export const FeaturesSection = () => {
             Experience the future of product management talent acquisition
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {features.map((feature, index) => (
             <div
               key={index}
@@ -41,6 +42,10 @@ export const FeaturesSection = () => {
               <p className="text-gray-600 text-left leading-relaxed">{feature.description}</p>
             </div>
           ))}
+        </div>
+        
+        <div className="mt-16">
+          <CostSavingsGraph />
         </div>
       </div>
     </div>
