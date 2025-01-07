@@ -23,16 +23,26 @@ export const ScheduleAvailability = () => {
 
   useEffect(() => {
     const fetchSchedule = async () => {
-      if (!session?.user) return;
+      if (!session?.user) {
+        setIsLoading(false);
+        return;
+      }
 
       try {
+        console.log("Fetching schedule data for user:", session.user.id);
+        
         const { data: existingApp, error: fetchError } = await supabase
           .from("candidate_applications")
           .select("id, availability_type, earliest_start_date, preferred_schedule")
           .eq("user_id", session.user.id)
           .maybeSingle();
 
-        if (fetchError) throw fetchError;
+        if (fetchError) {
+          console.error("Error fetching schedule:", fetchError);
+          throw fetchError;
+        }
+
+        console.log("Fetched application data:", existingApp);
 
         if (existingApp) {
           setApplicationId(existingApp.id);
@@ -46,8 +56,8 @@ export const ScheduleAvailability = () => {
           });
         }
         setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching schedule:", error);
+      } catch (error: any) {
+        console.error("Error in fetchSchedule:", error);
         toast({
           title: "Error",
           description: "Failed to load schedule data. Please try again.",
@@ -65,14 +75,18 @@ export const ScheduleAvailability = () => {
 
     setIsLoading(true);
     try {
+      console.log("Updating schedule with values:", values);
+      
       const { error } = await supabase
         .from("candidate_applications")
-        .update({
+        .upsert({
+          user_id: session.user.id,
           availability_type: values.availability_type,
           earliest_start_date: values.earliest_start_date,
           preferred_schedule: values.preferred_schedule,
-        })
-        .eq("user_id", session.user.id);
+        }, {
+          onConflict: 'user_id'
+        });
 
       if (error) throw error;
 
@@ -81,7 +95,7 @@ export const ScheduleAvailability = () => {
         description: "Your schedule has been updated.",
       });
       setFormData(values);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Update error:", error);
       toast({
         title: "Error",
