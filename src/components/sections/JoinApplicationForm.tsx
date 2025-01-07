@@ -145,6 +145,7 @@ export const JoinApplicationForm = () => {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
+      <h1 className="text-3xl font-bold text-center mb-8">Complete Your Application</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormFields form={form} />
