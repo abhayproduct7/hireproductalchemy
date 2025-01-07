@@ -1,5 +1,6 @@
 import { Zap, Users, Bot } from "lucide-react";
 import { CostSavingsGraph } from "../graphs/CostSavingsGraph";
+import { ProcessComparisonGraph } from "../graphs/ProcessComparisonGraph";
 
 export const FeaturesSection = () => {
   const features = [
@@ -50,6 +51,7 @@ export const FeaturesSection = () => {
                 </div>
               </div>
             ))}
+            <ProcessComparisonGraph />
           </div>
 
           <div className="lg:sticky lg:top-8">
