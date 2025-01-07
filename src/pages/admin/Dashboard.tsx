@@ -18,32 +18,36 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch employers with their requirements
-      const { data: employerData } = await supabase
+      // Fetch employers with their requirements by joining through user_id
+      const { data: employerData, error: employerError } = await supabase
         .from('profiles')
         .select(`
           *,
-          requirements(*)
+          employer_requirements:requirements(*)
         `)
         .eq('user_type', 'employer');
       
-      if (employerData) {
+      if (employerError) {
+        console.error('Error fetching employers:', employerError);
+      } else if (employerData) {
         setEmployers(employerData);
       }
 
       // Fetch talents with their profile information and related data
-      const { data: talentData } = await supabase
+      const { data: talentData, error: talentError } = await supabase
         .from('candidate_applications')
         .select(`
           *,
-          profiles!candidate_applications_user_id_fkey(*),
-          candidate_skills!inner(
+          talent_profile:profiles(*),
+          candidate_skills(
             skills(name)
           ),
           work_experiences(*)
         `);
       
-      if (talentData) {
+      if (talentError) {
+        console.error('Error fetching talents:', talentError);
+      } else if (talentData) {
         setTalents(talentData);
       }
     };
@@ -78,7 +82,7 @@ const AdminDashboard = () => {
                     <TableCell>{employer.location || 'N/A'}</TableCell>
                     <TableCell>{employer.phone || 'N/A'}</TableCell>
                     <TableCell>
-                      {employer.requirements?.map((req: any, index: number) => (
+                      {employer.employer_requirements?.map((req: any, index: number) => (
                         <div key={req.id} className="mb-2">
                           <p><strong>Requirement {index + 1}:</strong></p>
                           <p>Type: {req.answers?.type || 'N/A'}</p>
@@ -118,9 +122,9 @@ const AdminDashboard = () => {
               <TableBody>
                 {talents.map((talent) => (
                   <TableRow key={talent.id}>
-                    <TableCell>{talent.profiles?.full_name}</TableCell>
-                    <TableCell>{talent.profiles?.email}</TableCell>
-                    <TableCell>{talent.profiles?.location || 'N/A'}</TableCell>
+                    <TableCell>{talent.talent_profile?.full_name}</TableCell>
+                    <TableCell>{talent.talent_profile?.email}</TableCell>
+                    <TableCell>{talent.talent_profile?.location || 'N/A'}</TableCell>
                     <TableCell>{talent.years_experience} years</TableCell>
                     <TableCell>{talent.availability_type}</TableCell>
                     <TableCell>
