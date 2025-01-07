@@ -36,10 +36,11 @@ export const ChatBot = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://duqgdyzstzpcydztyflb.functions.supabase.co/chat", {
+      const response = await fetch("https://duqgdyzstzpcydztyflb.supabase.co/functions/v1/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({ message: userMessage }),
       });
