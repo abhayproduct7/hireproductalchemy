@@ -23,9 +23,11 @@ export const FeaturesSection = () => {
   return (
     <div className="py-12 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-primary mb-2">Why Choose ProductHire</h2>
-          <p className="text-sm text-gray-600 max-w-xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+            Why Choose ProductHire
+          </h2>
+          <p className="text-base text-gray-600 max-w-xl mx-auto">
             Experience the future of product management talent acquisition
           </p>
         </div>
@@ -36,7 +38,7 @@ export const FeaturesSection = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-muted p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-start"
+                className="bg-muted p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-start"
               >
                 <div className="bg-gray-100 p-2 rounded-full mb-2">
                   <feature.icon className="h-3.5 w-3.5 text-secondary" />
