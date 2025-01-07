@@ -24,6 +24,7 @@ export const ScheduleAvailability = () => {
   useEffect(() => {
     const fetchSchedule = async () => {
       if (!session?.user) {
+        console.log("No user session found");
         setIsLoading(false);
         return;
       }
@@ -35,7 +36,8 @@ export const ScheduleAvailability = () => {
           .from("candidate_applications")
           .select("id, availability_type, earliest_start_date, preferred_schedule")
           .eq("user_id", session.user.id)
-          .maybeSingle();
+          .limit(1)
+          .single();
 
         if (fetchError) {
           console.error("Error fetching schedule:", fetchError);
@@ -55,7 +57,6 @@ export const ScheduleAvailability = () => {
             },
           });
         }
-        setIsLoading(false);
       } catch (error: any) {
         console.error("Error in fetchSchedule:", error);
         toast({
@@ -63,6 +64,7 @@ export const ScheduleAvailability = () => {
           description: "Failed to load schedule data. Please try again.",
           variant: "destructive",
         });
+      } finally {
         setIsLoading(false);
       }
     };
@@ -71,7 +73,10 @@ export const ScheduleAvailability = () => {
   }, [session, toast]);
 
   const onSubmit = async (values: ScheduleFormType) => {
-    if (!session?.user) return;
+    if (!session?.user) {
+      console.log("No user session found during submit");
+      return;
+    }
 
     setIsLoading(true);
     try {
