@@ -9,6 +9,24 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admin_users: {
+        Row: {
+          added_by: string | null
+          created_at: string | null
+          user_id: string
+        }
+        Insert: {
+          added_by?: string | null
+          created_at?: string | null
+          user_id: string
+        }
+        Update: {
+          added_by?: string | null
+          created_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       candidate_applications: {
         Row: {
           availability_type: Database["public"]["Enums"]["availability_type"]
