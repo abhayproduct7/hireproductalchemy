@@ -1,12 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = 'https://duqgdyzstzpcydztyflb.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1cWdkeXpzdHpwY3lkenR5ZmxiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU5MzEyMDYsImV4cCI6MjA1MTUwNzIwNn0.bpTq4bb3Hb6V9or72K-LxaA9tneVM7C53YAyaaOoJqo';
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error(
-    'Supabase URL and Anon Key are required! Please check your .env file.'
-  );
+  console.error('Missing Supabase URL or Anon Key');
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
@@ -14,12 +12,16 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     persistSession: true,
     autoRefreshToken: true,
     detectSessionInUrl: true,
-    storage: typeof window !== 'undefined' ? window.localStorage : undefined
-  }
+    flowType: 'pkce',
+    storage: window.localStorage,
+    storageKey: 'supabase.auth.token',
+  },
 });
 
-// Log connection status
+// Test the connection
 supabase.auth.onAuthStateChange((event, session) => {
-  console.log('Supabase Auth Event:', event);
-  console.log('Session exists:', !!session);
+  console.log('Supabase connection test - Auth event:', event);
+  if (session) {
+    console.log('Session exists:', !!session);
+  }
 });
