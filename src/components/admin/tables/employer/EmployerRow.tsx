@@ -13,13 +13,13 @@ interface EmployerRowProps {
 export const EmployerRow = ({ employer }: EmployerRowProps) => {
   return (
     <TableRow key={employer.id}>
-      <TableCell>{employer.full_name}</TableCell>
-      <TableCell>{employer.email}</TableCell>
-      <TableCell>{employer.company_name}</TableCell>
+      <TableCell>{employer.full_name || 'N/A'}</TableCell>
+      <TableCell>{employer.email || 'N/A'}</TableCell>
+      <TableCell>{employer.company_name || 'N/A'}</TableCell>
       <TableCell>{employer.location || 'N/A'}</TableCell>
       <TableCell>{employer.phone || 'N/A'}</TableCell>
       <TableCell>
-        {employer.requirements?.length > 0 ? (
+        {employer.requirements && employer.requirements.length > 0 ? (
           employer.requirements.map((req, index) => (
             <RequirementDisplay 
               key={req.id} 

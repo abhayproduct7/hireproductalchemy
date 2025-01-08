@@ -26,9 +26,15 @@ export const EmployerTable = () => {
       try {
         setLoading(true);
         
+        // First, get all employer profiles
         const { data: employerProfiles, error: employerError } = await supabase
           .from('profiles')
-          .select('*')
+          .select(`
+            *,
+            requirements (
+              *
+            )
+          `)
           .eq('user_type', 'employer');
 
         if (employerError) {
@@ -41,33 +47,10 @@ export const EmployerTable = () => {
           return;
         }
 
+        console.log('Fetched employer data:', employerProfiles);
+        
         if (employerProfiles) {
-          const employersWithRequirements = await Promise.all(
-            employerProfiles.map(async (employer) => {
-              const { data: requirements, error: reqError } = await supabase
-                .from('requirements')
-                .select('*')
-                .eq('user_id', employer.id)
-                .throwOnError();
-              
-              if (reqError) {
-                console.error('Error fetching requirements for employer:', employer.id, reqError);
-                toast({
-                  title: "Error",
-                  description: `Failed to fetch requirements for ${employer.full_name}`,
-                  variant: "destructive",
-                });
-              }
-              
-              return {
-                ...employer,
-                requirements: requirements || []
-              };
-            })
-          );
-
-          console.log('Final employers data:', employersWithRequirements);
-          setEmployers(employersWithRequirements);
+          setEmployers(employerProfiles);
         }
       } catch (error) {
         console.error('Error in fetchEmployers:', error);
