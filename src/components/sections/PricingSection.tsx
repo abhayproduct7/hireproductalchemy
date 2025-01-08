@@ -14,20 +14,22 @@ export const PricingSection = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {/* Part Time Plan */}
+          {/* Fractional Plan */}
           <Card className="relative border-2 hover:border-secondary transition-all duration-300">
             <CardHeader className="text-center pb-8 pt-6">
-              <h3 className="text-2xl font-bold">Part Time</h3>
+              <h3 className="text-2xl font-bold">Fractional</h3>
               <p className="text-muted-foreground mt-2">20 hours/week</p>
               <div className="mt-4">
-                <span className="text-4xl font-bold">£3,000</span>
-                <span className="text-muted-foreground">/month</span>
+                <p className="text-sm text-muted-foreground mb-2">Starting from</p>
+                <span className="text-4xl font-bold">£1,000</span>
+                <span className="text-muted-foreground">/week</span>
               </div>
+              <p className="text-sm text-secondary mt-3">Ideal for strategic product leadership</p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 {[
-                  "Dedicated part-time product manager",
+                  "Dedicated fractional product manager",
                   "20 hours of weekly coverage",
                   "Flexible scheduling",
                   "Full platform support",
@@ -55,9 +57,11 @@ export const PricingSection = () => {
               <h3 className="text-2xl font-bold">Full Time</h3>
               <p className="text-muted-foreground mt-2">40 hours/week</p>
               <div className="mt-4">
-                <span className="text-4xl font-bold">£5,000</span>
-                <span className="text-muted-foreground">/month</span>
+                <p className="text-sm text-muted-foreground mb-2">Starting from</p>
+                <span className="text-4xl font-bold">£1,750</span>
+                <span className="text-muted-foreground">/week</span>
               </div>
+              <p className="text-sm text-secondary mt-3">Perfect for end-to-end product ownership</p>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
