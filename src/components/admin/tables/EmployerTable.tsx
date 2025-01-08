@@ -23,7 +23,6 @@ export const EmployerTable = () => {
       try {
         setLoading(true);
         
-        // First, get all employer profiles
         const { data: employerProfiles, error: employerError } = await supabase
           .from('profiles')
           .select('*')
@@ -39,7 +38,6 @@ export const EmployerTable = () => {
           return;
         }
 
-        // Then fetch requirements for each employer
         if (employerProfiles) {
           const employersWithRequirements = await Promise.all(
             employerProfiles.map(async (employer) => {
@@ -56,11 +54,13 @@ export const EmployerTable = () => {
                 };
               }
 
-              // Transform the requirements data to match our types
-              const typedRequirements = requirements?.map(req => ({
-                ...req,
-                answers: req.answers as RequirementAnswers
-              })) || [];
+              const typedRequirements = requirements?.map(req => {
+                const answers = req.answers as unknown as RequirementAnswers;
+                return {
+                  ...req,
+                  answers
+                };
+              }) || [];
 
               return {
                 ...employer,
@@ -69,7 +69,6 @@ export const EmployerTable = () => {
             })
           );
 
-          console.log('Employers with requirements:', employersWithRequirements);
           setEmployers(employersWithRequirements);
         }
       } catch (error) {
