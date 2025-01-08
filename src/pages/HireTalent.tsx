@@ -7,7 +7,6 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ProcessComparisonGraph } from "@/components/graphs/ProcessComparisonGraph";
-import { TimelineComparisonGraph } from "@/components/graphs/TimelineComparisonGraph";
 
 const HireTalent = () => {
   const navigate = useNavigate();
@@ -27,7 +26,6 @@ const HireTalent = () => {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-4xl mx-auto space-y-20">
           <ProcessComparisonGraph />
-          <TimelineComparisonGraph />
         </div>
       </section>
 
