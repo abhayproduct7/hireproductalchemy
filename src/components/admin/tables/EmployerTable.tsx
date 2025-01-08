@@ -54,6 +54,8 @@ export const EmployerTable = () => {
               answers: req.answers as unknown as RequirementAnswers
             })) as Requirement[];
 
+            console.log('Fetched requirements for profile:', profile.id, typedRequirements); // Debug log
+
             return {
               ...profile,
               requirements: typedRequirements
@@ -61,7 +63,7 @@ export const EmployerTable = () => {
           })
         );
 
-        console.log('Fetched employers with requirements:', employersWithRequirements);
+        console.log('Fetched employers with requirements:', employersWithRequirements); // Debug log
         setEmployers(employersWithRequirements);
         
       } catch (error) {

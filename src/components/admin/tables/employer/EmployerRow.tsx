@@ -9,6 +9,8 @@ interface EmployerRowProps {
 }
 
 export const EmployerRow = ({ employer }: EmployerRowProps) => {
+  console.log('Employer requirements:', employer.requirements); // Debug log
+
   return (
     <TableRow key={employer.id}>
       <TableCell>{employer.full_name || 'N/A'}</TableCell>
