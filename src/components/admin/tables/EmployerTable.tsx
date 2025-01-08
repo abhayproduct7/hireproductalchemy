@@ -10,7 +10,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { EmployerRow } from "./employer/EmployerRow";
 import { Database } from "@/integrations/supabase/types";
-import { Profile, RequirementAnswers } from "./employer/types";
+import { Profile } from "./employer/types";
 
 export const EmployerTable = () => {
   const supabase = useSupabaseClient<Database>();
@@ -23,51 +23,43 @@ export const EmployerTable = () => {
       try {
         setLoading(true);
         
-        // First fetch employer profiles
+        // First fetch all employer profiles
         const { data: profiles, error: profilesError } = await supabase
           .from('profiles')
           .select('*')
           .eq('user_type', 'employer');
 
-        if (profilesError) {
-          console.error('Error fetching profiles:', profilesError);
-          toast({
-            title: "Error",
-            description: "Failed to fetch employer profiles",
-            variant: "destructive",
-          });
-          return;
-        }
+        if (profilesError) throw profilesError;
 
-        if (!profiles) {
-          setEmployers([]);
-          return;
-        }
-
-        // Then fetch requirements for each profile using their id
-        const employersWithData = await Promise.all(
-          profiles.map(async (profile) => {
+        // Then fetch requirements for each employer
+        const employersWithRequirements = await Promise.all(
+          (profiles || []).map(async (profile) => {
             const { data: requirements, error: reqError } = await supabase
               .from('requirements')
               .select('*')
-              .eq('user_id', profile.id);
+              .eq('user_id', profile.id)
+              .order('created_at', { ascending: false });
 
             if (reqError) {
-              console.error('Error fetching requirements for profile:', profile.id, reqError);
+              console.error('Error fetching requirements:', reqError);
               return {
                 ...profile,
                 requirements: []
               };
             }
 
-            // Properly type and transform the requirements data
-            const typedRequirements = requirements?.map(req => {
-              const answers = req.answers as unknown as RequirementAnswers;
-              return {
-                ...req,
-                answers
-              };
-            }) || [];
+            // Transform requirements to match the expected type
+            const typedRequirements = requirements.map(req => ({
+              ...req,
+              answers: req.answers as unknown as {
+                type: string;
+                industry: string;
+                duration: string;
+                experience: string;
+                timeline: string;
+                responsibilities: string;
+              }
+            }));
 
             return {
               ...profile,
@@ -76,10 +68,11 @@ export const EmployerTable = () => {
           })
         );
 
-        console.log('Fetched employers with data:', employersWithData);
-        setEmployers(employersWithData as Profile[]);
+        console.log('Fetched employers with requirements:', employersWithRequirements);
+        setEmployers(employersWithRequirements);
+        
       } catch (error) {
-        console.error('Error in fetchEmployers:', error);
+        console.error('Error:', error);
         toast({
           title: "Error",
           description: "Failed to fetch employer data",
