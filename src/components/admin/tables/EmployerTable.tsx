@@ -10,10 +10,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { EmployerRow } from "./employer/EmployerRow";
 import { Database } from "@/integrations/supabase/types";
-
-type Profile = Database["public"]["Tables"]["profiles"]["Row"] & {
-  requirements: Database["public"]["Tables"]["requirements"]["Row"][];
-};
+import { Profile } from "./employer/types";
 
 export const EmployerTable = () => {
   const supabase = useSupabaseClient<Database>();
@@ -29,12 +26,7 @@ export const EmployerTable = () => {
         // First, get all employer profiles
         const { data: employerProfiles, error: employerError } = await supabase
           .from('profiles')
-          .select(`
-            *,
-            requirements (
-              *
-            )
-          `)
+          .select('*')
           .eq('user_type', 'employer');
 
         if (employerError) {
@@ -47,10 +39,32 @@ export const EmployerTable = () => {
           return;
         }
 
-        console.log('Fetched employer data:', employerProfiles);
-        
+        // Then fetch requirements for each employer
         if (employerProfiles) {
-          setEmployers(employerProfiles);
+          const employersWithRequirements = await Promise.all(
+            employerProfiles.map(async (employer) => {
+              const { data: requirements, error: reqError } = await supabase
+                .from('requirements')
+                .select('*')
+                .eq('user_id', employer.id);
+
+              if (reqError) {
+                console.error('Error fetching requirements:', reqError);
+                return {
+                  ...employer,
+                  requirements: []
+                };
+              }
+
+              return {
+                ...employer,
+                requirements: requirements || []
+              };
+            })
+          );
+
+          console.log('Employers with requirements:', employersWithRequirements);
+          setEmployers(employersWithRequirements);
         }
       } catch (error) {
         console.error('Error in fetchEmployers:', error);

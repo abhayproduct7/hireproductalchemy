@@ -1,6 +1,4 @@
-import { Database } from "@/integrations/supabase/types";
-
-type Requirement = Database["public"]["Tables"]["requirements"]["Row"];
+import { Requirement } from "./types";
 
 interface RequirementDisplayProps {
   requirement: Requirement;

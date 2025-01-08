@@ -1,10 +1,6 @@
-import { Database } from "@/integrations/supabase/types";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { RequirementDisplay } from "./RequirementDisplay";
-
-type Profile = Database["public"]["Tables"]["profiles"]["Row"] & {
-  requirements: Database["public"]["Tables"]["requirements"]["Row"][];
-};
+import { Profile } from "./types";
 
 interface EmployerRowProps {
   employer: Profile;
