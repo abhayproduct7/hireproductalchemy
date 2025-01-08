@@ -60,18 +60,24 @@ export const EmployerTable = () => {
               };
             }
 
+            // Properly type and transform the requirements data
+            const typedRequirements = requirements?.map(req => {
+              const answers = req.answers as unknown as RequirementAnswers;
+              return {
+                ...req,
+                answers
+              };
+            }) || [];
+
             return {
               ...profile,
-              requirements: requirements?.map(req => ({
-                ...req,
-                answers: req.answers as RequirementAnswers
-              })) || []
+              requirements: typedRequirements
             };
           })
         );
 
         console.log('Fetched employers with data:', employersWithData);
-        setEmployers(employersWithData);
+        setEmployers(employersWithData as Profile[]);
       } catch (error) {
         console.error('Error in fetchEmployers:', error);
         toast({
