@@ -22,7 +22,8 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
 
         if (!sessionData.session) {
           console.log('No session found, redirecting to login');
-          throw new Error('No session found');
+          navigate('/login');
+          return;
         }
 
         const userId = sessionData.session.user.id;
@@ -50,6 +51,7 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             variant: "destructive",
           });
           navigate('/');
+          return;
         }
       } catch (error) {
         console.error('Error in admin check:', error);
