@@ -1,16 +1,17 @@
 import { Database } from "@/integrations/supabase/types";
 
 export interface RequirementAnswers {
-  "1": string; // type
-  "2": string; // industry
-  "3": string; // duration
-  "4": string; // responsibilities
-  "5": string; // experience
-  "6": string; // email
-  "7": string; // password
+  "1": string; // Role Type
+  "2": string; // Industry
+  "3": string; // Duration
+  "4": string; // Responsibilities
+  "5": string; // Experience
 }
 
-export type Requirement = Database["public"]["Tables"]["requirements"]["Row"] & {
+export type Requirement = {
+  id: number;
+  user_id: string | null;
+  created_at: string;
   answers: RequirementAnswers;
 };
 

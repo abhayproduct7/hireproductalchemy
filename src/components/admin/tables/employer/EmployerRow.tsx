@@ -1,5 +1,4 @@
 import { TableCell, TableRow } from "@/components/ui/table";
-import { RequirementDisplay } from "./RequirementDisplay";
 import { Profile } from "./types";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
@@ -9,10 +8,27 @@ interface EmployerRowProps {
 }
 
 export const EmployerRow = ({ employer }: EmployerRowProps) => {
-  console.log('Employer requirements:', employer.requirements); // Debug log
+  const formatRequirementAnswer = (answer: string, question: string) => {
+    if (!answer) return 'Not specified';
+    
+    switch (question) {
+      case '5': // Experience
+        return `${answer} years`;
+      default:
+        return answer;
+    }
+  };
+
+  const questionLabels = {
+    "1": "Role Type",
+    "2": "Industry",
+    "3": "Duration",
+    "4": "Responsibilities",
+    "5": "Experience Required"
+  };
 
   return (
-    <TableRow key={employer.id}>
+    <TableRow>
       <TableCell>{employer.full_name || 'N/A'}</TableCell>
       <TableCell>
         <Popover>
@@ -23,17 +39,18 @@ export const EmployerRow = ({ employer }: EmployerRowProps) => {
           </PopoverTrigger>
           <PopoverContent className="w-80">
             <div className="space-y-2">
-              <h4 className="font-medium">Requirement Details</h4>
+              <h4 className="font-medium">Requirements</h4>
               {employer.requirements && employer.requirements.length > 0 ? (
                 employer.requirements.map((req) => (
                   <div key={req.id} className="text-sm space-y-1 border-b pb-2 last:border-0">
-                    <p><strong>Type:</strong> {req.answers["1"]}</p>
-                    <p><strong>Industry:</strong> {req.answers["2"]}</p>
-                    <p><strong>Duration:</strong> {req.answers["3"]}</p>
-                    <p><strong>Responsibilities:</strong> {req.answers["4"]}</p>
-                    <p><strong>Experience Required:</strong> {req.answers["5"]}</p>
+                    {Object.entries(questionLabels).map(([key, label]) => (
+                      <p key={key}>
+                        <strong>{label}:</strong>{' '}
+                        {formatRequirementAnswer(req.answers[key as keyof typeof req.answers], key)}
+                      </p>
+                    ))}
                     <p className="text-xs text-gray-500">
-                      Submitted on: {new Date(req.created_at).toLocaleDateString()}
+                      Submitted: {new Date(req.created_at).toLocaleDateString()}
                     </p>
                   </div>
                 ))
@@ -48,17 +65,9 @@ export const EmployerRow = ({ employer }: EmployerRowProps) => {
       <TableCell>{employer.location || 'N/A'}</TableCell>
       <TableCell>{employer.phone || 'N/A'}</TableCell>
       <TableCell>
-        {employer.requirements && employer.requirements.length > 0 ? (
-          employer.requirements.map((req, index) => (
-            <RequirementDisplay 
-              key={req.id} 
-              requirement={req} 
-              index={index} 
-            />
-          ))
-        ) : (
-          <span className="text-gray-500">No requirements submitted</span>
-        )}
+        <span className="text-sm">
+          {employer.requirements.length} requirement{employer.requirements.length !== 1 ? 's' : ''} submitted
+        </span>
       </TableCell>
       <TableCell>{new Date(employer.created_at!).toLocaleDateString()}</TableCell>
     </TableRow>

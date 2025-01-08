@@ -8,9 +8,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { EmployerRow } from "./employer/EmployerRow";
 import { Database } from "@/integrations/supabase/types";
-import { Profile, Requirement, RequirementAnswers } from "./employer/types";
+import { EmployerRow } from "./employer/EmployerRow";
+import { Profile, Requirement } from "./employer/types";
 
 export const EmployerTable = () => {
   const supabase = useSupabaseClient<Database>();
@@ -37,8 +37,7 @@ export const EmployerTable = () => {
             const { data: requirements, error: reqError } = await supabase
               .from('requirements')
               .select('*')
-              .eq('user_id', profile.id)
-              .order('created_at', { ascending: false });
+              .eq('user_id', profile.id);
 
             if (reqError) {
               console.error('Error fetching requirements:', reqError);
@@ -48,22 +47,27 @@ export const EmployerTable = () => {
               };
             }
 
-            // Type cast the requirements to ensure they match our Requirement type
-            const typedRequirements = (requirements || []).map(req => ({
-              ...req,
-              answers: req.answers as unknown as RequirementAnswers
-            })) as Requirement[];
-
-            console.log('Fetched requirements for profile:', profile.id, typedRequirements); // Debug log
+            // Map requirements data
+            const mappedRequirements = requirements?.map(req => ({
+              id: req.id,
+              user_id: req.user_id,
+              created_at: req.created_at,
+              answers: {
+                "1": req.answers?.["1"] || '', // Role Type
+                "2": req.answers?.["2"] || '', // Industry
+                "3": req.answers?.["3"] || '', // Duration
+                "4": req.answers?.["4"] || '', // Responsibilities
+                "5": req.answers?.["5"] || '', // Experience
+              }
+            })) || [];
 
             return {
               ...profile,
-              requirements: typedRequirements
-            } as Profile;
+              requirements: mappedRequirements
+            };
           })
         );
 
-        console.log('Fetched employers with requirements:', employersWithRequirements); // Debug log
         setEmployers(employersWithRequirements);
         
       } catch (error) {
@@ -102,7 +106,7 @@ export const EmployerTable = () => {
                 <TableHead>Company</TableHead>
                 <TableHead>Location</TableHead>
                 <TableHead>Phone</TableHead>
-                <TableHead>Project Requirements</TableHead>
+                <TableHead>Requirements</TableHead>
                 <TableHead>Created At</TableHead>
               </TableRow>
             </TableHeader>
