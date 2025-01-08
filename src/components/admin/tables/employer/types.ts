@@ -14,6 +14,4 @@ export type Requirement = Database["public"]["Tables"]["requirements"]["Row"] & 
   answers: RequirementAnswers;
 };
 
-export type Profile = Database["public"]["Tables"]["profiles"]["Row"] & {
-  requirements: Requirement[];
-};
+export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
