@@ -23,13 +23,10 @@ export const EmployerTable = () => {
       try {
         setLoading(true);
         
-        // Fetch employer profiles with their requirements in a single query
+        // First fetch employer profiles
         const { data: profiles, error: profilesError } = await supabase
           .from('profiles')
-          .select(`
-            *,
-            requirements (*)
-          `)
+          .select('*')
           .eq('user_type', 'employer');
 
         if (profilesError) {
@@ -47,14 +44,31 @@ export const EmployerTable = () => {
           return;
         }
 
-        // Transform the data to match our types
-        const employersWithData = profiles.map((profile) => ({
-          ...profile,
-          requirements: (profile.requirements || []).map((req: any) => ({
-            ...req,
-            answers: req.answers as RequirementAnswers
-          }))
-        }));
+        // Then fetch requirements for each profile using their id
+        const employersWithData = await Promise.all(
+          profiles.map(async (profile) => {
+            const { data: requirements, error: reqError } = await supabase
+              .from('requirements')
+              .select('*')
+              .eq('user_id', profile.id);
+
+            if (reqError) {
+              console.error('Error fetching requirements for profile:', profile.id, reqError);
+              return {
+                ...profile,
+                requirements: []
+              };
+            }
+
+            return {
+              ...profile,
+              requirements: requirements?.map(req => ({
+                ...req,
+                answers: req.answers as RequirementAnswers
+              })) || []
+            };
+          })
+        );
 
         console.log('Fetched employers with data:', employersWithData);
         setEmployers(employersWithData);
