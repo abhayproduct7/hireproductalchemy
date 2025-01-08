@@ -23,13 +23,14 @@ export const EmployerTable = () => {
       try {
         setLoading(true);
         
-        const { data: employerProfiles, error: employerError } = await supabase
+        // Fetch employer profiles
+        const { data: profiles, error: profilesError } = await supabase
           .from('profiles')
           .select('*')
           .eq('user_type', 'employer');
 
-        if (employerError) {
-          console.error('Error fetching employers:', employerError);
+        if (profilesError) {
+          console.error('Error fetching profiles:', profilesError);
           toast({
             title: "Error",
             description: "Failed to fetch employer profiles",
@@ -38,39 +39,41 @@ export const EmployerTable = () => {
           return;
         }
 
-        if (employerProfiles) {
-          const employersWithRequirements = await Promise.all(
-            employerProfiles.map(async (employer) => {
-              const { data: requirements, error: reqError } = await supabase
-                .from('requirements')
-                .select('*')
-                .eq('user_id', employer.id);
-
-              if (reqError) {
-                console.error('Error fetching requirements:', reqError);
-                return {
-                  ...employer,
-                  requirements: []
-                };
-              }
-
-              const typedRequirements = requirements?.map(req => {
-                const answers = req.answers as unknown as RequirementAnswers;
-                return {
-                  ...req,
-                  answers
-                };
-              }) || [];
-
-              return {
-                ...employer,
-                requirements: typedRequirements
-              };
-            })
-          );
-
-          setEmployers(employersWithRequirements);
+        if (!profiles) {
+          setEmployers([]);
+          return;
         }
+
+        // Fetch requirements for each profile
+        const employersWithData = await Promise.all(
+          profiles.map(async (profile) => {
+            const { data: reqs, error: reqsError } = await supabase
+              .from('requirements')
+              .select('*')
+              .eq('user_id', profile.id);
+
+            if (reqsError) {
+              console.error('Error fetching requirements:', reqsError);
+              return {
+                ...profile,
+                requirements: []
+              };
+            }
+
+            const requirements = reqs?.map(req => ({
+              ...req,
+              answers: req.answers as RequirementAnswers
+            })) || [];
+
+            return {
+              ...profile,
+              requirements
+            };
+          })
+        );
+
+        console.log('Fetched employers with data:', employersWithData);
+        setEmployers(employersWithData);
       } catch (error) {
         console.error('Error in fetchEmployers:', error);
         toast({
