@@ -13,21 +13,26 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const checkAdminStatus = async () => {
       try {
-        // First get the current user
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
         
-        if (userError) {
-          console.error('Error getting current user:', userError);
-          throw userError;
+        if (sessionError) {
+          console.error('Session error:', sessionError);
+          throw sessionError;
         }
 
-        console.log('Current user ID:', user?.id);
+        if (!sessionData.session) {
+          console.log('No session found, redirecting to login');
+          throw new Error('No session found');
+        }
 
-        // Then check admin status
+        const userId = sessionData.session.user.id;
+        console.log('Current user ID:', userId);
+
+        // Check admin status
         const { data: adminData, error: adminError } = await supabase
           .from('admin_users')
           .select('user_id')
-          .eq('user_id', user?.id)
+          .eq('user_id', userId)
           .maybeSingle();
 
         console.log('Admin check result:', { adminData, adminError });
