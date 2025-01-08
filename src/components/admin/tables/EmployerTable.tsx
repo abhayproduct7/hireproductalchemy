@@ -22,6 +22,7 @@ export const EmployerTable = () => {
     const fetchEmployers = async () => {
       try {
         setLoading(true);
+        console.log("Fetching employers..."); // Debug log
         
         // First fetch all employer profiles
         const { data: profiles, error: profilesError } = await supabase
@@ -29,35 +30,44 @@ export const EmployerTable = () => {
           .select('*')
           .eq('user_type', 'employer');
 
-        if (profilesError) throw profilesError;
+        if (profilesError) {
+          console.error('Profiles error:', profilesError); // Debug log
+          throw profilesError;
+        }
+
+        console.log("Fetched profiles:", profiles); // Debug log
 
         // Then fetch requirements for each employer
         const employersWithRequirements = await Promise.all(
           (profiles || []).map(async (profile) => {
+            console.log("Fetching requirements for profile:", profile.id); // Debug log
+            
             const { data: requirements, error: reqError } = await supabase
               .from('requirements')
               .select('*')
               .eq('user_id', profile.id);
 
             if (reqError) {
-              console.error('Error fetching requirements:', reqError);
+              console.error('Requirements error for profile', profile.id, ':', reqError); // Debug log
               return {
                 ...profile,
                 requirements: []
               };
             }
 
+            console.log("Requirements for profile", profile.id, ":", requirements); // Debug log
+
             // Map requirements data
             const mappedRequirements = requirements?.map(req => ({
               id: req.id,
               user_id: req.user_id,
               created_at: req.created_at,
-              answers: {
-                "1": req.answers?.["1"] || '', // Role Type
-                "2": req.answers?.["2"] || '', // Industry
-                "3": req.answers?.["3"] || '', // Duration
-                "4": req.answers?.["4"] || '', // Responsibilities
-                "5": req.answers?.["5"] || '', // Experience
+              answers: req.answers as {
+                "1": string; // Role Type
+                "2": string; // Industry
+                "3": string; // Duration
+                "4": string; // Responsibilities
+                "5": string; // Experience
               }
             })) || [];
 
@@ -68,6 +78,7 @@ export const EmployerTable = () => {
           })
         );
 
+        console.log("Final employers data:", employersWithRequirements); // Debug log
         setEmployers(employersWithRequirements);
         
       } catch (error) {

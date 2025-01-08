@@ -8,6 +8,9 @@ interface EmployerRowProps {
 }
 
 export const EmployerRow = ({ employer }: EmployerRowProps) => {
+  console.log("Employer data:", employer); // Debug log
+  console.log("Requirements:", employer.requirements); // Debug log
+
   const formatRequirementAnswer = (answer: string, question: string) => {
     if (!answer) return 'Not specified';
     
@@ -66,7 +69,7 @@ export const EmployerRow = ({ employer }: EmployerRowProps) => {
       <TableCell>{employer.phone || 'N/A'}</TableCell>
       <TableCell>
         <span className="text-sm">
-          {employer.requirements.length} requirement{employer.requirements.length !== 1 ? 's' : ''} submitted
+          {employer.requirements ? employer.requirements.length : 0} requirement{employer.requirements && employer.requirements.length !== 1 ? 's' : ''} submitted
         </span>
       </TableCell>
       <TableCell>{new Date(employer.created_at!).toLocaleDateString()}</TableCell>
