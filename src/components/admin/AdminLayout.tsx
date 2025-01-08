@@ -13,38 +13,28 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const checkAdminStatus = async () => {
       try {
-        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         
-        if (sessionError) {
-          console.error('Session error:', sessionError);
-          throw sessionError;
-        }
+        if (sessionError) throw sessionError;
 
-        if (!sessionData.session) {
-          console.log('No session found, redirecting to login');
+        if (!session) {
+          console.log('No active session found');
           navigate('/login');
           return;
         }
 
-        const userId = sessionData.session.user.id;
-        console.log('Current user ID:', userId);
-
-        // Check admin status
+        console.log('Checking admin status for user:', session.user.id);
+        
         const { data: adminData, error: adminError } = await supabase
           .from('admin_users')
           .select('user_id')
-          .eq('user_id', userId)
+          .eq('user_id', session.user.id)
           .maybeSingle();
 
-        console.log('Admin check result:', { adminData, adminError });
-
-        if (adminError) {
-          console.error('Error checking admin status:', adminError);
-          throw adminError;
-        }
+        if (adminError) throw adminError;
 
         if (!adminData) {
-          console.log('Not an admin user, redirecting...');
+          console.log('User is not an admin');
           toast({
             title: "Access Denied",
             description: "You don't have permission to access the admin dashboard.",
@@ -53,6 +43,10 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           navigate('/');
           return;
         }
+
+        console.log('Admin access confirmed');
+        setIsLoading(false);
+
       } catch (error) {
         console.error('Error in admin check:', error);
         toast({
@@ -61,8 +55,6 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           variant: "destructive",
         });
         navigate('/login');
-      } finally {
-        setIsLoading(false);
       }
     };
 

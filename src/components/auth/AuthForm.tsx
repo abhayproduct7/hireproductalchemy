@@ -4,9 +4,54 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuthForm } from "@/hooks/useAuthForm";
 import { SignUpForm } from "./SignUpForm";
 import { AuthLinks } from "./AuthLinks";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 export const AuthForm = () => {
   const { view, setView, userType, setUserType } = useAuthForm();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("Auth state changed:", event, session);
+      
+      if (event === 'SIGNED_IN' && session) {
+        try {
+          // Check if user is admin
+          const { data: adminData, error: adminError } = await supabase
+            .from('admin_users')
+            .select('user_id')
+            .eq('user_id', session.user.id)
+            .maybeSingle();
+
+          if (adminError) {
+            throw adminError;
+          }
+
+          if (adminData) {
+            console.log("Admin user detected, redirecting to admin dashboard");
+            navigate('/admin/dashboard');
+          } else {
+            console.log("Regular user detected, redirecting to dashboard");
+            navigate('/dashboard');
+          }
+        } catch (error) {
+          console.error("Error checking admin status:", error);
+          toast({
+            title: "Error",
+            description: "An error occurred while signing in. Please try again.",
+            variant: "destructive",
+          });
+        }
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [navigate, toast]);
 
   if (view === "sign_up") {
     return <SignUpForm setView={setView} userType={userType} setUserType={setUserType} />;
