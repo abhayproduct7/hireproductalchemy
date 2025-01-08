@@ -10,16 +10,17 @@ export const RequirementDisplay = ({ requirement, index }: RequirementDisplayPro
     return null;
   }
 
+  const answers = requirement.answers;
+
   return (
     <div className="mb-2 p-2 bg-gray-50 rounded">
       <p className="font-medium mb-1">Requirement {index + 1}:</p>
       <ul className="list-disc pl-4 space-y-1 text-sm">
-        <li>Role Type: {requirement.answers.type || 'N/A'}</li>
-        <li>Industry: {requirement.answers.industry || 'N/A'}</li>
-        <li>Duration: {requirement.answers.duration || 'N/A'}</li>
-        <li>Experience: {requirement.answers.experience || 'N/A'} years</li>
-        <li>Timeline: {requirement.answers.timeline || 'N/A'}</li>
-        <li>Key Responsibilities: {requirement.answers.responsibilities || 'N/A'}</li>
+        <li>Role Type: {answers["1"] || 'N/A'}</li>
+        <li>Industry: {answers["2"] || 'N/A'}</li>
+        <li>Duration: {answers["3"] || 'N/A'}</li>
+        <li>Key Responsibilities: {answers["4"] || 'N/A'}</li>
+        <li>Experience: {answers["5"] || 'N/A'} years</li>
       </ul>
     </div>
   );

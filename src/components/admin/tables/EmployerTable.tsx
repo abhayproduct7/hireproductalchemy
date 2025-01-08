@@ -48,22 +48,9 @@ export const EmployerTable = () => {
               };
             }
 
-            // Transform requirements to match the expected type
-            const typedRequirements = requirements.map(req => ({
-              ...req,
-              answers: req.answers as unknown as {
-                type: string;
-                industry: string;
-                duration: string;
-                experience: string;
-                timeline: string;
-                responsibilities: string;
-              }
-            }));
-
             return {
               ...profile,
-              requirements: typedRequirements
+              requirements: requirements || []
             };
           })
         );
