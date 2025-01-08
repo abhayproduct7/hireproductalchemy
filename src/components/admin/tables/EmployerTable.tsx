@@ -10,7 +10,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { EmployerRow } from "./employer/EmployerRow";
 import { Database } from "@/integrations/supabase/types";
-import { Profile } from "./employer/types";
+import { Profile, RequirementAnswers } from "./employer/types";
 
 export const EmployerTable = () => {
   const supabase = useSupabaseClient<Database>();
@@ -56,9 +56,15 @@ export const EmployerTable = () => {
                 };
               }
 
+              // Transform the requirements data to match our types
+              const typedRequirements = requirements?.map(req => ({
+                ...req,
+                answers: req.answers as RequirementAnswers
+              })) || [];
+
               return {
                 ...employer,
-                requirements: requirements || []
+                requirements: typedRequirements
               };
             })
           );

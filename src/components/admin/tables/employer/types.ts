@@ -9,7 +9,7 @@ export interface RequirementAnswers {
   responsibilities: string;
 }
 
-export type Requirement = Database["public"]["Tables"]["requirements"]["Row"] & {
+export type Requirement = Omit<Database["public"]["Tables"]["requirements"]["Row"], "answers"> & {
   answers: RequirementAnswers;
 };
 
