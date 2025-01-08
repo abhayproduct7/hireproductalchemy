@@ -1,7 +1,14 @@
 import { ArrowRight, List, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export const RequirementsSection = () => {
+  const navigate = useNavigate();
+
+  const handleHireClick = () => {
+    navigate("/hire");
+  };
+
   return (
     <section className="py-24 bg-background">
       <div className="container max-w-6xl mx-auto px-4">
@@ -53,8 +60,8 @@ export const RequirementsSection = () => {
             <p className="text-muted-foreground">
               Subscribe to view our community of experienced product managers and find the perfect fit for your team
             </p>
-            <Button className="w-full group" size="lg">
-              View Available Product Managers
+            <Button onClick={handleHireClick} className="w-full group" size="lg">
+              Start Hiring Now
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </div>
