@@ -3,16 +3,21 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
+import { EmployerRow } from "./employer/EmployerRow";
+import { Database } from "@/integrations/supabase/types";
+
+type Profile = Database["public"]["Tables"]["profiles"]["Row"] & {
+  requirements: Database["public"]["Tables"]["requirements"]["Row"][];
+};
 
 export const EmployerTable = () => {
-  const supabase = useSupabaseClient();
-  const [employers, setEmployers] = useState<any[]>([]);
+  const supabase = useSupabaseClient<Database>();
+  const [employers, setEmployers] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
@@ -21,7 +26,6 @@ export const EmployerTable = () => {
       try {
         setLoading(true);
         
-        // First fetch employer profiles
         const { data: employerProfiles, error: employerError } = await supabase
           .from('profiles')
           .select('*')
@@ -38,7 +42,6 @@ export const EmployerTable = () => {
         }
 
         if (employerProfiles) {
-          // Then fetch their requirements separately
           const employersWithRequirements = await Promise.all(
             employerProfiles.map(async (employer) => {
               const { data: requirements, error: reqError } = await supabase
@@ -108,33 +111,7 @@ export const EmployerTable = () => {
             </TableHeader>
             <TableBody>
               {employers.map((employer) => (
-                <TableRow key={employer.id}>
-                  <TableCell>{employer.full_name}</TableCell>
-                  <TableCell>{employer.email}</TableCell>
-                  <TableCell>{employer.company_name}</TableCell>
-                  <TableCell>{employer.location || 'N/A'}</TableCell>
-                  <TableCell>{employer.phone || 'N/A'}</TableCell>
-                  <TableCell>
-                    {employer.requirements?.length > 0 ? (
-                      employer.requirements.map((req: any, index: number) => (
-                        <div key={req.id} className="mb-2 p-2 bg-gray-50 rounded">
-                          <p><strong>Requirement {index + 1}:</strong></p>
-                          <ul className="list-disc pl-4 space-y-1">
-                            <li>Role Type: {req.answers?.type || 'N/A'}</li>
-                            <li>Industry: {req.answers?.industry || 'N/A'}</li>
-                            <li>Duration: {req.answers?.duration || 'N/A'}</li>
-                            <li>Experience: {req.answers?.experience || 'N/A'} years</li>
-                            <li>Timeline: {req.answers?.timeline || 'N/A'}</li>
-                            <li>Key Responsibilities: {req.answers?.responsibilities || 'N/A'}</li>
-                          </ul>
-                        </div>
-                      ))
-                    ) : (
-                      <span className="text-gray-500">No requirements submitted</span>
-                    )}
-                  </TableCell>
-                  <TableCell>{new Date(employer.created_at).toLocaleDateString()}</TableCell>
-                </TableRow>
+                <EmployerRow key={employer.id} employer={employer} />
               ))}
             </TableBody>
           </Table>
