@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { createBrowserClient } from "@supabase/ssr";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Index from "./pages/Index";
@@ -19,12 +18,6 @@ import { Toaster } from "@/components/ui/toaster";
 
 // Create a client
 const queryClient = new QueryClient();
-
-// Initialize Supabase client
-const supabaseClient = createBrowserClient(
-  import.meta.env.VITE_SUPABASE_URL || '',
-  import.meta.env.VITE_SUPABASE_ANON_KEY || ''
-);
 
 function App() {
   return (
