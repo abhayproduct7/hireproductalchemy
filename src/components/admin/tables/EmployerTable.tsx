@@ -117,12 +117,16 @@ export const EmployerTable = () => {
                   <TableCell>
                     {employer.requirements?.length > 0 ? (
                       employer.requirements.map((req: any, index: number) => (
-                        <div key={req.id} className="mb-2">
+                        <div key={req.id} className="mb-2 p-2 bg-gray-50 rounded">
                           <p><strong>Requirement {index + 1}:</strong></p>
-                          <p>Type: {req.answers?.type || 'N/A'}</p>
-                          <p>Industry: {req.answers?.industry || 'N/A'}</p>
-                          <p>Duration: {req.answers?.duration || 'N/A'}</p>
-                          <p>Experience: {req.answers?.experience || 'N/A'} years</p>
+                          <ul className="list-disc pl-4 space-y-1">
+                            <li>Role Type: {req.answers?.type || 'N/A'}</li>
+                            <li>Industry: {req.answers?.industry || 'N/A'}</li>
+                            <li>Duration: {req.answers?.duration || 'N/A'}</li>
+                            <li>Experience: {req.answers?.experience || 'N/A'} years</li>
+                            <li>Timeline: {req.answers?.timeline || 'N/A'}</li>
+                            <li>Key Responsibilities: {req.answers?.responsibilities || 'N/A'}</li>
+                          </ul>
                         </div>
                       ))
                     ) : (
