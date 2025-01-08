@@ -4,14 +4,12 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { questions } from "@/components/sections/requirements/questions";
 import { QuestionDisplay } from "@/components/sections/requirements/QuestionDisplay";
-import { AuthDialog } from "@/components/sections/join-form/AuthDialog";
 
 export default function RequirementsCapture() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [currentAnswer, setCurrentAnswer] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showAuthDialog, setShowAuthDialog] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -42,16 +40,6 @@ export default function RequirementsCapture() {
     setCurrentAnswer("");
 
     if (currentQuestion === questions.length - 1) {
-      // Check if user is logged in
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        // Store answers in localStorage before showing auth dialog
-        localStorage.setItem('pendingRequirements', JSON.stringify(updatedAnswers));
-        setShowAuthDialog(true);
-        return;
-      }
-
       setIsSubmitting(true);
       try {
         const formattedAnswers = {
@@ -66,10 +54,7 @@ export default function RequirementsCapture() {
 
         const { error: requirementError } = await supabase
           .from('requirements')
-          .insert([{ 
-            answers: formattedAnswers,
-            user_id: session.user.id
-          }]);
+          .insert([{ answers: formattedAnswers }]);
 
         if (requirementError) throw requirementError;
 
@@ -120,10 +105,6 @@ export default function RequirementsCapture() {
           handlePrevious={handlePrevious}
           isSubmitting={isSubmitting}
           handleKeyPress={handleKeyPress}
-        />
-        <AuthDialog 
-          open={showAuthDialog} 
-          onOpenChange={setShowAuthDialog} 
         />
       </div>
     </div>
