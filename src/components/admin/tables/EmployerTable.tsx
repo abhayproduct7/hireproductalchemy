@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useNavigate } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -8,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { EmployerRow } from "./employer/EmployerRow";
 import { Database } from "@/integrations/supabase/types";
@@ -19,13 +17,13 @@ export const EmployerTable = () => {
   const [employers, setEmployers] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEmployers = async () => {
       try {
         setLoading(true);
         
+        // First fetch all employer profiles
         const { data: profiles, error: profilesError } = await supabase
           .from('profiles')
           .select('*')
@@ -33,8 +31,32 @@ export const EmployerTable = () => {
 
         if (profilesError) throw profilesError;
 
-        console.log('Fetched employers:', profiles);
-        setEmployers(profiles as Profile[]);
+        // Then fetch requirements for each employer
+        const employersWithRequirements = await Promise.all(
+          (profiles || []).map(async (profile) => {
+            const { data: requirements, error: reqError } = await supabase
+              .from('requirements')
+              .select('*')
+              .eq('user_id', profile.id)
+              .order('created_at', { ascending: false });
+
+            if (reqError) {
+              console.error('Error fetching requirements:', reqError);
+              return {
+                ...profile,
+                requirements: []
+              };
+            }
+
+            return {
+              ...profile,
+              requirements: requirements || []
+            };
+          })
+        );
+
+        console.log('Fetched employers with requirements:', employersWithRequirements);
+        setEmployers(employersWithRequirements);
         
       } catch (error) {
         console.error('Error:', error);
@@ -57,30 +79,28 @@ export const EmployerTable = () => {
 
   return (
     <section>
-      <h2 className="text-2xl font-bold mb-4">Registered Employers</h2>
+      <h2 className="text-2xl font-bold mb-4">Employer Enquiries</h2>
       {employers.length === 0 ? (
         <div className="bg-white shadow rounded-lg p-6 text-center">
-          No employers found
+          No employer enquiries found
         </div>
       ) : (
         <div className="bg-white shadow rounded-lg overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Name</TableHead>
                 <TableHead>Email</TableHead>
                 <TableHead>Company</TableHead>
                 <TableHead>Location</TableHead>
+                <TableHead>Phone</TableHead>
+                <TableHead>Project Requirements</TableHead>
                 <TableHead>Created At</TableHead>
-                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {employers.map((employer) => (
-                <EmployerRow 
-                  key={employer.id} 
-                  employer={employer}
-                  onViewDetails={() => navigate(`/admin/employers/${employer.id}`)}
-                />
+                <EmployerRow key={employer.id} employer={employer} />
               ))}
             </TableBody>
           </Table>

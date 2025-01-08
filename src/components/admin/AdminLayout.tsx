@@ -13,40 +13,39 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const checkAdminStatus = async () => {
       try {
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        // First get the current user
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
         
-        if (sessionError) throw sessionError;
-
-        if (!session) {
-          console.log('No active session found');
-          navigate('/login');
-          return;
+        if (userError) {
+          console.error('Error getting current user:', userError);
+          throw userError;
         }
 
-        console.log('Checking admin status for user:', session.user.id);
-        
+        console.log('Current user ID:', user?.id);
+
+        // Then check admin status
         const { data: adminData, error: adminError } = await supabase
           .from('admin_users')
           .select('user_id')
-          .eq('user_id', session.user.id)
+          .eq('user_id', user?.id)
           .maybeSingle();
 
-        if (adminError) throw adminError;
+        console.log('Admin check result:', { adminData, adminError });
+
+        if (adminError) {
+          console.error('Error checking admin status:', adminError);
+          throw adminError;
+        }
 
         if (!adminData) {
-          console.log('User is not an admin');
+          console.log('Not an admin user, redirecting...');
           toast({
             title: "Access Denied",
             description: "You don't have permission to access the admin dashboard.",
             variant: "destructive",
           });
           navigate('/');
-          return;
         }
-
-        console.log('Admin access confirmed');
-        setIsLoading(false);
-
       } catch (error) {
         console.error('Error in admin check:', error);
         toast({
@@ -55,6 +54,8 @@ export const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           variant: "destructive",
         });
         navigate('/login');
+      } finally {
+        setIsLoading(false);
       }
     };
 
