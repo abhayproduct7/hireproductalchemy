@@ -56,6 +56,7 @@ export default function RequirementsCapture() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [currentAnswer, setCurrentAnswer] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -89,32 +90,31 @@ export default function RequirementsCapture() {
     setCurrentAnswer("");
 
     if (currentQuestion === questions.length - 1) {
-      // Check if user is logged in
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        // Store answers in localStorage before redirecting
-        localStorage.setItem('pendingRequirements', JSON.stringify(updatedAnswers));
-        
-        toast({
-          title: "Almost there!",
-          description: "Please sign in or create an account to submit your requirements.",
-        });
-        
-        // Redirect to login page with return URL
-        navigate("/login?returnTo=/thank-you");
-        return;
-      }
-
+      setIsSubmitting(true);
       try {
-        const { error } = await supabase
-          .from("requirements")
+        // Get current user session
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        // Format answers for database
+        const formattedAnswers = {
+          type: updatedAnswers[1],
+          industry: updatedAnswers[2],
+          duration: updatedAnswers[3],
+          responsibilities: updatedAnswers[4],
+          timeline: updatedAnswers[5],
+          email: updatedAnswers[6],
+          company: updatedAnswers[7],
+        };
+
+        // Insert requirement
+        const { error: requirementError } = await supabase
+          .from('requirements')
           .insert([{ 
-            answers: updatedAnswers,
-            user_id: session.user.id
+            answers: formattedAnswers,
+            user_id: session?.user?.id || null
           }]);
 
-        if (error) throw error;
+        if (requirementError) throw requirementError;
 
         toast({
           title: "Requirements submitted successfully!",
@@ -122,13 +122,15 @@ export default function RequirementsCapture() {
         });
         
         navigate("/thank-you");
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error submitting requirements:", error);
         toast({
           title: "Something went wrong",
-          description: "Please try again later.",
+          description: error.message || "Please try again later.",
           variant: "destructive",
         });
+      } finally {
+        setIsSubmitting(false);
       }
     } else {
       setCurrentQuestion((prev) => prev + 1);
@@ -178,16 +180,24 @@ export default function RequirementsCapture() {
               <Button
                 variant="outline"
                 onClick={handlePrevious}
-                disabled={currentQuestion === 0}
+                disabled={currentQuestion === 0 || isSubmitting}
                 className="w-28"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back
               </Button>
-              <Button onClick={handleNext} className="w-28">
-                {currentQuestion === questions.length - 1 ? "Submit" : "Next"}
-                {currentQuestion !== questions.length - 1 && (
-                  <ArrowRight className="ml-2 h-4 w-4" />
+              <Button 
+                onClick={handleNext} 
+                className="w-28"
+                disabled={isSubmitting}
+              >
+                {currentQuestion === questions.length - 1 ? (
+                  isSubmitting ? "Submitting..." : "Submit"
+                ) : (
+                  <>
+                    Next
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </>
                 )}
               </Button>
             </div>
