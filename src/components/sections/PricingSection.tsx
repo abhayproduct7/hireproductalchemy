@@ -3,6 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 
 export const PricingSection = () => {
+  const handleGetStarted = () => {
+    // Find the contact form section and scroll to it
+    const contactSection = document.querySelector('#contact-section');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,7 +50,7 @@ export const PricingSection = () => {
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full" variant="outline">
+              <Button className="w-full" variant="outline" onClick={handleGetStarted}>
                 Get Started <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </CardFooter>
@@ -79,7 +87,7 @@ export const PricingSection = () => {
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full">
+              <Button className="w-full" onClick={handleGetStarted}>
                 Get Started <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </CardFooter>
