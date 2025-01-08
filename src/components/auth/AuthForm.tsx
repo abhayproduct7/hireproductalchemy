@@ -27,18 +27,19 @@ export const AuthForm = () => {
             .maybeSingle();
 
           if (adminError) {
+            console.error("Error checking admin status:", adminError);
             throw adminError;
           }
 
           if (adminData) {
-            console.log("Admin user detected, redirecting to admin dashboard");
+            console.log("Admin user detected");
             navigate('/admin/dashboard');
           } else {
-            console.log("Regular user detected, redirecting to dashboard");
+            console.log("Regular user detected");
             navigate('/dashboard');
           }
         } catch (error) {
-          console.error("Error checking admin status:", error);
+          console.error("Error during authentication:", error);
           toast({
             title: "Error",
             description: "An error occurred while signing in. Please try again.",
