@@ -19,21 +19,28 @@ export const useAuthForm = () => {
 
     // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state changed:', event, session);
+      
       if (event === "SIGNED_IN" && session) {
         // Handle user type setting for new sign ups
         if (userType) {
-          const { error } = await supabase
-            .from('profiles')
-            .update({ user_type: userType })
-            .eq('id', session.user.id);
+          try {
+            const { error } = await supabase
+              .from('profiles')
+              .update({ user_type: userType })
+              .eq('id', session.user.id);
 
-          if (error) {
-            toast({
-              title: "Error",
-              description: "Failed to set user type. Please try again.",
-              variant: "destructive",
-            });
-            return;
+            if (error) {
+              console.error('Error setting user type:', error);
+              toast({
+                title: "Error",
+                description: "Failed to set user type. Please try again.",
+                variant: "destructive",
+              });
+              return;
+            }
+          } catch (error) {
+            console.error('Error in profile update:', error);
           }
         }
 
@@ -44,6 +51,10 @@ export const useAuthForm = () => {
           title: "Welcome!",
           description: "You have successfully signed in.",
         });
+      }
+
+      if (event === 'SIGNED_OUT') {
+        navigate('/login');
       }
     });
 
