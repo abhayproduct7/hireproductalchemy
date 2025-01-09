@@ -42,6 +42,7 @@ export const AuthForm = () => {
         providers={[]}
         view="sign_in"
         showLinks={false}
+        redirectTo={window.location.origin + "/dashboard"}
         localization={{
           variables: {
             sign_in: {
