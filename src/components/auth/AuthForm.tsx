@@ -12,10 +12,6 @@ export const AuthForm = () => {
     return <SignUpForm setView={setView} userType={userType} setUserType={setUserType} />;
   }
 
-  const redirectUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://www.producthire.co.uk/dashboard'
-    : `${window.location.origin}/dashboard`;
-
   return (
     <div className="space-y-6">
       <Auth
@@ -46,7 +42,6 @@ export const AuthForm = () => {
         providers={[]}
         view="sign_in"
         showLinks={false}
-        redirectTo={redirectUrl}
         localization={{
           variables: {
             sign_in: {
