@@ -32,8 +32,9 @@ export const useAuthForm = () => {
         console.log('User updated:', session);
       }
 
-      if (event === 'AUTH_ERROR') {
-        console.error('Auth error occurred');
+      // Handle any errors through the session state
+      if (!session && event === 'SIGNED_IN') {
+        console.error('Authentication failed');
         toast({
           title: "Authentication Error",
           description: "An error occurred during authentication. Please try again.",
