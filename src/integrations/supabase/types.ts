@@ -137,6 +137,33 @@ export type Database = {
           },
         ]
       }
+      contact_forms: {
+        Row: {
+          company_name: string | null
+          created_at: string
+          email: string | null
+          id: string
+          message: string | null
+          name: string | null
+        }
+        Insert: {
+          company_name?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          name?: string | null
+        }
+        Update: {
+          company_name?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          name?: string | null
+        }
+        Relationships: []
+      }
       producthire: {
         Row: {
           "company name": string | null
