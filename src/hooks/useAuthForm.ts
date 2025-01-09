@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
-import { AuthError } from "@supabase/supabase-js";
 
 export const useAuthForm = () => {
   const navigate = useNavigate();
@@ -32,20 +31,30 @@ export const useAuthForm = () => {
         console.log('User updated:', session);
       }
 
-      // Handle any errors through the session state
-      if (!session && event === 'SIGNED_IN') {
-        console.error('Authentication failed');
+      if (event === 'PASSWORD_RECOVERY') {
         toast({
-          title: "Authentication Error",
-          description: "An error occurred during authentication. Please try again.",
-          variant: "destructive",
+          title: "Password Recovery",
+          description: "Please check your email for password reset instructions.",
         });
       }
+    });
+
+    // Set up error handling for auth state changes
+    const {
+      data: { subscription: errorSubscription },
+    } = supabase.auth.onError((error) => {
+      console.error('Auth error:', error);
+      toast({
+        title: "Authentication Error",
+        description: error.message || "An error occurred during authentication. Please try again.",
+        variant: "destructive",
+      });
     });
 
     return () => {
       console.log("Cleaning up auth state listener");
       subscription.unsubscribe();
+      errorSubscription.unsubscribe();
     };
   }, [navigate]);
 
