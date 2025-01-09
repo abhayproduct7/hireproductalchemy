@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
+import { AuthError } from "@supabase/supabase-js";
 
 export const useAuthForm = () => {
   const navigate = useNavigate();
@@ -25,6 +26,19 @@ export const useAuthForm = () => {
 
       if (event === 'SIGNED_OUT') {
         navigate('/login');
+      }
+
+      if (event === 'USER_UPDATED') {
+        console.log('User updated:', session);
+      }
+
+      if (event === 'AUTH_ERROR') {
+        console.error('Auth error occurred');
+        toast({
+          title: "Authentication Error",
+          description: "An error occurred during authentication. Please try again.",
+          variant: "destructive",
+        });
       }
     });
 
