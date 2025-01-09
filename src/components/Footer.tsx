@@ -34,13 +34,20 @@ export const Footer = () => {
             </h3>
             <p className="mb-2">Need help? Get in touch with us.</p>
             <Link
-              to="/#contact"
+              to="/"
               className="inline-flex items-center text-accent hover:text-accent/80"
               onClick={(e) => {
                 e.preventDefault();
-                document
-                  .querySelector("#contact")
-                  ?.scrollIntoView({ behavior: "smooth" });
+                // First check if we're on the home page
+                if (window.location.pathname === '/') {
+                  // If we are, just scroll to the contact section
+                  document
+                    .querySelector("#contact")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                } else {
+                  // If we're not, navigate to home page and then scroll
+                  window.location.href = '/#contact';
+                }
               }}
             >
               Contact Form
