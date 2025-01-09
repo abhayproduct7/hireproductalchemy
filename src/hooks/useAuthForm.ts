@@ -2,6 +2,21 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
+import { AuthError, AuthApiError } from "@supabase/supabase-js";
+
+const getErrorMessage = (error: AuthError) => {
+  if (error instanceof AuthApiError) {
+    switch (error.status) {
+      case 400:
+        return 'Invalid credentials. Please check your email and password.';
+      case 422:
+        return 'Invalid email format. Please enter a valid email address.';
+      default:
+        return error.message;
+    }
+  }
+  return error.message;
+};
 
 export const useAuthForm = () => {
   const navigate = useNavigate();
@@ -40,12 +55,15 @@ export const useAuthForm = () => {
 
       // Handle authentication errors
       if (event === 'SIGNED_IN' && !session) {
-        console.error('Authentication failed');
-        toast({
-          title: "Authentication Error",
-          description: "An error occurred during authentication. Please try again.",
-          variant: "destructive",
-        });
+        const { error } = await supabase.auth.getSession();
+        if (error) {
+          console.error('Authentication error:', error);
+          toast({
+            title: "Authentication Error",
+            description: getErrorMessage(error),
+            variant: "destructive",
+          });
+        }
       }
     });
 
