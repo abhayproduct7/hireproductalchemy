@@ -42,7 +42,7 @@ export const AuthForm = () => {
         providers={[]}
         view="sign_in"
         showLinks={false}
-        redirectTo="https://www.producthire.co.uk/dashboard"
+        redirectTo={window.location.origin + "/dashboard"}
         localization={{
           variables: {
             sign_in: {

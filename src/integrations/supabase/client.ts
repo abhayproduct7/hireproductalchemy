@@ -11,5 +11,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     flowType: 'pkce',
     storage: window?.localStorage,
     storageKey: 'producthire-auth-token'
+  },
+  global: {
+    headers: {
+      'X-Client-Info': 'producthire-web'
+    }
   }
 });
