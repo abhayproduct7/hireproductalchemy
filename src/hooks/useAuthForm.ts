@@ -46,7 +46,7 @@ export const useAuthForm = () => {
 
         // Handle navigation after successful sign in
         localStorage.removeItem("returnTo");
-        navigate("/dashboard");
+        navigate(returnTo);
         toast({
           title: "Welcome!",
           description: "You have successfully signed in.",
@@ -62,12 +62,6 @@ export const useAuthForm = () => {
       subscription.unsubscribe();
     };
   }, [navigate, returnTo, userType]);
-
-  // Listen for view changes through URL
-  useEffect(() => {
-    const currentView = location.pathname.includes("sign-up") ? "sign_up" : "sign_in";
-    setView(currentView);
-  }, [location]);
 
   return {
     view,
