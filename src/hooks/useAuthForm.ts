@@ -37,24 +37,21 @@ export const useAuthForm = () => {
           description: "Please check your email for password reset instructions.",
         });
       }
-    });
 
-    // Set up error handling for auth state changes
-    const {
-      data: { subscription: errorSubscription },
-    } = supabase.auth.onError((error) => {
-      console.error('Auth error:', error);
-      toast({
-        title: "Authentication Error",
-        description: error.message || "An error occurred during authentication. Please try again.",
-        variant: "destructive",
-      });
+      // Handle authentication errors
+      if (event === 'SIGNED_IN' && !session) {
+        console.error('Authentication failed');
+        toast({
+          title: "Authentication Error",
+          description: "An error occurred during authentication. Please try again.",
+          variant: "destructive",
+        });
+      }
     });
 
     return () => {
       console.log("Cleaning up auth state listener");
       subscription.unsubscribe();
-      errorSubscription.unsubscribe();
     };
   }, [navigate]);
 
