@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { Globe, Link as LinkIcon, Mail, Search } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { ContactForm } from "@/components/sections/contact-form/ContactForm";
 
 export const Footer = () => {
   return (
@@ -33,25 +35,16 @@ export const Footer = () => {
               Contact Us
             </h3>
             <p className="mb-2">Need help? Get in touch with us.</p>
-            <Link
-              to="/"
-              className="inline-flex items-center text-accent hover:text-accent/80"
-              onClick={(e) => {
-                e.preventDefault();
-                // First check if we're on the home page
-                if (window.location.pathname === '/') {
-                  // If we are, just scroll to the contact section
-                  document
-                    .querySelector("#contact")
-                    ?.scrollIntoView({ behavior: "smooth" });
-                } else {
-                  // If we're not, navigate to home page and then scroll
-                  window.location.href = '/#contact';
-                }
-              }}
-            >
-              Contact Form
-            </Link>
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="inline-flex items-center text-accent hover:text-accent/80">
+                  Contact Form
+                </button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <ContactForm />
+              </DialogContent>
+            </Dialog>
           </div>
 
           {/* SEO Optimized Content */}
