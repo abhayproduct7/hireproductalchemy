@@ -8,9 +8,9 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: false,
-    flowType: 'pkce',
-    storage: window?.localStorage,
-    storageKey: 'producthire-auth-token'
+    storage: localStorage,
+    storageKey: 'producthire-auth-token',
+    flowType: 'pkce'
   },
   global: {
     headers: {
