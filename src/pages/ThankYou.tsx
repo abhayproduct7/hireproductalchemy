@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { UserPlus } from "lucide-react";
 
 const ThankYou = () => {
   const navigate = useNavigate();
@@ -12,9 +12,9 @@ const ThankYou = () => {
         <p className="text-xl text-muted-foreground mb-8">
           We've received your requirements and will be in touch with matched candidates soon.
         </p>
-        <Button onClick={() => navigate("/hire")} className="group">
-          View Available Product Managers
-          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+        <Button onClick={() => navigate("/login?returnTo=/profile")} className="group">
+          Update your profile
+          <UserPlus className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Button>
       </div>
     </div>
