@@ -2,14 +2,15 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { Profile } from "./types";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface EmployerRowProps {
   employer: Profile;
 }
 
 export const EmployerRow = ({ employer }: EmployerRowProps) => {
-  console.log("Full employer data:", employer); // Debug log
-  console.log("Requirements data:", employer.requirements); // Debug log
+  console.log("Full employer data:", employer);
+  console.log("Requirements data:", employer.requirements);
 
   const formatRequirementAnswer = (answer: string | null, questionKey: string) => {
     if (!answer) return 'Not specified';
@@ -44,34 +45,45 @@ export const EmployerRow = ({ employer }: EmployerRowProps) => {
       <TableCell>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="link" className="p-0 h-auto font-normal">
+            <Button variant="link" className="p-0 h-auto font-normal underline">
               {employer.email || 'N/A'}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-80">
-            <div className="space-y-2">
-              <h4 className="font-medium">Requirements</h4>
+          <PopoverContent 
+            className="w-[400px] bg-white border border-gray-200 shadow-lg rounded-md p-0" 
+            sideOffset={5}
+          >
+            <div className="bg-secondary px-4 py-3 rounded-t-md">
+              <h4 className="font-medium text-white">Requirements</h4>
+            </div>
+            <ScrollArea className="h-[300px] p-4">
               {employer.requirements && employer.requirements.length > 0 ? (
                 employer.requirements.map((req) => {
-                  console.log("Processing requirement:", req); // Debug log for each requirement
+                  console.log("Processing requirement:", req);
                   return (
-                    <div key={req.id} className="text-sm space-y-1 border-b pb-2 last:border-0">
-                      {Object.keys(questionLabels).map((key) => (
-                        <p key={key}>
-                          <strong>{questionLabels[key as keyof typeof questionLabels]}:</strong>{' '}
-                          {formatRequirementAnswer(req.answers[key as keyof typeof req.answers], key)}
+                    <div key={req.id} className="mb-4 last:mb-0">
+                      <div className="bg-muted rounded-md p-3 space-y-2">
+                        {Object.keys(questionLabels).map((key) => (
+                          <p key={key} className="text-sm">
+                            <strong className="text-secondary">
+                              {questionLabels[key as keyof typeof questionLabels]}:
+                            </strong>{' '}
+                            <span className="text-gray-700">
+                              {formatRequirementAnswer(req.answers[key as keyof typeof req.answers], key)}
+                            </span>
+                          </p>
+                        ))}
+                        <p className="text-xs text-gray-500 mt-2 pt-2 border-t border-gray-200">
+                          Submitted: {new Date(req.created_at).toLocaleDateString()}
                         </p>
-                      ))}
-                      <p className="text-xs text-gray-500">
-                        Submitted: {new Date(req.created_at).toLocaleDateString()}
-                      </p>
+                      </div>
                     </div>
                   );
                 })
               ) : (
-                <p className="text-sm text-gray-500">No requirements submitted</p>
+                <p className="text-sm text-gray-500 p-4">No requirements submitted</p>
               )}
-            </div>
+            </ScrollArea>
           </PopoverContent>
         </Popover>
       </TableCell>
