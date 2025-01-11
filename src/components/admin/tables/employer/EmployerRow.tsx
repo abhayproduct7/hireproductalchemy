@@ -8,10 +8,10 @@ interface EmployerRowProps {
 }
 
 export const EmployerRow = ({ employer }: EmployerRowProps) => {
-  console.log("Employer data:", employer); // Debug log
-  console.log("Requirements:", employer.requirements); // Debug log
+  console.log("Employer row data:", employer); // Debug log
+  console.log("Requirements in row:", employer.requirements); // Debug log
 
-  const formatRequirementAnswer = (answer: string, question: string) => {
+  const formatRequirementAnswer = (answer: string | null, question: string) => {
     if (!answer) return 'Not specified';
     
     switch (question) {
@@ -46,10 +46,10 @@ export const EmployerRow = ({ employer }: EmployerRowProps) => {
               {employer.requirements && employer.requirements.length > 0 ? (
                 employer.requirements.map((req) => (
                   <div key={req.id} className="text-sm space-y-1 border-b pb-2 last:border-0">
-                    {Object.entries(questionLabels).map(([key, label]) => (
+                    {Object.entries(req.answers || {}).map(([key, value]) => (
                       <p key={key}>
-                        <strong>{label}:</strong>{' '}
-                        {formatRequirementAnswer(req.answers[key as keyof typeof req.answers], key)}
+                        <strong>{questionLabels[key as keyof typeof questionLabels]}:</strong>{' '}
+                        {formatRequirementAnswer(value, key)}
                       </p>
                     ))}
                     <p className="text-xs text-gray-500">
