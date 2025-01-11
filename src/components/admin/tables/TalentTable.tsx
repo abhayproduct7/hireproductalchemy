@@ -48,13 +48,14 @@ export const TalentTable = () => {
           throw fetchError;
         }
 
+        console.log('Fetched applications:', data);
+
         // Transform the data to ensure preferred_schedule is properly typed
         const typedApplications = data?.map(app => ({
           ...app,
-          preferred_schedule: app.preferred_schedule as PreferredSchedule
+          preferred_schedule: typeof app.preferred_schedule === 'object' ? app.preferred_schedule as PreferredSchedule : undefined
         })) || [];
 
-        console.log("Fetched applications:", typedApplications);
         setApplications(typedApplications);
         
       } catch (err) {

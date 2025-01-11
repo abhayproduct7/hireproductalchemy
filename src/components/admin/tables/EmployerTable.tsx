@@ -32,13 +32,15 @@ export const EmployerTable = () => {
           throw error;
         }
 
-        // Transform the data to match our expected types
-        const typedRequirements = data.map(req => ({
-          ...req,
-          answers: req.answers as Requirement['answers']
-        }));
+        console.log('Fetched requirements:', data);
 
-        setRequirements(typedRequirements);
+        if (data) {
+          const typedRequirements = data.map(req => ({
+            ...req,
+            answers: req.answers as RequirementAnswers
+          }));
+          setRequirements(typedRequirements);
+        }
         
       } catch (error) {
         console.error('Error:', error);
