@@ -22,7 +22,7 @@ export const EmployerTable = () => {
     const fetchEmployers = async () => {
       try {
         setLoading(true);
-        console.log("Fetching employers..."); // Debug log
+        console.log("Fetching employers...");
         
         // First fetch all employer profiles
         const { data: profiles, error: profilesError } = await supabase
@@ -31,45 +31,44 @@ export const EmployerTable = () => {
           .eq('user_type', 'employer');
 
         if (profilesError) {
-          console.error('Profiles error:', profilesError); // Debug log
+          console.error('Profiles error:', profilesError);
           throw profilesError;
         }
 
-        console.log("Fetched profiles:", profiles); // Debug log
+        console.log("Fetched profiles:", profiles);
 
         // Then fetch requirements for each employer
         const employersWithRequirements = await Promise.all(
           (profiles || []).map(async (profile) => {
-            console.log("Fetching requirements for profile:", profile.id); // Debug log
-            
             const { data: requirements, error: reqError } = await supabase
               .from('requirements')
-              .select('*')
-              .eq('user_id', profile.id);
+              .select('id, created_at, answers, user_id')
+              .eq('user_id', profile.id)
+              .order('created_at', { ascending: false });
 
             if (reqError) {
-              console.error('Requirements error for profile', profile.id, ':', reqError); // Debug log
+              console.error('Requirements error for profile', profile.id, ':', reqError);
               return {
                 ...profile,
                 requirements: []
               };
             }
 
-            console.log("Requirements for profile", profile.id, ":", requirements); // Debug log
-
-            // Map requirements data
+            // Map requirements data with proper typing
             const mappedRequirements = requirements?.map(req => ({
               id: req.id,
               user_id: req.user_id,
               created_at: req.created_at,
               answers: req.answers as {
-                "1": string; // Role Type
-                "2": string; // Industry
-                "3": string; // Duration
-                "4": string; // Responsibilities
-                "5": string; // Experience
+                "1": string;
+                "2": string;
+                "3": string;
+                "4": string;
+                "5": string;
               }
             })) || [];
+
+            console.log(`Requirements for profile ${profile.id}:`, mappedRequirements);
 
             return {
               ...profile,
@@ -78,7 +77,7 @@ export const EmployerTable = () => {
           })
         );
 
-        console.log("Final employers data:", employersWithRequirements); // Debug log
+        console.log("Final employers data:", employersWithRequirements);
         setEmployers(employersWithRequirements);
         
       } catch (error) {
