@@ -8,13 +8,21 @@ interface EmployerRowProps {
 }
 
 export const EmployerRow = ({ employer }: EmployerRowProps) => {
-  console.log("Employer row data:", employer); // Debug log
-  console.log("Requirements in row:", employer.requirements); // Debug log
+  console.log("Full employer data:", employer); // Debug log
+  console.log("Requirements data:", employer.requirements); // Debug log
 
-  const formatRequirementAnswer = (answer: string | null, question: string) => {
+  const formatRequirementAnswer = (answer: string | null, questionKey: string) => {
     if (!answer) return 'Not specified';
     
-    switch (question) {
+    switch (questionKey) {
+      case '1': // Role Type
+        return answer;
+      case '2': // Industry
+        return answer;
+      case '3': // Duration
+        return answer;
+      case '4': // Responsibilities
+        return answer;
       case '5': // Experience
         return `${answer} years`;
       default:
@@ -44,19 +52,22 @@ export const EmployerRow = ({ employer }: EmployerRowProps) => {
             <div className="space-y-2">
               <h4 className="font-medium">Requirements</h4>
               {employer.requirements && employer.requirements.length > 0 ? (
-                employer.requirements.map((req) => (
-                  <div key={req.id} className="text-sm space-y-1 border-b pb-2 last:border-0">
-                    {Object.entries(req.answers || {}).map(([key, value]) => (
-                      <p key={key}>
-                        <strong>{questionLabels[key as keyof typeof questionLabels]}:</strong>{' '}
-                        {formatRequirementAnswer(value, key)}
+                employer.requirements.map((req) => {
+                  console.log("Processing requirement:", req); // Debug log for each requirement
+                  return (
+                    <div key={req.id} className="text-sm space-y-1 border-b pb-2 last:border-0">
+                      {Object.keys(questionLabels).map((key) => (
+                        <p key={key}>
+                          <strong>{questionLabels[key as keyof typeof questionLabels]}:</strong>{' '}
+                          {formatRequirementAnswer(req.answers[key as keyof typeof req.answers], key)}
+                        </p>
+                      ))}
+                      <p className="text-xs text-gray-500">
+                        Submitted: {new Date(req.created_at).toLocaleDateString()}
                       </p>
-                    ))}
-                    <p className="text-xs text-gray-500">
-                      Submitted: {new Date(req.created_at).toLocaleDateString()}
-                    </p>
-                  </div>
-                ))
+                    </div>
+                  );
+                })
               ) : (
                 <p className="text-sm text-gray-500">No requirements submitted</p>
               )}
