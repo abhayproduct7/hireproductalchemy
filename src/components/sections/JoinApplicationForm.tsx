@@ -144,24 +144,43 @@ export const JoinApplicationForm = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-center mb-8">Complete Your Application</h1>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormFields form={form} />
-          
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Submitting...
-              </>
-            ) : (
-              "Submit Application"
-            )}
-          </Button>
-        </form>
-      </Form>
+    <div className="max-w-4xl mx-auto">
+      <div className="mb-12 text-center bg-gradient-to-b from-secondary/10 via-secondary/5 to-transparent rounded-lg p-8 animate-fade-up">
+        <h1 className="text-3xl font-bold text-primary mb-4">
+          Thank You for Creating Your Account
+        </h1>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          You're just a few steps away from joining our community of product leaders. 
+          Please complete your application below to help us understand your experience and preferences.
+        </p>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-sm border border-muted p-8 animate-fade-up">
+        <h2 className="text-2xl font-semibold text-primary mb-6">
+          Complete Your Application
+        </h2>
+        
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormFields form={form} />
+            
+            <Button 
+              type="submit" 
+              className="w-full bg-secondary hover:bg-secondary/90"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                "Submit Application"
+              )}
+            </Button>
+          </form>
+        </Form>
+      </div>
 
       <AuthDialog 
         open={showAuthDialog} 
