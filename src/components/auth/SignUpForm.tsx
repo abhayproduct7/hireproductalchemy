@@ -4,11 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { UserTypeSelector } from "./UserTypeSelector";
 import { PasswordRequirements } from "./PasswordRequirements";
 import { AuthLinks } from "./AuthLinks";
+import { useSignUp } from "./hooks/useSignUp";
+import { SignUpFormFields } from "./SignUpFormFields";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -30,8 +30,9 @@ interface SignUpFormProps {
 }
 
 export const SignUpForm = ({ setView, userType, setUserType }: SignUpFormProps) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [showPasswordRequirements, setShowPasswordRequirements] = useState(false);
+  const { isLoading, handleSignUp } = useSignUp({ setView });
+  
   const {
     register,
     handleSubmit,
@@ -52,80 +53,16 @@ export const SignUpForm = ({ setView, userType, setUserType }: SignUpFormProps) 
   ];
 
   const onSubmit = async ({ email, password }: FormData) => {
-    if (!userType) {
-      toast({
-        title: "Error",
-        description: "Please select whether you're joining as talent or an employer",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-
-      // First, sign up the user
-      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            user_type: userType,
-          },
-        },
-      });
-
-      if (signUpError) {
-        if (signUpError.message === "User already registered") {
-          toast({
-            title: "Account exists",
-            description: "Please sign in with your existing account",
-          });
-          setView("sign_in");
-          return;
-        }
-        throw signUpError;
-      }
-
-      // Then, ensure the profile is created with the correct user type
-      if (signUpData.user) {
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .upsert({
-            id: signUpData.user.id,
-            email: email,
-            user_type: userType,
-          }, {
-            onConflict: 'id',
-          });
-
-        if (profileError) {
-          console.error("Profile creation error:", profileError);
-          throw new Error("Failed to create profile");
-        }
-      }
-
-      toast({
-        title: "Check your email",
-        description: "We've sent you a confirmation link to complete your registration",
-      });
-    } catch (error: any) {
-      console.error("Signup error:", error);
-      toast({
-        title: "Error",
-        description: error.message || "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    await handleSignUp(email, password, userType);
   };
 
   return (
     <div className="space-y-6">
       <div className="space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
-        <p className="text-sm text-muted-foreground">Enter your details below to create your account</p>
+        <p className="text-sm text-muted-foreground">
+          Enter your details below to create your account
+        </p>
       </div>
 
       <UserTypeSelector userType={userType} setUserType={setUserType} />
@@ -142,7 +79,9 @@ export const SignUpForm = ({ setView, userType, setUserType }: SignUpFormProps) 
             disabled={isLoading}
             {...register("email")}
           />
-          {errors?.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
+          {errors?.email && (
+            <p className="text-sm text-red-500">{errors.email.message}</p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -155,10 +94,12 @@ export const SignUpForm = ({ setView, userType, setUserType }: SignUpFormProps) 
             onFocus={() => setShowPasswordRequirements(true)}
             {...register("password")}
           />
-          {errors?.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+          {errors?.password && (
+            <p className="text-sm text-red-500">{errors.password.message}</p>
+          )}
         </div>
 
-        <PasswordRequirements 
+        <PasswordRequirements
           requirements={passwordRequirements}
           show={showPasswordRequirements}
         />
