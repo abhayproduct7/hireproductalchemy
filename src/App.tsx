@@ -14,6 +14,7 @@ import JoinCommunity from "./pages/JoinCommunity";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/admin/Dashboard";
+import AdminAnalytics from "./pages/admin/Analytics";
 import { ChatBot } from "./components/ChatBot";
 import { Toaster } from "@/components/ui/toaster";
 import { useAnalytics } from "@/hooks/use-analytics";
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin/analytics" element={<AdminAnalytics />} />
               </Routes>
               <ChatBot />
               <Toaster />
