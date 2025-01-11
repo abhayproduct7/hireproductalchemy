@@ -6,74 +6,54 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TableCell,
 } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
 import { Database } from "@/integrations/supabase/types";
-import { EmployerRow } from "./employer/EmployerRow";
-import { Profile, Requirement } from "./employer/types";
+
+interface Requirement {
+  id: number;
+  created_at: string;
+  answers: {
+    type: string;
+    email: string;
+    company: string;
+    duration: string;
+    industry: string;
+    timeline: string;
+    responsibilities: string;
+  };
+  user_id?: string;
+}
 
 export const EmployerTable = () => {
   const supabase = useSupabaseClient<Database>();
-  const [employers, setEmployers] = useState<Profile[]>([]);
+  const [requirements, setRequirements] = useState<Requirement[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
-    const fetchEmployers = async () => {
+    const fetchRequirements = async () => {
       try {
         setLoading(true);
-        
-        // First fetch employer profiles
-        const { data: profiles, error: profilesError } = await supabase
-          .from('profiles')
-          .select('id, full_name, email, company_name, location, phone, created_at, updated_at, user_type')
-          .eq('user_type', 'employer');
-
-        if (profilesError) {
-          console.error('Error fetching profiles:', profilesError);
-          throw profilesError;
-        }
-
-        // Then fetch all requirements
-        const { data: requirements, error: requirementsError } = await supabase
+        const { data, error } = await supabase
           .from('requirements')
           .select('*')
           .order('created_at', { ascending: false });
 
-        if (requirementsError) {
-          console.error('Error fetching requirements:', requirementsError);
-          throw requirementsError;
+        if (error) {
+          console.error('Error fetching requirements:', error);
+          throw error;
         }
 
-        // Map requirements to profiles
-        const employersWithRequirements = profiles?.map(profile => {
-          const profileRequirements = requirements?.filter(req => req.user_id === profile.id) || [];
-          
-          return {
-            ...profile,
-            requirements: profileRequirements.map(req => ({
-              id: req.id,
-              user_id: req.user_id,
-              created_at: req.created_at,
-              answers: req.answers as {
-                "1": string;
-                "2": string;
-                "3": string;
-                "4": string;
-                "5": string;
-              }
-            }))
-          } as Profile;
-        }) || [];
-
-        console.log('Employers with requirements:', employersWithRequirements);
-        setEmployers(employersWithRequirements);
+        console.log('Requirements data:', data);
+        setRequirements(data || []);
         
       } catch (error) {
         console.error('Error:', error);
         toast({
           title: "Error",
-          description: "Failed to fetch employer data",
+          description: "Failed to fetch requirements data",
           variant: "destructive",
         });
       } finally {
@@ -81,37 +61,45 @@ export const EmployerTable = () => {
       }
     };
 
-    fetchEmployers();
+    fetchRequirements();
   }, [supabase, toast]);
 
   if (loading) {
-    return <div className="flex justify-center p-8">Loading employer data...</div>;
+    return <div className="flex justify-center p-8">Loading requirements data...</div>;
   }
 
   return (
     <section>
-      <h2 className="text-2xl font-bold mb-4">Employer Enquiries</h2>
-      {employers.length === 0 ? (
+      <h2 className="text-2xl font-bold mb-4">Employer Requirements</h2>
+      {requirements.length === 0 ? (
         <div className="bg-white shadow rounded-lg p-6 text-center">
-          No employer enquiries found
+          No requirements found
         </div>
       ) : (
         <div className="bg-white shadow rounded-lg overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
                 <TableHead>Company</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Phone</TableHead>
-                <TableHead>Requirements</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Role Type</TableHead>
+                <TableHead>Industry</TableHead>
+                <TableHead>Duration</TableHead>
+                <TableHead>Timeline</TableHead>
                 <TableHead>Created At</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {employers.map((employer) => (
-                <EmployerRow key={employer.id} employer={employer} />
+              {requirements.map((requirement) => (
+                <TableRow key={requirement.id}>
+                  <TableCell>{requirement.answers.company}</TableCell>
+                  <TableCell>{requirement.answers.email}</TableCell>
+                  <TableCell>{requirement.answers.type}</TableCell>
+                  <TableCell>{requirement.answers.industry}</TableCell>
+                  <TableCell>{requirement.answers.duration}</TableCell>
+                  <TableCell>{requirement.answers.timeline}</TableCell>
+                  <TableCell>{new Date(requirement.created_at).toLocaleDateString()}</TableCell>
+                </TableRow>
               ))}
             </TableBody>
           </Table>
