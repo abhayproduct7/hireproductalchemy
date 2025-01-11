@@ -47,10 +47,34 @@ export const JoinApplicationForm = () => {
   const progress = ((currentStep + 1) / STEPS.length) * 100;
   const CurrentStepComponent = STEPS[currentStep].component;
 
+  // Get the field names for the current step
+  const getStepFields = (stepIndex: number) => {
+    switch (stepIndex) {
+      case 0: // Basic Information
+        return ["yearsExperience", "professionalSummary"];
+      case 1: // CV Upload
+        return ["cv"];
+      case 2: // Skills
+        return ["skills"];
+      case 3: // Availability
+        return ["availabilityType", "earliestStartDate", "preferredSchedule"];
+      default:
+        return [];
+    }
+  };
+
   const nextStep = async () => {
-    const fields = await form.trigger();
-    if (fields) {
+    const currentFields = getStepFields(currentStep);
+    const isValid = await form.trigger(currentFields);
+    
+    if (isValid) {
       setCurrentStep((prev) => Math.min(prev + 1, STEPS.length - 1));
+    } else {
+      toast({
+        title: "Please complete all required fields",
+        description: "Some fields need your attention before proceeding.",
+        variant: "destructive",
+      });
     }
   };
 
