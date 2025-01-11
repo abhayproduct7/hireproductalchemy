@@ -23,17 +23,10 @@ export const TalentTable = () => {
         setLoading(true);
         setError(null);
         
-        // First fetch candidate applications and join with profiles
+        // First fetch candidate applications
         const { data: applications, error: applicationsError } = await supabase
           .from('candidate_applications')
-          .select(`
-            *,
-            profiles!candidate_applications_user_id_fkey (
-              full_name,
-              email,
-              location
-            )
-          `);
+          .select('*');
 
         if (applicationsError) {
           console.error('Error fetching applications:', applicationsError);
@@ -43,24 +36,31 @@ export const TalentTable = () => {
         console.log("Fetched applications:", applications);
 
         if (applications) {
-          // Then fetch all related data for each application
+          // Then fetch profiles and other related data for each application
           const talentsWithDetails = await Promise.all(
             applications.map(async (application) => {
-              const [{ data: skills }, { data: experiences }] = await Promise.all([
-                // Get skills
-                supabase
-                  .from('candidate_skills')
-                  .select('skills(name)')
-                  .eq('application_id', application.id),
-                // Get work experiences
-                supabase
-                  .from('work_experiences')
-                  .select('*')
-                  .eq('application_id', application.id)
-              ]);
+              // Get profile data
+              const { data: profiles } = await supabase
+                .from('profiles')
+                .select('full_name, email, location')
+                .eq('id', application.user_id)
+                .single();
+
+              // Get skills
+              const { data: skills } = await supabase
+                .from('candidate_skills')
+                .select('skills(name)')
+                .eq('application_id', application.id);
+
+              // Get work experiences
+              const { data: experiences } = await supabase
+                .from('work_experiences')
+                .select('*')
+                .eq('application_id', application.id);
 
               return {
                 ...application,
+                profiles,
                 skills: skills || [],
                 work_experiences: experiences || []
               };
