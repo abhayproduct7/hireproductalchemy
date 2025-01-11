@@ -28,7 +28,7 @@ export const TalentTable = () => {
           .from('candidate_applications')
           .select(`
             *,
-            profile:user_id (
+            profiles!candidate_applications_user_id_fkey (
               full_name,
               email,
               location
@@ -127,9 +127,9 @@ export const TalentTable = () => {
             ) : (
               talents.map((talent) => (
                 <TableRow key={talent.id}>
-                  <TableCell>{talent.profile?.full_name || 'N/A'}</TableCell>
-                  <TableCell>{talent.profile?.email || 'N/A'}</TableCell>
-                  <TableCell>{talent.profile?.location || 'N/A'}</TableCell>
+                  <TableCell>{talent.profiles?.full_name || 'N/A'}</TableCell>
+                  <TableCell>{talent.profiles?.email || 'N/A'}</TableCell>
+                  <TableCell>{talent.profiles?.location || 'N/A'}</TableCell>
                   <TableCell>{talent.years_experience} years</TableCell>
                   <TableCell>{talent.availability_type}</TableCell>
                   <TableCell>
