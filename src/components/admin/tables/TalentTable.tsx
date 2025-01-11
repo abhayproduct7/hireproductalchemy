@@ -12,9 +12,15 @@ import { format } from "date-fns";
 import { Loader2 } from "lucide-react";
 import { Database } from "@/integrations/supabase/types";
 
+type PreferredSchedule = {
+  hoursPerWeek: number;
+  timeZone: string;
+};
+
 type CandidateApplication = Database['public']['Tables']['candidate_applications']['Row'] & {
   skills?: { skills: { name: string } }[];
   work_experiences?: Database['public']['Tables']['work_experiences']['Row'][];
+  preferred_schedule?: PreferredSchedule;
 };
 
 export const TalentTable = () => {
@@ -29,7 +35,6 @@ export const TalentTable = () => {
         setLoading(true);
         setError(null);
         
-        // Fetch candidate applications with their skills and work experiences
         const { data, error: fetchError } = await supabase
           .from('candidate_applications')
           .select(`
@@ -43,8 +48,14 @@ export const TalentTable = () => {
           throw fetchError;
         }
 
-        console.log("Fetched applications:", data);
-        setApplications(data || []);
+        // Transform the data to ensure preferred_schedule is properly typed
+        const typedApplications = data?.map(app => ({
+          ...app,
+          preferred_schedule: app.preferred_schedule as PreferredSchedule
+        })) || [];
+
+        console.log("Fetched applications:", typedApplications);
+        setApplications(typedApplications);
         
       } catch (err) {
         console.error('Error in fetchApplications:', err);
