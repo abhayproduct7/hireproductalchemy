@@ -10,23 +10,23 @@ import { Card, CardContent } from "@/components/ui/card";
 export const TestimonialsSection = () => {
   const testimonials = [
     {
-      company: "TechGiant Inc.",
+      company: "Series B SaaS Company",
       testimonial:
-        "The product manager we hired through this platform transformed our product development process. Their expertise in AI and machine learning helped us launch our flagship product 3 months ahead of schedule.",
+        "ProductHire's AI-powered matching found us the perfect product manager within days. Their AI copilot helped our PM streamline documentation and feature planning, resulting in 40% faster product iterations.",
       author: "Sarah Chen",
       designation: "VP of Engineering",
     },
     {
-      company: "InnovateCorp",
+      company: "Seed-stage Startup",
       testimonial:
-        "Having access to both an experienced product manager and their AI tools has been game-changing for our startup. We've seen a 40% increase in feature adoption since implementing their suggested strategies.",
+        "The flexible monthly subscription model and instant access to pre-vetted PMs is exactly what we needed. When our requirements changed, we were able to find a new match within 48 hours at no extra cost.",
       author: "Michael Rodriguez",
       designation: "Chief Technology Officer",
     },
     {
-      company: "FutureScale",
+      company: "Growth-stage Fintech",
       testimonial:
-        "The flexibility to scale our product team up or down as needed has been invaluable. The product manager's deep expertise in B2B SaaS has helped us refine our product-market fit.",
+        "The AI tools provided to our product manager were game-changing. From automated PRDs to data-driven prioritization, we've cut our planning time in half while improving quality.",
       author: "Amanda Foster",
       designation: "Director of Product",
     },
