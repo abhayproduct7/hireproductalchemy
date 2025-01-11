@@ -7,12 +7,24 @@ import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/use-toast";
 import { joinFormSchema, type JoinFormValues } from "./join-form/schema";
 import { AuthDialog } from "./join-form/AuthDialog";
-import { FormFields } from "./join-form/FormFields";
+import { BasicInfoFields } from "./join-form/fields/BasicInfoFields";
+import { CVUploadField } from "./join-form/fields/CVUploadField";
+import { SkillsField } from "./join-form/fields/SkillsField";
+import { AvailabilityFields } from "./join-form/fields/AvailabilityFields";
+
+const STEPS = [
+  { title: "Basic Information", component: BasicInfoFields },
+  { title: "CV Upload", component: CVUploadField },
+  { title: "Skills", component: SkillsField },
+  { title: "Availability", component: AvailabilityFields },
+];
 
 export const JoinApplicationForm = () => {
+  const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const navigate = useNavigate();
@@ -31,6 +43,20 @@ export const JoinApplicationForm = () => {
       skills: [],
     },
   });
+
+  const progress = ((currentStep + 1) / STEPS.length) * 100;
+  const CurrentStepComponent = STEPS[currentStep].component;
+
+  const nextStep = async () => {
+    const fields = await form.trigger();
+    if (fields) {
+      setCurrentStep((prev) => Math.min(prev + 1, STEPS.length - 1));
+    }
+  };
+
+  const prevStep = () => {
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
+  };
 
   const onSubmit = async (values: JoinFormValues) => {
     if (!session?.user) {
@@ -156,28 +182,57 @@ export const JoinApplicationForm = () => {
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-muted p-8 animate-fade-up">
-        <h2 className="text-2xl font-semibold text-primary mb-6">
-          Complete Your Application
-        </h2>
-        
+        <div className="mb-8">
+          <div className="flex justify-between mb-2 text-sm text-gray-600">
+            <span>Step {currentStep + 1} of {STEPS.length}</span>
+            <span>{STEPS[currentStep].title}</span>
+          </div>
+          <Progress value={progress} className="h-2" />
+        </div>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormFields form={form} />
-            
-            <Button 
-              type="submit" 
-              className="w-full bg-secondary hover:bg-secondary/90"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Submitting...
-                </>
-              ) : (
-                "Submit Application"
+            <div className="min-h-[400px]">
+              <CurrentStepComponent form={form} />
+            </div>
+
+            <div className="flex gap-4 pt-4 border-t">
+              {currentStep > 0 && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={prevStep}
+                  className="flex-1"
+                >
+                  Previous
+                </Button>
               )}
-            </Button>
+              
+              {currentStep === STEPS.length - 1 ? (
+                <Button 
+                  type="submit" 
+                  className="flex-1 bg-secondary hover:bg-secondary/90"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Submit Application"
+                  )}
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  onClick={nextStep}
+                  className="flex-1 bg-secondary hover:bg-secondary/90"
+                >
+                  Next
+                </Button>
+              )}
+            </div>
           </form>
         </Form>
       </div>
