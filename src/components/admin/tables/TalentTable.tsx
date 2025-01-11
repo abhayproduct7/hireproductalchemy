@@ -9,81 +9,92 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { format } from "date-fns";
+import { Loader2 } from "lucide-react";
 
 export const TalentTable = () => {
   const supabase = useSupabaseClient();
   const [talents, setTalents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchTalents = async () => {
-      setLoading(true);
-      console.log("Fetching talent applications...");
-      
-      // First fetch all candidate applications
-      const { data: applications, error: applicationsError } = await supabase
-        .from('candidate_applications')
-        .select('*, user_id');
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // First fetch all candidate applications with their user profiles
+        const { data: applications, error: applicationsError } = await supabase
+          .from('candidate_applications')
+          .select(`
+            *,
+            profiles:user_id (
+              full_name,
+              email,
+              location
+            )
+          `);
 
-      if (applicationsError) {
-        console.error('Error fetching applications:', applicationsError);
+        if (applicationsError) {
+          console.error('Error fetching applications:', applicationsError);
+          throw applicationsError;
+        }
+
+        console.log("Fetched applications:", applications);
+
+        if (applications) {
+          // Then fetch all related data for each application
+          const talentsWithDetails = await Promise.all(
+            applications.map(async (application) => {
+              const [{ data: skills }, { data: experiences }] = await Promise.all([
+                // Get skills
+                supabase
+                  .from('candidate_skills')
+                  .select('skills(name)')
+                  .eq('application_id', application.id),
+                // Get work experiences
+                supabase
+                  .from('work_experiences')
+                  .select('*')
+                  .eq('application_id', application.id)
+              ]);
+
+              return {
+                ...application,
+                skills: skills || [],
+                work_experiences: experiences || []
+              };
+            })
+          );
+
+          console.log("Processed talents with details:", talentsWithDetails);
+          setTalents(talentsWithDetails);
+        }
+      } catch (err) {
+        console.error('Error in fetchTalents:', err);
+        setError('Failed to fetch talent applications');
+      } finally {
         setLoading(false);
-        return;
       }
-
-      console.log("Fetched applications:", applications);
-
-      if (applications) {
-        // Then fetch all related data for each application
-        const talentsWithDetails = await Promise.all(
-          applications.map(async (application) => {
-            const [
-              { data: profile },
-              { data: skills },
-              { data: experiences }
-            ] = await Promise.all([
-              // Get profile
-              supabase
-                .from('profiles')
-                .select('*')
-                .eq('id', application.user_id)
-                .maybeSingle(),
-              // Get skills
-              supabase
-                .from('candidate_skills')
-                .select('skills(name)')
-                .eq('application_id', application.id),
-              // Get work experiences
-              supabase
-                .from('work_experiences')
-                .select('*')
-                .eq('application_id', application.id)
-            ]);
-
-            console.log(`Profile for application ${application.id}:`, profile);
-            console.log(`Skills for application ${application.id}:`, skills);
-            console.log(`Experiences for application ${application.id}:`, experiences);
-
-            return {
-              ...application,
-              profile,
-              skills: skills || [],
-              work_experiences: experiences || []
-            };
-          })
-        );
-
-        console.log("Processed talents with details:", talentsWithDetails);
-        setTalents(talentsWithDetails);
-      }
-      setLoading(false);
     };
 
     fetchTalents();
   }, [supabase]);
 
   if (loading) {
-    return <div>Loading talent applications...</div>;
+    return (
+      <div className="flex items-center justify-center p-8">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-red-500 p-4">
+        {error}
+      </div>
+    );
   }
 
   return (
@@ -116,9 +127,9 @@ export const TalentTable = () => {
             ) : (
               talents.map((talent) => (
                 <TableRow key={talent.id}>
-                  <TableCell>{talent.profile?.full_name || 'N/A'}</TableCell>
-                  <TableCell>{talent.profile?.email || 'N/A'}</TableCell>
-                  <TableCell>{talent.profile?.location || 'N/A'}</TableCell>
+                  <TableCell>{talent.profiles?.full_name || 'N/A'}</TableCell>
+                  <TableCell>{talent.profiles?.email || 'N/A'}</TableCell>
+                  <TableCell>{talent.profiles?.location || 'N/A'}</TableCell>
                   <TableCell>{talent.years_experience} years</TableCell>
                   <TableCell>{talent.availability_type}</TableCell>
                   <TableCell>
