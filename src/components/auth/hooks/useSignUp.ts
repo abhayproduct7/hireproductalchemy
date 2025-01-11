@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 interface UseSignUpProps {
   setView: (view: "sign_in" | "sign_up") => void;
@@ -9,6 +10,7 @@ interface UseSignUpProps {
 export const useSignUp = ({ setView }: UseSignUpProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSignUp = async (
     email: string,
@@ -35,6 +37,7 @@ export const useSignUp = ({ setView }: UseSignUpProps) => {
           data: {
             user_type: userType,
           },
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       });
 
@@ -54,7 +57,6 @@ export const useSignUp = ({ setView }: UseSignUpProps) => {
       if (signUpData.user) {
         console.log("User created successfully, creating profile...");
         
-        // Ensure profile creation with user_type
         const { error: profileError } = await supabase
           .from('profiles')
           .upsert({
@@ -71,12 +73,10 @@ export const useSignUp = ({ setView }: UseSignUpProps) => {
         }
 
         console.log("Profile created successfully with user_type:", userType);
+        
+        // Redirect to confirmation page
+        navigate("/email-confirmation");
       }
-
-      toast({
-        title: "Check your email",
-        description: "We've sent you a confirmation link to complete your registration",
-      });
     } catch (error: any) {
       console.error("Signup process error:", error);
       toast({
