@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
 
 const Profile = () => {
   const session = useSession();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [userType, setUserType] = useState<"talent" | "employer" | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,26 +24,38 @@ const Profile = () => {
       }
 
       try {
+        console.log("Fetching user type for:", session.user.id);
+        
         const { data, error } = await supabase
           .from("profiles")
           .select("user_type")
           .eq("id", session.user.id)
           .single();
 
-        if (error) throw error;
+        if (error) {
+          console.error("Error fetching user type:", error);
+          throw error;
+        }
+        
+        console.log("Fetched user type:", data?.user_type);
         
         if (data) {
           setUserType(data.user_type);
         }
       } catch (error) {
         console.error("Error fetching user type:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load profile data. Please try again.",
+          variant: "destructive",
+        });
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchUserType();
-  }, [session, navigate]);
+  }, [session, navigate, toast]);
 
   if (!session) {
     navigate("/login");
@@ -76,8 +90,11 @@ const Profile = () => {
         ) : (
           <div className="text-center py-8">
             <h2 className="text-2xl font-semibold mb-4">Profile type not set</h2>
+            <p className="text-muted-foreground mb-4">
+              It seems your profile type hasn't been set. This usually happens when the signup process wasn't completed properly.
+            </p>
             <p className="text-muted-foreground">
-              Please contact support if you believe this is an error.
+              Please try signing out and signing in again, or contact support if the issue persists.
             </p>
           </div>
         )}
