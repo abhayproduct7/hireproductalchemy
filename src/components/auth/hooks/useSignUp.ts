@@ -26,6 +26,7 @@ export const useSignUp = ({ setView }: UseSignUpProps) => {
 
     try {
       setIsLoading(true);
+      console.log("Starting signup process for:", email, "as", userType);
 
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
@@ -38,6 +39,7 @@ export const useSignUp = ({ setView }: UseSignUpProps) => {
       });
 
       if (signUpError) {
+        console.error("Signup error:", signUpError);
         if (signUpError.message === "User already registered") {
           toast({
             title: "Account exists",
@@ -50,6 +52,9 @@ export const useSignUp = ({ setView }: UseSignUpProps) => {
       }
 
       if (signUpData.user) {
+        console.log("User created successfully, creating profile...");
+        
+        // Ensure profile creation with user_type
         const { error: profileError } = await supabase
           .from('profiles')
           .upsert({
@@ -64,6 +69,8 @@ export const useSignUp = ({ setView }: UseSignUpProps) => {
           console.error("Profile creation error:", profileError);
           throw new Error("Failed to create profile");
         }
+
+        console.log("Profile created successfully with user_type:", userType);
       }
 
       toast({
@@ -71,7 +78,7 @@ export const useSignUp = ({ setView }: UseSignUpProps) => {
         description: "We've sent you a confirmation link to complete your registration",
       });
     } catch (error: any) {
-      console.error("Signup error:", error);
+      console.error("Signup process error:", error);
       toast({
         title: "Error",
         description: error.message || "Something went wrong. Please try again.",
