@@ -26,7 +26,7 @@ export const EmployerTable = () => {
         // First fetch employer profiles
         const { data: profiles, error: profilesError } = await supabase
           .from('profiles')
-          .select('*')
+          .select('id, full_name, email, company_name, location, phone, created_at, updated_at, user_type')
           .eq('user_type', 'employer');
 
         if (profilesError) {
@@ -46,24 +46,28 @@ export const EmployerTable = () => {
         }
 
         // Map requirements to profiles
-        const employersWithRequirements = profiles?.map(profile => ({
-          ...profile,
-          requirements: requirements.filter(req => req.user_id === profile.id).map(req => ({
-            id: req.id,
-            user_id: req.user_id,
-            created_at: req.created_at,
-            answers: req.answers as {
-              "1": string;
-              "2": string;
-              "3": string;
-              "4": string;
-              "5": string;
-            }
-          }))
-        })) || [];
+        const employersWithRequirements = profiles?.map(profile => {
+          const profileRequirements = requirements?.filter(req => req.user_id === profile.id) || [];
+          
+          return {
+            ...profile,
+            requirements: profileRequirements.map(req => ({
+              id: req.id,
+              user_id: req.user_id,
+              created_at: req.created_at,
+              answers: req.answers as {
+                "1": string;
+                "2": string;
+                "3": string;
+                "4": string;
+                "5": string;
+              }
+            }))
+          } as Profile;
+        }) || [];
 
         console.log('Employers with requirements:', employersWithRequirements);
-        setEmployers(employersWithRequirements as Profile[]);
+        setEmployers(employersWithRequirements);
         
       } catch (error) {
         console.error('Error:', error);
