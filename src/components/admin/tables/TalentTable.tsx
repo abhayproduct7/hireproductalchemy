@@ -10,75 +10,51 @@ import {
 } from "@/components/ui/table";
 import { format } from "date-fns";
 import { Loader2 } from "lucide-react";
+import { Database } from "@/integrations/supabase/types";
+
+type CandidateApplication = Database['public']['Tables']['candidate_applications']['Row'] & {
+  skills?: { skills: { name: string } }[];
+  work_experiences?: Database['public']['Tables']['work_experiences']['Row'][];
+};
 
 export const TalentTable = () => {
-  const supabase = useSupabaseClient();
-  const [talents, setTalents] = useState<any[]>([]);
+  const supabase = useSupabaseClient<Database>();
+  const [applications, setApplications] = useState<CandidateApplication[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchTalents = async () => {
+    const fetchApplications = async () => {
       try {
         setLoading(true);
         setError(null);
         
-        // First fetch candidate applications
-        const { data: applications, error: applicationsError } = await supabase
+        // Fetch candidate applications with their skills and work experiences
+        const { data, error: fetchError } = await supabase
           .from('candidate_applications')
-          .select('*');
+          .select(`
+            *,
+            skills:candidate_skills(skills(name)),
+            work_experiences(*)
+          `);
 
-        if (applicationsError) {
-          console.error('Error fetching applications:', applicationsError);
-          throw applicationsError;
+        if (fetchError) {
+          console.error('Error fetching applications:', fetchError);
+          throw fetchError;
         }
 
-        console.log("Fetched applications:", applications);
-
-        if (applications) {
-          // Then fetch profiles and other related data for each application
-          const talentsWithDetails = await Promise.all(
-            applications.map(async (application) => {
-              // Get profile data
-              const { data: profiles } = await supabase
-                .from('profiles')
-                .select('full_name, email, location')
-                .eq('id', application.user_id)
-                .single();
-
-              // Get skills
-              const { data: skills } = await supabase
-                .from('candidate_skills')
-                .select('skills(name)')
-                .eq('application_id', application.id);
-
-              // Get work experiences
-              const { data: experiences } = await supabase
-                .from('work_experiences')
-                .select('*')
-                .eq('application_id', application.id);
-
-              return {
-                ...application,
-                profiles,
-                skills: skills || [],
-                work_experiences: experiences || []
-              };
-            })
-          );
-
-          console.log("Processed talents with details:", talentsWithDetails);
-          setTalents(talentsWithDetails);
-        }
+        console.log("Fetched applications:", data);
+        setApplications(data || []);
+        
       } catch (err) {
-        console.error('Error in fetchTalents:', err);
-        setError('Failed to fetch talent applications');
+        console.error('Error in fetchApplications:', err);
+        setError('Failed to fetch applications');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchTalents();
+    fetchApplications();
   }, [supabase]);
 
   if (loading) {
@@ -99,14 +75,11 @@ export const TalentTable = () => {
 
   return (
     <section>
-      <h2 className="text-2xl font-bold mb-4">Talent Applications ({talents.length})</h2>
+      <h2 className="text-2xl font-bold mb-4">Talent Applications ({applications.length})</h2>
       <div className="bg-white shadow rounded-lg overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Location</TableHead>
               <TableHead>Experience</TableHead>
               <TableHead>Availability</TableHead>
               <TableHead>Start Date</TableHead>
@@ -118,42 +91,39 @@ export const TalentTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {talents.length === 0 ? (
+            {applications.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={11} className="text-center py-4">
-                  No talent applications found
+                <TableCell colSpan={8} className="text-center py-4">
+                  No applications found
                 </TableCell>
               </TableRow>
             ) : (
-              talents.map((talent) => (
-                <TableRow key={talent.id}>
-                  <TableCell>{talent.profiles?.full_name || 'N/A'}</TableCell>
-                  <TableCell>{talent.profiles?.email || 'N/A'}</TableCell>
-                  <TableCell>{talent.profiles?.location || 'N/A'}</TableCell>
-                  <TableCell>{talent.years_experience} years</TableCell>
-                  <TableCell>{talent.availability_type}</TableCell>
+              applications.map((application) => (
+                <TableRow key={application.id}>
+                  <TableCell>{application.years_experience} years</TableCell>
+                  <TableCell>{application.availability_type}</TableCell>
                   <TableCell>
-                    {talent.earliest_start_date 
-                      ? format(new Date(talent.earliest_start_date), 'PP')
+                    {application.earliest_start_date 
+                      ? format(new Date(application.earliest_start_date), 'PP')
                       : 'N/A'}
                   </TableCell>
                   <TableCell>
-                    {talent.preferred_schedule ? (
+                    {application.preferred_schedule ? (
                       <div>
-                        <p>Hours/week: {talent.preferred_schedule.hoursPerWeek}</p>
-                        <p>Timezone: {talent.preferred_schedule.timeZone}</p>
+                        <p>Hours/week: {application.preferred_schedule.hoursPerWeek}</p>
+                        <p>Timezone: {application.preferred_schedule.timeZone}</p>
                       </div>
                     ) : 'N/A'}
                   </TableCell>
                   <TableCell>
-                    {talent.skills?.map((skill: any) => (
-                      <span key={skill.skills.name} className="inline-block bg-gray-100 rounded px-2 py-1 text-sm mr-1 mb-1">
+                    {application.skills?.map((skill, index) => (
+                      <span key={index} className="inline-block bg-gray-100 rounded px-2 py-1 text-sm mr-1 mb-1">
                         {skill.skills.name}
                       </span>
                     ))}
                   </TableCell>
                   <TableCell>
-                    {talent.work_experiences?.map((exp: any) => (
+                    {application.work_experiences?.map((exp) => (
                       <div key={exp.id} className="mb-2">
                         <p><strong>{exp.role_title}</strong></p>
                         <p>{exp.company_name}</p>
@@ -165,10 +135,10 @@ export const TalentTable = () => {
                   </TableCell>
                   <TableCell>
                     <div className="max-w-xs overflow-hidden text-ellipsis">
-                      {talent.professional_summary}
+                      {application.professional_summary}
                     </div>
                   </TableCell>
-                  <TableCell>{format(new Date(talent.created_at), 'PP')}</TableCell>
+                  <TableCell>{format(new Date(application.created_at), 'PP')}</TableCell>
                 </TableRow>
               ))
             )}
