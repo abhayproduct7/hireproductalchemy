@@ -26,15 +26,18 @@ export const skillsService = {
 
   async addSkill(applicationId: string, skillName: string) {
     // Check if skill exists
-    const { data: existingSkill } = await supabase
+    const { data: existingSkill, error: searchError } = await supabase
       .from('skills')
       .select('id')
       .eq('name', skillName.trim())
       .maybeSingle();
 
+    if (searchError) throw searchError;
+
     let skillId;
 
     if (!existingSkill) {
+      // Create new skill if it doesn't exist
       const { data: newSkillData, error: newSkillError } = await supabase
         .from('skills')
         .insert({ name: skillName.trim() })
@@ -47,6 +50,7 @@ export const skillsService = {
       skillId = existingSkill.id;
     }
 
+    // Link skill to application
     const { error: linkError } = await supabase
       .from('candidate_skills')
       .insert({
@@ -59,11 +63,13 @@ export const skillsService = {
   },
 
   async removeSkill(applicationId: string, skillName: string) {
-    const { data: skillData } = await supabase
+    const { data: skillData, error: searchError } = await supabase
       .from('skills')
       .select('id')
       .eq('name', skillName)
-      .single();
+      .maybeSingle();
+
+    if (searchError) throw searchError;
 
     if (skillData) {
       const { error } = await supabase
