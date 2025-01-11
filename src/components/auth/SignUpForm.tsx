@@ -64,31 +64,8 @@ export const SignUpForm = ({ setView, userType, setUserType }: SignUpFormProps) 
     try {
       setIsLoading(true);
 
-      // Check if user exists in profiles
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('id, user_type')
-        .eq('email', email)
-        .maybeSingle();
-
-      if (profileError) {
-        throw profileError;
-      }
-
-      if (profileData) {
-        // If user exists in profiles but with different user type, show error
-        if (profileData.user_type && profileData.user_type !== userType) {
-          toast({
-            title: "Account exists",
-            description: `This email is already registered as ${profileData.user_type}. Please sign in or use a different email.`,
-            variant: "destructive",
-          });
-          return;
-        }
-      }
-
-      // Proceed with sign up
-      const { error: signUpError } = await supabase.auth.signUp({
+      // First, sign up the user
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -108,6 +85,24 @@ export const SignUpForm = ({ setView, userType, setUserType }: SignUpFormProps) 
           return;
         }
         throw signUpError;
+      }
+
+      // Then, ensure the profile is created with the correct user type
+      if (signUpData.user) {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .upsert({
+            id: signUpData.user.id,
+            email: email,
+            user_type: userType,
+          }, {
+            onConflict: 'id',
+          });
+
+        if (profileError) {
+          console.error("Profile creation error:", profileError);
+          throw new Error("Failed to create profile");
+        }
       }
 
       toast({

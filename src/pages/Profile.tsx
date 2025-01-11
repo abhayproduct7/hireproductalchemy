@@ -6,30 +6,47 @@ import { EmployerProfile } from "@/components/profile/EmployerProfile";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const session = useSession();
+  const navigate = useNavigate();
   const [userType, setUserType] = useState<"talent" | "employer" | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserType = async () => {
-      if (session?.user) {
+      if (!session?.user) {
+        navigate("/login");
+        return;
+      }
+
+      try {
         const { data, error } = await supabase
           .from("profiles")
           .select("user_type")
           .eq("id", session.user.id)
           .single();
 
-        if (!error && data) {
+        if (error) throw error;
+        
+        if (data) {
           setUserType(data.user_type);
         }
+      } catch (error) {
+        console.error("Error fetching user type:", error);
+      } finally {
         setIsLoading(false);
       }
     };
 
     fetchUserType();
-  }, [session]);
+  }, [session, navigate]);
+
+  if (!session) {
+    navigate("/login");
+    return null;
+  }
 
   if (isLoading) {
     return (
@@ -57,7 +74,12 @@ const Profile = () => {
         ) : userType === "employer" ? (
           <EmployerProfile />
         ) : (
-          <div>Profile type not set</div>
+          <div className="text-center py-8">
+            <h2 className="text-2xl font-semibold mb-4">Profile type not set</h2>
+            <p className="text-muted-foreground">
+              Please contact support if you believe this is an error.
+            </p>
+          </div>
         )}
       </main>
       <Footer />
