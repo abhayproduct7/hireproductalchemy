@@ -48,7 +48,7 @@ export const JoinApplicationForm = () => {
   const CurrentStepComponent = STEPS[currentStep].component;
 
   // Get the field names for the current step
-  const getStepFields = (stepIndex: number) => {
+  const getStepFields = (stepIndex: number): (keyof JoinFormValues)[] => {
     switch (stepIndex) {
       case 0: // Basic Information
         return ["yearsExperience", "professionalSummary"];
