@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,9 +16,16 @@ import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/admin/Dashboard";
 import { ChatBot } from "./components/ChatBot";
 import { Toaster } from "@/components/ui/toaster";
+import { useAnalytics } from "@/hooks/use-analytics";
 
 // Create a client
 const queryClient = new QueryClient();
+
+// Analytics wrapper component
+const AnalyticsWrapper = ({ children }: { children: React.ReactNode }) => {
+  useAnalytics(); // This will track page views automatically
+  return <>{children}</>;
+};
 
 function App() {
   return (
@@ -26,21 +33,23 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <SessionContextProvider supabaseClient={supabase}>
           <Router>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/hire" element={<HireTalent />} />
-              <Route path="/join" element={<JoinCommunity />} />
-              <Route path="/requirements" element={<RequirementsCapture />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms-of-service" element={<TermsOfService />} />
-              <Route path="/thank-you" element={<ThankYou />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-            </Routes>
-            <ChatBot />
-            <Toaster />
+            <AnalyticsWrapper>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/hire" element={<HireTalent />} />
+                <Route path="/join" element={<JoinCommunity />} />
+                <Route path="/requirements" element={<RequirementsCapture />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
+                <Route path="/thank-you" element={<ThankYou />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+              </Routes>
+              <ChatBot />
+              <Toaster />
+            </AnalyticsWrapper>
           </Router>
         </SessionContextProvider>
       </QueryClientProvider>
