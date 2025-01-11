@@ -10,21 +10,7 @@ import {
 } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
 import { Database } from "@/integrations/supabase/types";
-
-interface Requirement {
-  id: number;
-  created_at: string;
-  answers: {
-    type: string;
-    email: string;
-    company: string;
-    duration: string;
-    industry: string;
-    timeline: string;
-    responsibilities: string;
-  };
-  user_id?: string;
-}
+import { Requirement } from "./employer/types";
 
 export const EmployerTable = () => {
   const supabase = useSupabaseClient<Database>();
@@ -46,8 +32,13 @@ export const EmployerTable = () => {
           throw error;
         }
 
-        console.log('Requirements data:', data);
-        setRequirements(data || []);
+        // Transform the data to match our expected types
+        const typedRequirements = data.map(req => ({
+          ...req,
+          answers: req.answers as Requirement['answers']
+        }));
+
+        setRequirements(typedRequirements);
         
       } catch (error) {
         console.error('Error:', error);

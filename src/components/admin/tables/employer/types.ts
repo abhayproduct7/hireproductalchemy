@@ -1,11 +1,13 @@
 import { Database } from "@/integrations/supabase/types";
 
 export interface RequirementAnswers {
-  "1": string; // Role Type
-  "2": string; // Industry
-  "3": string; // Duration
-  "4": string; // Responsibilities
-  "5": string; // Experience
+  type: string;
+  email: string;
+  company: string;
+  duration: string;
+  industry: string;
+  timeline: string;
+  responsibilities: string;
 }
 
 export type Requirement = {
