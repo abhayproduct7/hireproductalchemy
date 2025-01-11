@@ -23,12 +23,12 @@ export const TalentTable = () => {
         setLoading(true);
         setError(null);
         
-        // First fetch all candidate applications with their user profiles
+        // First fetch candidate applications and join with profiles
         const { data: applications, error: applicationsError } = await supabase
           .from('candidate_applications')
           .select(`
             *,
-            profiles:user_id (
+            profile:user_id (
               full_name,
               email,
               location
@@ -127,9 +127,9 @@ export const TalentTable = () => {
             ) : (
               talents.map((talent) => (
                 <TableRow key={talent.id}>
-                  <TableCell>{talent.profiles?.full_name || 'N/A'}</TableCell>
-                  <TableCell>{talent.profiles?.email || 'N/A'}</TableCell>
-                  <TableCell>{talent.profiles?.location || 'N/A'}</TableCell>
+                  <TableCell>{talent.profile?.full_name || 'N/A'}</TableCell>
+                  <TableCell>{talent.profile?.email || 'N/A'}</TableCell>
+                  <TableCell>{talent.profile?.location || 'N/A'}</TableCell>
                   <TableCell>{talent.years_experience} years</TableCell>
                   <TableCell>{talent.availability_type}</TableCell>
                   <TableCell>
