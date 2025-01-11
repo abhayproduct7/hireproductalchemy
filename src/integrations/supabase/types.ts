@@ -30,7 +30,9 @@ export type Database = {
       analytics_events: {
         Row: {
           created_at: string | null
+          duration_seconds: number | null
           event_type: string
+          exit_page: boolean | null
           id: string
           page_path: string
           referrer: string | null
@@ -40,7 +42,9 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
+          duration_seconds?: number | null
           event_type: string
+          exit_page?: boolean | null
           id?: string
           page_path: string
           referrer?: string | null
@@ -50,7 +54,9 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
+          duration_seconds?: number | null
           event_type?: string
+          exit_page?: boolean | null
           id?: string
           page_path?: string
           referrer?: string | null

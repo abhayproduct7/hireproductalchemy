@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PageViewsChart } from "./charts/PageViewsChart";
 import { EventsTable } from "./EventsTable";
+import { PageMetricsTable } from "./PageMetricsTable";
 
 export const AnalyticsDashboard = () => {
   const { data: events, isLoading } = useQuery({
@@ -30,16 +31,20 @@ export const AnalyticsDashboard = () => {
 
   return (
     <div className="space-y-8">
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
         <Card className="p-4">
           <h3 className="text-lg font-semibold mb-4">Page Views Over Time</h3>
           <PageViewsChart events={events || []} />
         </Card>
         <Card className="p-4">
-          <h3 className="text-lg font-semibold mb-4">Recent Events</h3>
-          <EventsTable events={events || []} />
+          <h3 className="text-lg font-semibold mb-4">Page Metrics</h3>
+          <PageMetricsTable events={events || []} />
         </Card>
       </div>
+      <Card className="p-4">
+        <h3 className="text-lg font-semibold mb-4">Recent Events</h3>
+        <EventsTable events={events || []} />
+      </Card>
     </div>
   );
 };
