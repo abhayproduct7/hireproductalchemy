@@ -45,10 +45,11 @@ export const Footer = () => {
                     Contact Form
                   </button>
                 </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <ContactForm />
-              </DialogContent>
-            </Dialog>
+                <DialogContent className="sm:max-w-[425px]">
+                  <ContactForm />
+                </DialogContent>
+              </Dialog>
+            </div>
           </div>
 
           {/* SEO Optimized Content */}
