@@ -26,10 +26,21 @@ export const AuthForm = () => {
       setError(decodeURIComponent(errorMessage));
     }
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_OUT') {
         setError(null);
         setUnconfirmedEmail(null);
+      }
+
+      // Handle auth errors
+      if (event === 'USER_UPDATED' && !session) {
+        const { error } = await supabase.auth.getSession();
+        if (error?.message?.includes('email_not_confirmed')) {
+          const email = error.message.match(/Email (.*?) is/)?.[1];
+          if (email) {
+            setUnconfirmedEmail(email);
+          }
+        }
       }
     });
 
