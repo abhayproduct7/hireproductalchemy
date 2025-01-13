@@ -8,7 +8,6 @@ import { UserTypeSelector } from "./UserTypeSelector";
 import { PasswordRequirements } from "./PasswordRequirements";
 import { AuthLinks } from "./AuthLinks";
 import { useSignUp } from "./hooks/useSignUp";
-import { SignUpFormFields } from "./SignUpFormFields";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -31,7 +30,7 @@ interface SignUpFormProps {
 
 export const SignUpForm = ({ setView, userType, setUserType }: SignUpFormProps) => {
   const [showPasswordRequirements, setShowPasswordRequirements] = useState(false);
-  const { isLoading, handleSignUp } = useSignUp({ setView });
+  const { signUp, isLoading, error } = useSignUp({ setView });
   
   const {
     register,
@@ -53,7 +52,7 @@ export const SignUpForm = ({ setView, userType, setUserType }: SignUpFormProps) 
   ];
 
   const onSubmit = async ({ email, password }: FormData) => {
-    await handleSignUp(email, password, userType);
+    await signUp(email, password, userType);
   };
 
   return (
@@ -103,6 +102,10 @@ export const SignUpForm = ({ setView, userType, setUserType }: SignUpFormProps) 
           requirements={passwordRequirements}
           show={showPasswordRequirements}
         />
+
+        {error && (
+          <p className="text-sm text-red-500">{error}</p>
+        )}
 
         <Button className="w-full" type="submit" disabled={isLoading}>
           {isLoading ? "Creating account..." : "Create account"}
