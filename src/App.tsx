@@ -15,6 +15,8 @@ import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminAnalytics from "./pages/admin/Analytics";
+import AuthCallback from "./pages/AuthCallback";
+import EmailConfirmation from "./pages/EmailConfirmation";
 import { ChatBot } from "./components/ChatBot";
 import { Toaster } from "@/components/ui/toaster";
 import { useAnalytics } from "@/hooks/use-analytics";
@@ -48,6 +50,8 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/admin/analytics" element={<AdminAnalytics />} />
+                <Route path="/auth/callback" element={<AuthCallback />} />
+                <Route path="/email-confirmation" element={<EmailConfirmation />} />
               </Routes>
               <ChatBot />
               <Toaster />
