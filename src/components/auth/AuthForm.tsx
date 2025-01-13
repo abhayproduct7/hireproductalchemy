@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { BASE_URL } from "@/config/constants";
 import { toast } from "@/hooks/use-toast";
-import { AuthError } from "@supabase/supabase-js";
 
 export const AuthForm = () => {
   const { view, setView, userType, setUserType } = useAuthForm();
@@ -49,16 +48,17 @@ export const AuthForm = () => {
     // Check URL parameters for email confirmation error
     const urlParams = new URLSearchParams(window.location.search);
     const errorCode = urlParams.get('error_code');
+    const errorMessage = urlParams.get('error_description');
     const email = urlParams.get('email');
 
     if (errorCode === 'email_not_confirmed' && email) {
       setError('Please verify your email address before signing in.');
       setUnconfirmedEmail(email);
+    } else if (errorMessage) {
+      setError(decodeURIComponent(errorMessage));
     }
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('Auth state changed:', event);
-      
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
       if (event === 'SIGNED_OUT') {
         setError(null);
         setUnconfirmedEmail(null);
