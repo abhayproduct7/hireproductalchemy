@@ -37,7 +37,7 @@ export const useSignUp = ({ setView }: UseSignUpProps) => {
           data: {
             user_type: userType,
           },
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: 'https://producthire.co.uk/auth/callback',
         },
       });
 
