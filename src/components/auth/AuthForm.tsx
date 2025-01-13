@@ -15,6 +15,7 @@ export const AuthForm = () => {
   const [unconfirmedEmail, setUnconfirmedEmail] = useState<string | null>(null);
 
   useEffect(() => {
+    // Check URL parameters for errors
     const urlParams = new URLSearchParams(window.location.search);
     const errorCode = urlParams.get('error_code');
     const errorMessage = urlParams.get('error_description');
@@ -25,38 +26,16 @@ export const AuthForm = () => {
     } else if (errorMessage) {
       setError(decodeURIComponent(errorMessage));
     }
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_OUT') {
-        setError(null);
-        setUnconfirmedEmail(null);
-      }
-
-      // Handle auth errors
-      if (event === 'USER_UPDATED' && !session) {
-        const { error } = await supabase.auth.getSession();
-        if (error?.message?.includes('email_not_confirmed')) {
-          const email = error.message.match(/Email (.*?) is/)?.[1];
-          if (email) {
-            setUnconfirmedEmail(email);
-          }
-        }
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
   }, []);
-
-  if (view === "sign_up") {
-    return <SignUpForm setView={setView} userType={userType} setUserType={setUserType} />;
-  }
 
   const handleErrorClose = () => {
     setError(null);
     setUnconfirmedEmail(null);
   };
+
+  if (view === "sign_up") {
+    return <SignUpForm setView={setView} userType={userType} setUserType={setUserType} />;
+  }
 
   return (
     <div className="space-y-6">

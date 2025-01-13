@@ -40,7 +40,7 @@ export const EmailConfirmationAlert = ({ email, onClose }: EmailConfirmationAler
   };
 
   return (
-    <Alert variant="destructive" className="mb-6">
+    <Alert variant="destructive">
       <Mail className="h-5 w-5" />
       <AlertTitle className="mb-2">Email Verification Required</AlertTitle>
       <AlertDescription className="space-y-4">
