@@ -46,21 +46,7 @@ export const AuthForm = () => {
   };
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_OUT') {
-        // Check if there's an error in the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const errorCode = urlParams.get('error_code');
-        const email = urlParams.get('email');
-
-        if (errorCode === 'email_not_confirmed' && email) {
-          setError('Please verify your email address before signing in.');
-          setUnconfirmedEmail(email);
-        }
-      }
-    });
-
-    // Initial check for error in URL
+    // Check URL parameters for email confirmation error
     const urlParams = new URLSearchParams(window.location.search);
     const errorCode = urlParams.get('error_code');
     const email = urlParams.get('email');
@@ -69,6 +55,15 @@ export const AuthForm = () => {
       setError('Please verify your email address before signing in.');
       setUnconfirmedEmail(email);
     }
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed:', event);
+      
+      if (event === 'SIGNED_OUT') {
+        setError(null);
+        setUnconfirmedEmail(null);
+      }
+    });
 
     return () => {
       subscription.unsubscribe();
