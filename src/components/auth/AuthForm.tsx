@@ -20,9 +20,13 @@ export const AuthForm = () => {
     // Check URL parameters for errors
     const params = new URLSearchParams(window.location.search);
     const errorCode = params.get('error_code');
+    const email = params.get('email');
     
     if (errorCode === 'email_not_confirmed') {
-      setError('Your email confirmation link has expired. Please sign in again to receive a new confirmation email.');
+      setError('Your email is not confirmed. Please check your inbox for the confirmation email or request a new one.');
+      if (email) {
+        setUnconfirmedEmail(email);
+      }
     }
   }, []);
 
@@ -53,21 +57,31 @@ export const AuthForm = () => {
   };
 
   // Set up auth state change listener to catch errors
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (event === 'USER_UPDATED' && !session) {
-      const urlParams = new URLSearchParams(window.location.search);
-      const errorCode = urlParams.get('error_code');
-      const errorMessage = urlParams.get('error_description');
-      const email = urlParams.get('email');
-      
-      if (errorCode === 'email_not_confirmed' && email) {
-        setError('Please verify your email address before signing in.');
-        setUnconfirmedEmail(email);
-      } else if (errorMessage) {
-        setError(errorMessage);
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'USER_UPDATED' && !session) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorCode = urlParams.get('error_code');
+        const errorMessage = urlParams.get('error_description');
+        const email = urlParams.get('email');
+        
+        if (errorCode === 'email_not_confirmed') {
+          setError('Please verify your email address before signing in.');
+          if (email) {
+            setUnconfirmedEmail(email);
+          }
+        } else if (errorMessage) {
+          setError(errorMessage);
+        }
       }
-    }
-  });
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   if (view === "sign_up") {
     return <SignUpForm setView={setView} userType={userType} setUserType={setUserType} />;
