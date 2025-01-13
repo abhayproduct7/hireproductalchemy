@@ -56,9 +56,28 @@ export const useSignUp = ({ setView }: UseSignUpProps) => {
 
       if (signUpData.user) {
         console.log("User created successfully");
-        // The profile will be created automatically by the database trigger
-        // No need to manually create it here
+        
+        // Update the user's profile with the selected user type
+        const { error: updateError } = await supabase
+          .from('profiles')
+          .update({ user_type: userType })
+          .eq('id', signUpData.user.id);
+
+        if (updateError) {
+          console.error("Error updating profile:", updateError);
+          toast({
+            title: "Error",
+            description: "There was a problem setting up your profile. Please contact support.",
+            variant: "destructive",
+          });
+          return;
+        }
+
         navigate("/email-confirmation");
+        toast({
+          title: "Success!",
+          description: "Please check your email to verify your account.",
+        });
       }
     } catch (error: any) {
       console.error("Signup process error:", error);

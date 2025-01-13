@@ -237,7 +237,7 @@ export type Database = {
           location: string | null
           phone: string | null
           updated_at: string | null
-          user_type: Database["public"]["Enums"]["user_type"] | null
+          user_type: Database["public"]["Enums"]["user_type"]
         }
         Insert: {
           company_name?: string | null
@@ -248,7 +248,7 @@ export type Database = {
           location?: string | null
           phone?: string | null
           updated_at?: string | null
-          user_type?: Database["public"]["Enums"]["user_type"] | null
+          user_type?: Database["public"]["Enums"]["user_type"]
         }
         Update: {
           company_name?: string | null
@@ -259,7 +259,7 @@ export type Database = {
           location?: string | null
           phone?: string | null
           updated_at?: string | null
-          user_type?: Database["public"]["Enums"]["user_type"] | null
+          user_type?: Database["public"]["Enums"]["user_type"]
         }
         Relationships: []
       }

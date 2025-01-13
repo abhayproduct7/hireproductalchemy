@@ -1,22 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/components/ui/use-toast";
-import { AuthError, AuthApiError } from "@supabase/supabase-js";
-
-const getErrorMessage = (error: AuthError) => {
-  if (error instanceof AuthApiError) {
-    switch (error.status) {
-      case 400:
-        return 'Invalid credentials. Please check your email and password.';
-      case 422:
-        return 'Invalid email format. Please enter a valid email address.';
-      default:
-        return error.message;
-    }
-  }
-  return error.message;
-};
+import { toast } from "@/hooks/use-toast";
+import { AuthError } from "@supabase/supabase-js";
 
 export const useAuthForm = () => {
   const navigate = useNavigate();
@@ -30,12 +16,39 @@ export const useAuthForm = () => {
       console.log('Auth state changed:', event, session);
       
       if (event === "SIGNED_IN" && session) {
-        console.log('Sign in successful, navigating to dashboard');
-        navigate("/dashboard");
-        toast({
-          title: "Welcome!",
-          description: "You have successfully signed in.",
-        });
+        console.log('Sign in successful, checking profile');
+        
+        // Check if user has a profile
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('user_type')
+          .eq('id', session.user.id)
+          .single();
+
+        if (profileError) {
+          console.error('Error fetching profile:', profileError);
+          toast({
+            title: "Error",
+            description: "There was a problem accessing your profile.",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        if (profile) {
+          console.log('Profile found:', profile);
+          // Redirect based on user type
+          if (profile.user_type === 'talent') {
+            navigate("/join-community#application");
+          } else {
+            navigate("/dashboard");
+          }
+          
+          toast({
+            title: "Welcome!",
+            description: "You have successfully signed in.",
+          });
+        }
       }
 
       if (event === 'SIGNED_OUT') {
@@ -44,26 +57,6 @@ export const useAuthForm = () => {
 
       if (event === 'USER_UPDATED') {
         console.log('User updated:', session);
-      }
-
-      if (event === 'PASSWORD_RECOVERY') {
-        toast({
-          title: "Password Recovery",
-          description: "Please check your email for password reset instructions.",
-        });
-      }
-
-      // Handle authentication errors
-      if (event === 'SIGNED_IN' && !session) {
-        const { error } = await supabase.auth.getSession();
-        if (error) {
-          console.error('Authentication error:', error);
-          toast({
-            title: "Authentication Error",
-            description: getErrorMessage(error),
-            variant: "destructive",
-          });
-        }
       }
     });
 

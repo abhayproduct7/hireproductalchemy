@@ -42,7 +42,7 @@ export const AuthForm = () => {
         providers={[]}
         view="sign_in"
         showLinks={false}
-        redirectTo={window.location.origin}
+        redirectTo={`${window.location.origin}/auth/callback`}
         localization={{
           variables: {
             sign_in: {
