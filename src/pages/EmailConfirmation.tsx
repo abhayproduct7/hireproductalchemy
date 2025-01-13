@@ -29,7 +29,13 @@ const EmailConfirmation = () => {
             return;
           }
 
-          setUserType(profile?.user_type || null);
+          if (profile?.user_type) {
+            setUserType(profile.user_type);
+            // Redirect to appropriate page after a short delay
+            setTimeout(() => {
+              navigate(profile.user_type === 'employer' ? '/hire' : '/join');
+            }, 2000);
+          }
         } catch (error) {
           console.error('Error:', error);
         } finally {
@@ -41,36 +47,34 @@ const EmailConfirmation = () => {
     };
 
     checkUserProfile();
-  }, [session]);
+  }, [session, navigate]);
 
-  // Show loading state while checking session and profile
-  if (isLoading || isCheckingProfile) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <div className="flex items-center justify-center min-h-[60vh]">
+  const renderContent = () => {
+    if (isLoading || isCheckingProfile) {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+          <p className="text-gray-600">Checking authentication status...</p>
         </div>
-        <Footer />
-      </div>
-    );
-  }
+      );
+    }
 
-  // If user is authenticated, show appropriate page based on user type
-  if (session) {
+    if (session && userType) {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4">
+          <div className="max-w-md text-center space-y-4">
+            <h2 className="text-2xl font-bold text-primary">Email Verified Successfully!</h2>
+            <p className="text-gray-600">
+              Redirecting you to the {userType === 'employer' ? 'employer' : 'talent'} dashboard...
+            </p>
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary mx-auto"></div>
+          </div>
+          {userType === 'employer' ? <HireTalentHero /> : <JoinCommunityHero />}
+        </div>
+      );
+    }
+
     return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        {userType === 'employer' ? <HireTalentHero /> : <JoinCommunityHero />}
-        <Footer />
-      </div>
-    );
-  }
-
-  // Show email confirmation message if not authenticated
-  return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
       <div className="flex items-center justify-center px-4 py-32">
         <div className="max-w-md w-full space-y-8 text-center">
           <div className="bg-white p-8 rounded-lg shadow-md space-y-6">
@@ -90,6 +94,15 @@ const EmailConfirmation = () => {
           </div>
         </div>
       </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <main className="container mx-auto">
+        {renderContent()}
+      </main>
       <Footer />
     </div>
   );
