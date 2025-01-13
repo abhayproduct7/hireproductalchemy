@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { BASE_URL } from "@/config/constants";
 import { toast } from "@/hooks/use-toast";
-import { AuthError } from "@supabase/supabase-js";
+import { AuthError, AuthApiError } from "@supabase/supabase-js";
 
 export const AuthForm = () => {
   const { view, setView, userType, setUserType } = useAuthForm();
@@ -66,6 +66,8 @@ export const AuthForm = () => {
 
   // Set up auth state change listener to catch errors
   useEffect(() => {
+    console.log("Setting up auth state listener");
+    
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -91,16 +93,20 @@ export const AuthForm = () => {
       if (event === 'SIGNED_OUT') {
         const urlParams = new URLSearchParams(window.location.search);
         const errorCode = urlParams.get('error_code');
+        const errorMessage = urlParams.get('error_description');
         const email = urlParams.get('email');
 
         if (errorCode === 'email_not_confirmed' && email) {
           setError('Please verify your email address before signing in.');
           setUnconfirmedEmail(email);
+        } else if (errorMessage) {
+          setError(errorMessage);
         }
       }
     });
 
     return () => {
+      console.log("Cleaning up auth state listener");
       subscription.unsubscribe();
     };
   }, []);
