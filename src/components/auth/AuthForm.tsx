@@ -5,12 +5,16 @@ import { useAuthForm } from "@/hooks/useAuthForm";
 import { SignUpForm } from "./SignUpForm";
 import { AuthLinks } from "./AuthLinks";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { BASE_URL } from "@/config/constants";
+import { toast } from "@/hooks/use-toast";
 
 export const AuthForm = () => {
   const { view, setView, userType, setUserType } = useAuthForm();
   const [error, setError] = useState<string | null>(null);
+  const [unconfirmedEmail, setUnconfirmedEmail] = useState<string | null>(null);
+  const [isResending, setIsResending] = useState(false);
 
   useEffect(() => {
     // Check URL parameters for errors
@@ -22,15 +26,43 @@ export const AuthForm = () => {
     }
   }, []);
 
+  const handleResendConfirmation = async () => {
+    if (!unconfirmedEmail) return;
+    
+    setIsResending(true);
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: unconfirmedEmail,
+    });
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to resend confirmation email. Please try again.",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Success",
+        description: "Confirmation email has been resent. Please check your inbox.",
+      });
+      setError(null);
+      setUnconfirmedEmail(null);
+    }
+    setIsResending(false);
+  };
+
   // Set up auth state change listener to catch errors
   supabase.auth.onAuthStateChange((event, session) => {
     if (event === 'USER_UPDATED' && !session) {
       const urlParams = new URLSearchParams(window.location.search);
       const errorCode = urlParams.get('error_code');
       const errorMessage = urlParams.get('error_description');
+      const email = urlParams.get('email');
       
-      if (errorCode === 'email_not_confirmed') {
-        setError('Please check your email and click the confirmation link to verify your account.');
+      if (errorCode === 'email_not_confirmed' && email) {
+        setError('Please verify your email address before signing in.');
+        setUnconfirmedEmail(email);
       } else if (errorMessage) {
         setError(errorMessage);
       }
@@ -45,7 +77,21 @@ export const AuthForm = () => {
     <div className="space-y-6">
       {error && (
         <Alert variant="destructive" className="mb-4">
-          <AlertDescription>{error}</AlertDescription>
+          <AlertDescription>
+            {error}
+            {unconfirmedEmail && (
+              <div className="mt-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleResendConfirmation}
+                  disabled={isResending}
+                >
+                  {isResending ? "Sending..." : "Resend confirmation email"}
+                </Button>
+              </div>
+            )}
+          </AlertDescription>
         </Alert>
       )}
       <Auth
