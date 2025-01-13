@@ -52,12 +52,11 @@ const JoinCommunity = () => {
             return;
           }
 
-          // Check for existing application
-          const { data, error } = await supabase
+          // Check for existing application - using select count instead of maybeSingle
+          const { count, error } = await supabase
             .from("candidate_applications")
-            .select("id")
-            .eq("user_id", session.user.id)
-            .maybeSingle();
+            .select('*', { count: 'exact', head: true })
+            .eq("user_id", session.user.id);
 
           if (error) {
             console.error("Error checking application:", error);
@@ -68,7 +67,7 @@ const JoinCommunity = () => {
             });
           }
 
-          setHasApplication(!!data);
+          setHasApplication(count ? count > 0 : false);
           setIsLoading(false);
         } catch (error) {
           console.error("Error checking user state:", error);
