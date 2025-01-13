@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
@@ -23,8 +24,8 @@ export const EmailConfirmationAlert = ({ email, onClose }: EmailConfirmationAler
       if (error) throw error;
 
       toast({
-        title: "Success",
-        description: "Confirmation email has been resent. Please check your inbox.",
+        title: "Confirmation email sent",
+        description: "Please check your inbox and spam folder.",
       });
     } catch (error) {
       console.error('Error resending confirmation:', error);
@@ -39,17 +40,28 @@ export const EmailConfirmationAlert = ({ email, onClose }: EmailConfirmationAler
   };
 
   return (
-    <Alert variant="destructive" className="mb-4">
-      <AlertDescription>
-        Please verify your email address before signing in.
-        <div className="mt-2">
+    <Alert variant="destructive" className="mb-6">
+      <Mail className="h-5 w-5" />
+      <AlertTitle className="mb-2">Email Verification Required</AlertTitle>
+      <AlertDescription className="space-y-4">
+        <p>
+          Please verify your email address ({email}) before signing in. Check your inbox and spam folder for the verification link.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-2">
           <Button
             variant="outline"
-            size="sm"
             onClick={handleResendConfirmation}
             disabled={isResending}
+            className="w-full sm:w-auto"
           >
-            {isResending ? "Sending..." : "Resend confirmation email"}
+            {isResending ? "Sending..." : "Resend Verification Email"}
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={onClose}
+            className="w-full sm:w-auto"
+          >
+            Try Different Email
           </Button>
         </div>
       </AlertDescription>
