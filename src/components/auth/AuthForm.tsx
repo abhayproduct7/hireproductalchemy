@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { BASE_URL } from "@/config/constants";
 import { toast } from "@/hooks/use-toast";
+import { AuthError } from "@supabase/supabase-js";
 
 export const AuthForm = () => {
   const { view, setView, userType, setUserType } = useAuthForm();
@@ -20,6 +21,7 @@ export const AuthForm = () => {
     // Check URL parameters for errors
     const params = new URLSearchParams(window.location.search);
     const errorCode = params.get('error_code');
+    const errorDescription = params.get('error_description');
     const email = params.get('email');
     
     if (errorCode === 'email_not_confirmed') {
@@ -27,6 +29,8 @@ export const AuthForm = () => {
       if (email) {
         setUnconfirmedEmail(email);
       }
+    } else if (errorDescription) {
+      setError(errorDescription);
     }
   }, []);
 
@@ -34,26 +38,30 @@ export const AuthForm = () => {
     if (!unconfirmedEmail) return;
     
     setIsResending(true);
-    const { error } = await supabase.auth.resend({
-      type: 'signup',
-      email: unconfirmedEmail,
-    });
-
-    if (error) {
-      toast({
-        title: "Error",
-        description: "Failed to resend confirmation email. Please try again.",
-        variant: "destructive",
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: unconfirmedEmail,
       });
-    } else {
+
+      if (error) throw error;
+
       toast({
         title: "Success",
         description: "Confirmation email has been resent. Please check your inbox.",
       });
       setError(null);
       setUnconfirmedEmail(null);
+    } catch (error) {
+      console.error('Error resending confirmation:', error);
+      toast({
+        title: "Error",
+        description: "Failed to resend confirmation email. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsResending(false);
     }
-    setIsResending(false);
   };
 
   // Set up auth state change listener to catch errors
@@ -61,6 +69,8 @@ export const AuthForm = () => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state changed:', event, session);
+      
       if (event === 'USER_UPDATED' && !session) {
         const urlParams = new URLSearchParams(window.location.search);
         const errorCode = urlParams.get('error_code');
@@ -74,6 +84,18 @@ export const AuthForm = () => {
           }
         } else if (errorMessage) {
           setError(errorMessage);
+        }
+      }
+
+      // Handle sign-in errors
+      if (event === 'SIGNED_OUT') {
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorCode = urlParams.get('error_code');
+        const email = urlParams.get('email');
+
+        if (errorCode === 'email_not_confirmed' && email) {
+          setError('Please verify your email address before signing in.');
+          setUnconfirmedEmail(email);
         }
       }
     });
