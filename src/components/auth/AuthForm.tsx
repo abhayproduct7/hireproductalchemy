@@ -5,12 +5,22 @@ import { useAuthForm } from "@/hooks/useAuthForm";
 import { SignUpForm } from "./SignUpForm";
 import { AuthLinks } from "./AuthLinks";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BASE_URL } from "@/config/constants";
 
 export const AuthForm = () => {
   const { view, setView, userType, setUserType } = useAuthForm();
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Check URL parameters for errors
+    const params = new URLSearchParams(window.location.search);
+    const errorCode = params.get('error_code');
+    
+    if (errorCode === 'email_not_confirmed') {
+      setError('Your email confirmation link has expired. Please sign in again to receive a new confirmation email.');
+    }
+  }, []);
 
   // Set up auth state change listener to catch errors
   supabase.auth.onAuthStateChange((event, session) => {

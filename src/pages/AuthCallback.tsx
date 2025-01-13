@@ -12,7 +12,9 @@ const AuthCallback = () => {
   useEffect(() => {
     // First, ensure we're on the correct domain
     if (!window.location.origin.includes('producthire.co.uk')) {
-      window.location.href = `${BASE_URL}${window.location.pathname}${window.location.search}`;
+      const currentPath = window.location.pathname;
+      const currentSearch = window.location.search;
+      window.location.href = `${BASE_URL}${currentPath}${currentSearch}`;
       return;
     }
 
@@ -20,8 +22,19 @@ const AuthCallback = () => {
       try {
         // Get the error parameters from URL if they exist
         const params = new URLSearchParams(window.location.search);
-        const errorCode = params.get('error');
+        const errorCode = params.get('error_code');
         const errorDescription = params.get('error_description');
+
+        if (errorCode === 'otp_expired') {
+          console.error('Email confirmation link expired');
+          toast({
+            title: "Email confirmation link expired",
+            description: "Please request a new confirmation email from the login page.",
+            variant: "destructive",
+          });
+          window.location.href = `${BASE_URL}/login?error_code=email_not_confirmed`;
+          return;
+        }
 
         if (errorCode) {
           console.error('Auth error:', errorCode, errorDescription);
@@ -55,13 +68,13 @@ const AuthCallback = () => {
             throw profileError;
           }
 
-          // Force the domain to be producthire.co.uk
+          // Redirect based on user type
           const redirectPath = profile?.user_type === 'employer' ? '/hire' : '/join-community#application';
           window.location.href = `${BASE_URL}${redirectPath}`;
 
           toast({
-            title: "Email verified successfully",
-            description: "Welcome to the platform!",
+            title: "Successfully authenticated",
+            description: "Welcome to ProductHire!",
           });
         } else {
           // If no session, redirect to login
