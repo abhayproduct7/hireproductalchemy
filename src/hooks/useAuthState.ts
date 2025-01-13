@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthChangeEvent, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
+import { BASE_URL } from "@/config/constants";
 
 export const useAuthState = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ export const useAuthState = () => {
       
       if (event === 'SIGNED_IN') {
         console.log('Sign in successful, navigating to dashboard');
-        navigate("/dashboard");
+        window.location.href = `${BASE_URL}/dashboard`;
         toast({
           title: "Successfully signed in",
           description: "Welcome back!",
@@ -47,7 +48,7 @@ export const useAuthState = () => {
       
       if (event === 'SIGNED_OUT') {
         console.log('Sign out detected');
-        navigate("/login");
+        window.location.href = `${BASE_URL}/login`;
         toast({
           title: "Signed out",
           description: "You have been signed out successfully.",

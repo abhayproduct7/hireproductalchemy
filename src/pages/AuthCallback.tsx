@@ -24,7 +24,7 @@ const AuthCallback = () => {
             description: errorDescription || "Please try signing in again.",
             variant: "destructive",
           });
-          navigate('/login');
+          window.location.href = `${BASE_URL}/login`;
           return;
         }
 
@@ -50,22 +50,15 @@ const AuthCallback = () => {
           }
 
           // Update the URL to use the custom domain
-          window.history.replaceState({}, '', `${BASE_URL}${window.location.pathname}`);
+          window.location.href = `${BASE_URL}${profile?.user_type === 'employer' ? '/hire' : '/join-community#application'}`;
 
           toast({
             title: "Email verified successfully",
             description: "Welcome to the platform!",
           });
-
-          // Redirect based on user type
-          if (profile?.user_type === 'employer') {
-            navigate('/hire');
-          } else {
-            navigate('/join-community#application');
-          }
         } else {
           // If no session, redirect to login
-          navigate('/login');
+          window.location.href = `${BASE_URL}/login`;
         }
       } catch (error) {
         console.error('Error in auth callback:', error);
@@ -74,7 +67,7 @@ const AuthCallback = () => {
           description: "Please try signing in again.",
           variant: "destructive",
         });
-        navigate('/login');
+        window.location.href = `${BASE_URL}/login`;
       }
     };
 
