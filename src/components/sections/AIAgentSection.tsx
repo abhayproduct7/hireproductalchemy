@@ -33,10 +33,6 @@ export const AIAgentSection = () => {
           <p className="text-muted-foreground mb-6">
             Whether you're hiring or part of our talent community, our AI assistant is here to ensure your product development journey is smooth and successful
           </p>
-          <div className="animate-pulse inline-flex items-center gap-2 text-secondary">
-            <Brain className="h-5 w-5" />
-            <span className="font-medium">AI is actively learning and evolving</span>
-          </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mt-16">
