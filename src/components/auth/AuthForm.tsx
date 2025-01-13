@@ -36,6 +36,21 @@ export const AuthForm = () => {
         setError(null);
         setUnconfirmedEmail(null);
       }
+
+      // Handle auth errors through the event listener
+      if (event === 'USER_UPDATED' && !session) {
+        const { data, error: sessionError } = await supabase.auth.getSession();
+        if (sessionError) {
+          if (sessionError.message.includes('Email not confirmed')) {
+            const email = sessionError.message.match(/Email (.*?) is/)?.[1];
+            if (email) {
+              setUnconfirmedEmail(email);
+            }
+          } else {
+            setError(sessionError.message);
+          }
+        }
+      }
     });
 
     return () => {
@@ -101,16 +116,6 @@ export const AuthForm = () => {
               button_label: "Sign In",
             },
           },
-        }}
-        onError={(error: AuthError) => {
-          if (error.message.includes('Email not confirmed')) {
-            const email = error.message.match(/Email (.*?) is/)?.[1];
-            if (email) {
-              setUnconfirmedEmail(email);
-            }
-          } else {
-            setError(error.message);
-          }
         }}
       />
       <AuthLinks setView={setView} />
