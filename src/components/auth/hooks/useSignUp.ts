@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 
 interface UseSignUpProps {
@@ -55,26 +55,9 @@ export const useSignUp = ({ setView }: UseSignUpProps) => {
       }
 
       if (signUpData.user) {
-        console.log("User created successfully, creating profile...");
-        
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .upsert({
-            id: signUpData.user.id,
-            email: email,
-            user_type: userType,
-          }, {
-            onConflict: 'id',
-          });
-
-        if (profileError) {
-          console.error("Profile creation error:", profileError);
-          throw new Error("Failed to create profile");
-        }
-
-        console.log("Profile created successfully with user_type:", userType);
-        
-        // Redirect to confirmation page
+        console.log("User created successfully");
+        // The profile will be created automatically by the database trigger
+        // No need to manually create it here
         navigate("/email-confirmation");
       }
     } catch (error: any) {
