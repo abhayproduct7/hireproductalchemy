@@ -1,10 +1,10 @@
 import { useSession } from "@supabase/auth-helpers-react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { TalentProfile } from "@/components/profile/TalentProfile";
 import { EmployerProfile } from "@/components/profile/EmployerProfile";
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
@@ -17,12 +17,12 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserType = async () => {
-      if (!session?.user) {
-        navigate("/login");
-        return;
-      }
+    if (!session?.user) {
+      navigate("/login");
+      return;
+    }
 
+    const fetchUserType = async () => {
       try {
         console.log("Fetching user type for:", session.user.id);
         
@@ -30,7 +30,7 @@ const Profile = () => {
           .from("profiles")
           .select("user_type")
           .eq("id", session.user.id)
-          .single();
+          .maybeSingle();
 
         if (error) {
           console.error("Error fetching user type:", error);
@@ -39,9 +39,18 @@ const Profile = () => {
         
         console.log("Fetched user type:", data?.user_type);
         
-        if (data) {
-          setUserType(data.user_type);
+        if (!data) {
+          // If no profile exists, show an error and redirect to complete profile setup
+          toast({
+            title: "Profile not found",
+            description: "Please complete your profile setup",
+            variant: "destructive",
+          });
+          navigate("/join-community#application");
+          return;
         }
+
+        setUserType(data.user_type);
       } catch (error) {
         console.error("Error fetching user type:", error);
         toast({
