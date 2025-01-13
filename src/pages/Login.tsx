@@ -10,9 +10,26 @@ const Login = () => {
 
   useEffect(() => {
     if (session) {
-      const returnTo = localStorage.getItem("returnTo") || "/";
+      // Get the return path from localStorage, but ensure it's a relative path
+      const storedReturnTo = localStorage.getItem("returnTo");
+      let returnPath = "/";
+
+      if (storedReturnTo) {
+        try {
+          // Create URL object to parse the stored path
+          const url = new URL(storedReturnTo);
+          // Only use the pathname and hash from the stored URL
+          returnPath = url.pathname + url.hash;
+        } catch {
+          // If the stored value isn't a valid URL, use it directly if it starts with /
+          if (storedReturnTo.startsWith('/')) {
+            returnPath = storedReturnTo;
+          }
+        }
+      }
+
       localStorage.removeItem("returnTo");
-      navigate(returnTo);
+      navigate(returnPath);
     }
   }, [session, navigate]);
 
