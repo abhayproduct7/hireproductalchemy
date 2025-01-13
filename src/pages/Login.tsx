@@ -3,6 +3,7 @@ import { AuthForm } from "@/components/auth/AuthForm";
 import { useSession } from "@supabase/auth-helpers-react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "@/config/constants";
 
 const Login = () => {
   const session = useSession();
@@ -20,6 +21,9 @@ const Login = () => {
           const url = new URL(storedReturnTo);
           // Only use the pathname and hash from the stored URL
           returnPath = url.pathname + url.hash;
+          
+          // Update the URL to use the custom domain
+          window.history.replaceState({}, '', `${BASE_URL}${returnPath}`);
         } catch {
           // If the stored value isn't a valid URL, use it directly if it starts with /
           if (storedReturnTo.startsWith('/')) {

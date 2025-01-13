@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { BASE_URL } from "@/config/constants";
 
 const AuthCallback = () => {
   const navigate = useNavigate();
@@ -23,6 +24,9 @@ const AuthCallback = () => {
             .select('user_type')
             .eq('id', session.user.id)
             .single();
+
+          // Update the URL to use the custom domain
+          window.history.replaceState({}, '', `${BASE_URL}${window.location.pathname}${window.location.hash}`);
 
           toast({
             title: "Email verified successfully",
