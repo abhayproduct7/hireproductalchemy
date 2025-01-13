@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
 import { Database } from "@/integrations/supabase/types";
-import { Requirement } from "./employer/types";
+import { Requirement, RequirementAnswers } from "./employer/types";
 
 export const EmployerTable = () => {
   const supabase = useSupabaseClient<Database>();
