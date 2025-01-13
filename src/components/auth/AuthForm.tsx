@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { BASE_URL } from "@/config/constants";
 import { toast } from "@/hooks/use-toast";
-import { AuthError, AuthApiError } from "@supabase/supabase-js";
+import { AuthError } from "@supabase/supabase-js";
 
 export const AuthForm = () => {
   const { view, setView, userType, setUserType } = useAuthForm();
@@ -46,19 +46,9 @@ export const AuthForm = () => {
   };
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const errorCode = params.get('error_code');
-    const email = params.get('email');
-    
-    if (errorCode === 'email_not_confirmed' && email) {
-      setError('Please verify your email address before signing in.');
-      setUnconfirmedEmail(email);
-    }
-  }, []);
-
-  useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_OUT' || event === 'USER_UPDATED') {
+      if (event === 'SIGNED_OUT') {
+        // Check if there's an error in the URL
         const urlParams = new URLSearchParams(window.location.search);
         const errorCode = urlParams.get('error_code');
         const email = urlParams.get('email');
@@ -69,6 +59,16 @@ export const AuthForm = () => {
         }
       }
     });
+
+    // Initial check for error in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorCode = urlParams.get('error_code');
+    const email = urlParams.get('email');
+
+    if (errorCode === 'email_not_confirmed' && email) {
+      setError('Please verify your email address before signing in.');
+      setUnconfirmedEmail(email);
+    }
 
     return () => {
       subscription.unsubscribe();
