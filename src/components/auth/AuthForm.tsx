@@ -17,23 +17,6 @@ export const AuthForm = () => {
   const [unconfirmedEmail, setUnconfirmedEmail] = useState<string | null>(null);
   const [isResending, setIsResending] = useState(false);
 
-  useEffect(() => {
-    // Check URL parameters for errors
-    const params = new URLSearchParams(window.location.search);
-    const errorCode = params.get('error_code');
-    const errorDescription = params.get('error_description');
-    const email = params.get('email');
-    
-    if (errorCode === 'email_not_confirmed') {
-      setError('Your email is not confirmed. Please check your inbox for the confirmation email or request a new one.');
-      if (email) {
-        setUnconfirmedEmail(email);
-      }
-    } else if (errorDescription) {
-      setError(errorDescription);
-    }
-  }, []);
-
   const handleResendConfirmation = async () => {
     if (!unconfirmedEmail) return;
     
@@ -50,8 +33,6 @@ export const AuthForm = () => {
         title: "Success",
         description: "Confirmation email has been resent. Please check your inbox.",
       });
-      setError(null);
-      setUnconfirmedEmail(null);
     } catch (error) {
       console.error('Error resending confirmation:', error);
       toast({
@@ -64,49 +45,32 @@ export const AuthForm = () => {
     }
   };
 
-  // Set up auth state change listener to catch errors
   useEffect(() => {
-    console.log("Setting up auth state listener");
+    const params = new URLSearchParams(window.location.search);
+    const errorCode = params.get('error_code');
+    const email = params.get('email');
     
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth state changed:', event, session);
-      
-      if (event === 'USER_UPDATED' && !session) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const errorCode = urlParams.get('error_code');
-        const errorMessage = urlParams.get('error_description');
-        const email = urlParams.get('email');
-        
-        if (errorCode === 'email_not_confirmed') {
-          setError('Please verify your email address before signing in.');
-          if (email) {
-            setUnconfirmedEmail(email);
-          }
-        } else if (errorMessage) {
-          setError(errorMessage);
-        }
-      }
+    if (errorCode === 'email_not_confirmed' && email) {
+      setError('Please verify your email address before signing in.');
+      setUnconfirmedEmail(email);
+    }
+  }, []);
 
-      // Handle sign-in errors
-      if (event === 'SIGNED_OUT') {
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT' || event === 'USER_UPDATED') {
         const urlParams = new URLSearchParams(window.location.search);
         const errorCode = urlParams.get('error_code');
-        const errorMessage = urlParams.get('error_description');
         const email = urlParams.get('email');
 
         if (errorCode === 'email_not_confirmed' && email) {
           setError('Please verify your email address before signing in.');
           setUnconfirmedEmail(email);
-        } else if (errorMessage) {
-          setError(errorMessage);
         }
       }
     });
 
     return () => {
-      console.log("Cleaning up auth state listener");
       subscription.unsubscribe();
     };
   }, []);
