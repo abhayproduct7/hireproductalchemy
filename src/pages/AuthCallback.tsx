@@ -1,63 +1,60 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSessionContext } from "@supabase/auth-helpers-react";
-import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { Loader2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const AuthCallback = () => {
-  const { isLoading, session } = useSessionContext();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
-    const handleCallback = async () => {
-      if (!isLoading && session?.user) {
-        try {
-          // Get the user's profile type
-          const { data: profile, error: profileError } = await supabase
+    const handleAuthCallback = async () => {
+      try {
+        // Get the session to check if user is authenticated
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        
+        if (sessionError) throw sessionError;
+
+        if (session) {
+          // Get user profile to check user type
+          const { data: profile } = await supabase
             .from('profiles')
             .select('user_type')
             .eq('id', session.user.id)
             .single();
 
-          if (profileError) throw profileError;
-
           toast({
-            title: "Email confirmed",
-            description: "Your email has been confirmed. Welcome!",
+            title: "Email verified successfully",
+            description: "Welcome to the platform!",
           });
 
           // Redirect based on user type
-          if (profile.user_type === 'talent') {
-            navigate("/join-community#application");
+          if (profile?.user_type === 'employer') {
+            navigate('/hire');
           } else {
-            navigate("/dashboard");
+            navigate('/join-community#application');
           }
-        } catch (error) {
-          console.error("Error in callback:", error);
-          toast({
-            title: "Error",
-            description: "There was a problem setting up your account. Please try again.",
-            variant: "destructive",
-          });
-          navigate("/login");
+        } else {
+          navigate('/login');
         }
-      } else if (!isLoading && !session) {
+      } catch (error) {
+        console.error('Error in auth callback:', error);
         toast({
-          title: "Error",
-          description: "There was a problem confirming your email. Please try again.",
+          title: "Authentication error",
+          description: "Please try signing in again.",
           variant: "destructive",
         });
-        navigate("/login");
+        navigate('/login');
       }
     };
 
-    handleCallback();
-  }, [isLoading, session, navigate, toast]);
+    handleAuthCallback();
+  }, [navigate, toast]);
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center">
-      <div className="animate-pulse">Verifying...</div>
+    <div className="min-h-screen flex items-center justify-center">
+      <Loader2 className="h-12 w-12 animate-spin text-primary" />
     </div>
   );
 };
