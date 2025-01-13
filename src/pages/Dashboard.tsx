@@ -6,11 +6,13 @@ import { Footer } from "@/components/Footer";
 import { EmployerDashboard } from "@/components/dashboard/EmployerDashboard";
 import { TalentDashboard } from "@/components/dashboard/TalentDashboard";
 import { SetupProfile } from "@/components/dashboard/SetupProfile";
+import { useToast } from "@/components/ui/use-toast";
 
 const Dashboard = () => {
   const session = useSession();
   const navigate = useNavigate();
   const supabase = useSupabaseClient();
+  const { toast } = useToast();
   const [userType, setUserType] = useState<'employer' | 'talent' | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,23 +24,41 @@ const Dashboard = () => {
 
     const fetchUserType = async () => {
       try {
-        const { data: profile, error } = await supabase
+        console.log("Fetching user type for:", session.user.id);
+        
+        const { data, error } = await supabase
           .from("profiles")
           .select("user_type")
           .eq("id", session.user.id)
-          .single();
+          .maybeSingle();
 
-        if (error) throw error;
-        setUserType(profile?.user_type || null);
+        if (error) {
+          console.error("Error fetching user type:", error);
+          throw error;
+        }
+        
+        console.log("Fetched user type:", data?.user_type);
+        
+        if (!data) {
+          // If no profile exists, show the setup profile component
+          setUserType(null);
+        } else {
+          setUserType(data.user_type);
+        }
       } catch (error) {
         console.error("Error fetching user type:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load profile data. Please try again.",
+          variant: "destructive",
+        });
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchUserType();
-  }, [session, supabase, navigate]);
+  }, [session, supabase, navigate, toast]);
 
   if (!session) return null;
   if (isLoading) return <div>Loading...</div>;
