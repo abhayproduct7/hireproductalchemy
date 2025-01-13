@@ -20,7 +20,7 @@ export const useSignUp = ({ setView }: UseSignUpProps = {}) => {
         email,
         password,
         options: {
-          emailRedirectTo: `${BASE_URL}/login`,
+          emailRedirectTo: `${BASE_URL}/auth/callback`,
           data: {
             user_type: userType,
           },

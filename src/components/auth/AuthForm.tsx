@@ -6,7 +6,7 @@ import { SignUpForm } from "./SignUpForm";
 import { AuthLinks } from "./AuthLinks";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useState } from "react";
-import { AuthError } from "@supabase/supabase-js";
+import { BASE_URL } from "@/config/constants";
 
 export const AuthForm = () => {
   const { view, setView, userType, setUserType } = useAuthForm();
@@ -66,7 +66,7 @@ export const AuthForm = () => {
         providers={[]}
         view="sign_in"
         showLinks={false}
-        redirectTo={`${window.location.origin}/auth/callback`}
+        redirectTo={`${BASE_URL}/auth/callback`}
         localization={{
           variables: {
             sign_in: {
