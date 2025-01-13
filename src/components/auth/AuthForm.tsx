@@ -4,55 +4,23 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuthForm } from "@/hooks/useAuthForm";
 import { SignUpForm } from "./SignUpForm";
 import { AuthLinks } from "./AuthLinks";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { BASE_URL } from "@/config/constants";
-import { toast } from "@/hooks/use-toast";
+import { EmailConfirmationAlert } from "./EmailConfirmationAlert";
+import { ErrorAlert } from "./ErrorAlert";
 
 export const AuthForm = () => {
   const { view, setView, userType, setUserType } = useAuthForm();
   const [error, setError] = useState<string | null>(null);
   const [unconfirmedEmail, setUnconfirmedEmail] = useState<string | null>(null);
-  const [isResending, setIsResending] = useState(false);
-
-  const handleResendConfirmation = async () => {
-    if (!unconfirmedEmail) return;
-    
-    setIsResending(true);
-    try {
-      const { error } = await supabase.auth.resend({
-        type: 'signup',
-        email: unconfirmedEmail,
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: "Confirmation email has been resent. Please check your inbox.",
-      });
-    } catch (error) {
-      console.error('Error resending confirmation:', error);
-      toast({
-        title: "Error",
-        description: "Failed to resend confirmation email. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsResending(false);
-    }
-  };
 
   useEffect(() => {
-    // Check URL parameters for email confirmation error
     const urlParams = new URLSearchParams(window.location.search);
     const errorCode = urlParams.get('error_code');
     const errorMessage = urlParams.get('error_description');
     const email = urlParams.get('email');
 
     if (errorCode === 'email_not_confirmed' && email) {
-      setError('Please verify your email address before signing in.');
       setUnconfirmedEmail(email);
     } else if (errorMessage) {
       setError(decodeURIComponent(errorMessage));
@@ -74,27 +42,22 @@ export const AuthForm = () => {
     return <SignUpForm setView={setView} userType={userType} setUserType={setUserType} />;
   }
 
+  const handleErrorClose = () => {
+    setError(null);
+    setUnconfirmedEmail(null);
+  };
+
   return (
     <div className="space-y-6">
-      {error && (
-        <Alert variant="destructive" className="mb-4">
-          <AlertDescription>
-            {error}
-            {unconfirmedEmail && (
-              <div className="mt-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleResendConfirmation}
-                  disabled={isResending}
-                >
-                  {isResending ? "Sending..." : "Resend confirmation email"}
-                </Button>
-              </div>
-            )}
-          </AlertDescription>
-        </Alert>
-      )}
+      {unconfirmedEmail ? (
+        <EmailConfirmationAlert 
+          email={unconfirmedEmail} 
+          onClose={handleErrorClose} 
+        />
+      ) : error ? (
+        <ErrorAlert message={error} />
+      ) : null}
+
       <Auth
         supabaseClient={supabase}
         appearance={{ 
