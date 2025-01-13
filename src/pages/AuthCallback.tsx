@@ -10,6 +10,12 @@ const AuthCallback = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    // First, ensure we're on the correct domain
+    if (!window.location.origin.includes('producthire.co.uk')) {
+      window.location.href = `${BASE_URL}${window.location.pathname}${window.location.search}`;
+      return;
+    }
+
     const handleAuthCallback = async () => {
       try {
         // Get the error parameters from URL if they exist
@@ -49,8 +55,9 @@ const AuthCallback = () => {
             throw profileError;
           }
 
-          // Update the URL to use the custom domain
-          window.location.href = `${BASE_URL}${profile?.user_type === 'employer' ? '/hire' : '/join-community#application'}`;
+          // Force the domain to be producthire.co.uk
+          const redirectPath = profile?.user_type === 'employer' ? '/hire' : '/join-community#application';
+          window.location.href = `${BASE_URL}${redirectPath}`;
 
           toast({
             title: "Email verified successfully",

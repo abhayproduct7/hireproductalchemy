@@ -1,51 +1,47 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { AuthChangeEvent, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
 import { BASE_URL } from "@/config/constants";
 
 export const useAuthState = () => {
-  const navigate = useNavigate();
-
   useEffect(() => {
-    console.log("Setting up auth state listener");
-    console.log("Current URL:", window.location.href);
+    // First, ensure we're on the correct domain
+    if (!window.location.origin.includes('producthire.co.uk')) {
+      window.location.href = `${BASE_URL}${window.location.pathname}${window.location.search}`;
+      return;
+    }
 
-    // Check initial session
-    const checkInitialSession = async () => {
-      try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        console.log('Initial session check:', session ? 'Session exists' : 'No session');
-        if (error) {
-          console.error('Error checking initial session:', error);
-          toast({
-            title: "Authentication Error",
-            description: error.message,
-            variant: "destructive",
-          });
+    const handleAuthChange = async (event: AuthChangeEvent, session: Session | null) => {
+      console.log('Auth state changed:', event, session);
+
+      if (session) {
+        try {
+          const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('user_type')
+            .eq('id', session.user.id)
+            .single();
+
+          if (profileError) {
+            console.error('Error fetching profile:', profileError);
+            return;
+          }
+
+          if (event === 'SIGNED_IN') {
+            console.log('Sign in successful, navigating to dashboard');
+            const redirectPath = profile?.user_type === 'employer' ? '/hire' : '/join-community#application';
+            window.location.href = `${BASE_URL}${redirectPath}`;
+            toast({
+              title: "Successfully signed in",
+              description: "Welcome back!",
+            });
+          }
+        } catch (error) {
+          console.error('Error in auth change handler:', error);
         }
-      } catch (err) {
-        console.error('Unexpected error during session check:', err);
       }
-    };
 
-    checkInitialSession();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event: AuthChangeEvent, session: Session | null) => {
-      console.log('Auth event:', event);
-      console.log('Session:', session);
-      console.log('Current pathname:', window.location.pathname);
-      
-      if (event === 'SIGNED_IN') {
-        console.log('Sign in successful, navigating to dashboard');
-        window.location.href = `${BASE_URL}/dashboard`;
-        toast({
-          title: "Successfully signed in",
-          description: "Welcome back!",
-        });
-      }
-      
       if (event === 'SIGNED_OUT') {
         console.log('Sign out detected');
         window.location.href = `${BASE_URL}/login`;
@@ -54,27 +50,12 @@ export const useAuthState = () => {
           description: "You have been signed out successfully.",
         });
       }
+    };
 
-      if (event === 'USER_UPDATED') {
-        console.log('User update detected');
-        toast({
-          title: "Account updated",
-          description: "Your account has been updated successfully.",
-        });
-      }
-
-      if (event === 'TOKEN_REFRESHED') {
-        console.log('Token refreshed');
-      }
-
-      if (event === 'INITIAL_SESSION') {
-        console.log('Initial session loaded:', session ? 'Session exists' : 'No session');
-      }
-    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(handleAuthChange);
 
     return () => {
-      console.log("Cleaning up auth state listener");
       subscription.unsubscribe();
     };
-  }, [navigate]);
+  }, []);
 };
