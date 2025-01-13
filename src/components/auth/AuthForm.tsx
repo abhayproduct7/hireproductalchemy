@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { BASE_URL } from "@/config/constants";
 import { EmailConfirmationAlert } from "./EmailConfirmationAlert";
 import { ErrorAlert } from "./ErrorAlert";
+import { AuthError } from "@supabase/supabase-js";
 
 export const AuthForm = () => {
   const { view, setView, userType, setUserType } = useAuthForm();
@@ -15,17 +16,31 @@ export const AuthForm = () => {
   const [unconfirmedEmail, setUnconfirmedEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check URL parameters for errors
-    const urlParams = new URLSearchParams(window.location.search);
-    const errorCode = urlParams.get('error_code');
-    const errorMessage = urlParams.get('error_description');
-    const email = urlParams.get('email');
+    const handleAuthError = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const errorCode = urlParams.get('error_code');
+      const errorMessage = urlParams.get('error_description');
+      const email = urlParams.get('email');
 
-    if (errorCode === 'email_not_confirmed' && email) {
-      setUnconfirmedEmail(decodeURIComponent(email));
-    } else if (errorMessage) {
-      setError(decodeURIComponent(errorMessage));
-    }
+      if (errorCode === 'email_not_confirmed' && email) {
+        setUnconfirmedEmail(decodeURIComponent(email));
+      } else if (errorMessage) {
+        setError(decodeURIComponent(errorMessage));
+      }
+    };
+
+    handleAuthError();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_OUT') {
+        setError(null);
+        setUnconfirmedEmail(null);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleErrorClose = () => {
@@ -86,6 +101,16 @@ export const AuthForm = () => {
               button_label: "Sign In",
             },
           },
+        }}
+        onError={(error: AuthError) => {
+          if (error.message.includes('Email not confirmed')) {
+            const email = error.message.match(/Email (.*?) is/)?.[1];
+            if (email) {
+              setUnconfirmedEmail(email);
+            }
+          } else {
+            setError(error.message);
+          }
         }}
       />
       <AuthLinks setView={setView} />
