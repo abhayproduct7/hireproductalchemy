@@ -21,12 +21,12 @@ export const AuthForm = () => {
     const email = urlParams.get('email');
 
     if (errorCode === 'email_not_confirmed' && email) {
-      setUnconfirmedEmail(email);
+      setUnconfirmedEmail(decodeURIComponent(email));
     } else if (errorMessage) {
       setError(decodeURIComponent(errorMessage));
     }
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_OUT') {
         setError(null);
         setUnconfirmedEmail(null);
@@ -49,14 +49,15 @@ export const AuthForm = () => {
 
   return (
     <div className="space-y-6">
-      {unconfirmedEmail ? (
+      {unconfirmedEmail && (
         <EmailConfirmationAlert 
           email={unconfirmedEmail} 
           onClose={handleErrorClose} 
         />
-      ) : error ? (
-        <ErrorAlert message={error} />
-      ) : null}
+      )}
+      {error && !unconfirmedEmail && (
+        <ErrorAlert message={error} onClose={handleErrorClose} />
+      )}
 
       <Auth
         supabaseClient={supabase}
