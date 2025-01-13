@@ -35,12 +35,16 @@ export const Footer = () => {
               Contact Us
             </h3>
             <p className="mb-2">Need help? Get in touch with us.</p>
-            <Dialog>
-              <DialogTrigger asChild>
-                <button className="inline-flex items-center text-accent hover:text-accent/80">
-                  Contact Form
-                </button>
-              </DialogTrigger>
+            <div className="space-y-2">
+              <a href="mailto:contact@producthire.co.uk" className="block text-accent hover:text-accent/80">
+                contact@producthire.co.uk
+              </a>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button className="inline-flex items-center text-accent hover:text-accent/80">
+                    Contact Form
+                  </button>
+                </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <ContactForm />
               </DialogContent>
