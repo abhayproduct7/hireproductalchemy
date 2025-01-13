@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSession } from "@supabase/auth-helpers-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/Navigation";
@@ -9,13 +9,17 @@ import { BenefitsSection } from "@/components/sections/BenefitsSection";
 import { CommunityAdvantagesSection } from "@/components/sections/CommunityAdvantagesSection";
 import { JoinApplicationForm } from "@/components/sections/JoinApplicationForm";
 import { Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const JoinCommunity = () => {
   const session = useSession();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { toast } = useToast();
   const [hasApplication, setHasApplication] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userProfile, setUserProfile] = useState<any>(null);
+  const showApplicationForm = location.hash === '#application';
 
   useEffect(() => {
     const checkUserAndApplication = async () => {
@@ -34,10 +38,16 @@ const JoinCommunity = () => {
             return;
           }
 
+          console.log("Profile found:", profile);
           setUserProfile(profile);
 
           // If user is employer, redirect to hire page
           if (profile?.user_type === 'employer') {
+            toast({
+              title: "Access Denied",
+              description: "Employer accounts cannot access the talent application form.",
+              variant: "destructive"
+            });
             navigate('/hire');
             return;
           }
@@ -51,6 +61,11 @@ const JoinCommunity = () => {
 
           if (error) {
             console.error("Error checking application:", error);
+            toast({
+              title: "Error",
+              description: "Failed to check application status. Please try again.",
+              variant: "destructive"
+            });
           }
 
           setHasApplication(!!data);
@@ -65,7 +80,7 @@ const JoinCommunity = () => {
     };
 
     checkUserAndApplication();
-  }, [session, navigate]);
+  }, [session, navigate, toast]);
 
   if (isLoading) {
     return (
@@ -81,19 +96,11 @@ const JoinCommunity = () => {
     );
   }
 
-  // If user is not authenticated and tries to access the form directly,
-  // redirect them to login
-  useEffect(() => {
-    if (!session && window.location.hash === "#application") {
-      navigate("/login");
-    }
-  }, [session, navigate]);
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
       <main>
-        {!session || hasApplication ? (
+        {(!session || hasApplication || !showApplicationForm) ? (
           <>
             <JoinCommunityHero />
             <CommunityAdvantagesSection />

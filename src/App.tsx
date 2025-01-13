@@ -42,6 +42,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/hire" element={<HireTalent />} />
                 <Route path="/join" element={<JoinCommunity />} />
+                <Route path="/join-community" element={<JoinCommunity />} />
                 <Route path="/requirements" element={<RequirementsCapture />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-of-service" element={<TermsOfService />} />
