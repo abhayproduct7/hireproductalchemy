@@ -18,35 +18,43 @@ export const useAuthForm = () => {
       if (event === "SIGNED_IN" && session) {
         console.log('Sign in successful, checking profile');
         
-        // Check if user has a profile
-        const { data: profile, error: profileError } = await supabase
-          .from('profiles')
-          .select('user_type')
-          .eq('id', session.user.id)
-          .single();
+        try {
+          const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('user_type')
+            .eq('id', session.user.id)
+            .single();
 
-        if (profileError) {
-          console.error('Error fetching profile:', profileError);
+          if (profileError) {
+            console.error('Error fetching profile:', profileError);
+            toast({
+              title: "Error",
+              description: "There was a problem accessing your profile.",
+              variant: "destructive",
+            });
+            return;
+          }
+
+          if (profile) {
+            console.log('Profile found:', profile);
+            // Redirect based on user type
+            if (profile.user_type === 'talent') {
+              navigate("/join-community#application");
+            } else {
+              navigate("/dashboard");
+            }
+            
+            toast({
+              title: "Welcome!",
+              description: "You have successfully signed in.",
+            });
+          }
+        } catch (error) {
+          console.error('Unexpected error:', error);
           toast({
             title: "Error",
-            description: "There was a problem accessing your profile.",
+            description: "An unexpected error occurred.",
             variant: "destructive",
-          });
-          return;
-        }
-
-        if (profile) {
-          console.log('Profile found:', profile);
-          // Redirect based on user type
-          if (profile.user_type === 'talent') {
-            navigate("/join-community#application");
-          } else {
-            navigate("/dashboard");
-          }
-          
-          toast({
-            title: "Welcome!",
-            description: "You have successfully signed in.",
           });
         }
       }
