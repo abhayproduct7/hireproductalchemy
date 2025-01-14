@@ -2,63 +2,62 @@ import { Link } from "react-router-dom";
 
 interface LogoProps {
   showText?: boolean;
+  className?: string;
+  size?: "sm" | "md" | "lg";
 }
 
-const Logo = ({ showText = true }: LogoProps) => {
+const Logo = ({ showText = true, className = "", size = "md" }: LogoProps) => {
+  const getSizeClass = () => {
+    switch (size) {
+      case "sm":
+        return "w-6 h-6";
+      case "lg":
+        return "w-12 h-12";
+      default:
+        return "w-8 h-8";
+    }
+  };
+
   return (
-    <div className="flex items-center gap-2">
+    <div className={`flex items-center gap-3 ${className}`}>
       <svg
-        width="32"
-        height="32"
-        viewBox="0 0 32 32"
+        viewBox="0 0 100 100"
         xmlns="http://www.w3.org/2000/svg"
-        className="flex-shrink-0"
+        className={`flex-shrink-0 ${getSizeClass()}`}
       >
-        {/* Gradient background */}
         <defs>
-          <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="dotGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#0F4C35" />
             <stop offset="100%" stopColor="#1B5E40" />
           </linearGradient>
         </defs>
         
-        {/* Main hexagonal shape */}
-        <path
-          d="M16 4 L26 10 L26 22 L16 28 L6 22 L6 10 Z"
-          fill="url(#logoGradient)"
-          opacity="0.9"
-        />
-
-        {/* Connecting lines representing AI/neural networks */}
-        <path
-          d="M16 8 L22 12 M16 8 L10 12 M16 24 L22 20 M16 24 L10 20"
-          stroke="white"
-          strokeWidth="0.75"
-          opacity="0.6"
-        />
-
-        {/* Central node */}
-        <circle
-          cx="16"
-          cy="16"
-          r="4"
-          fill="white"
-          opacity="0.9"
-        />
-
-        {/* Smaller nodes */}
-        <circle cx="16" cy="8" r="2" fill="white" opacity="0.7" />
-        <circle cx="22" cy="12" r="2" fill="white" opacity="0.7" />
-        <circle cx="22" cy="20" r="2" fill="white" opacity="0.7" />
-        <circle cx="16" cy="24" r="2" fill="white" opacity="0.7" />
-        <circle cx="10" cy="20" r="2" fill="white" opacity="0.7" />
-        <circle cx="10" cy="12" r="2" fill="white" opacity="0.7" />
+        {/* Outer circle of dots */}
+        {Array.from({ length: 12 }).map((_, i) => {
+          const angle = (i * 30 * Math.PI) / 180;
+          const cx = 50 + 35 * Math.cos(angle);
+          const cy = 50 + 35 * Math.sin(angle);
+          const size = i % 2 === 0 ? 8 : 6;
+          
+          return (
+            <circle
+              key={i}
+              cx={cx}
+              cy={cy}
+              r={size}
+              fill="url(#dotGradient)"
+              opacity={i % 2 === 0 ? 1 : 0.7}
+            />
+          );
+        })}
       </svg>
+      
       {showText && (
-        <div className="text-lg font-semibold">
-          <span className="text-primary">Product</span>
-          <span className="text-secondary">Hire</span>
-        </div>
+        <span className="text-2xl font-semibold tracking-tight">
+          <span className="text-primary">product</span>
+          <span className="text-secondary">hire</span>
+          <span className="text-primary">.co.uk</span>
+        </span>
       )}
     </div>
   );

@@ -1,6 +1,6 @@
 import { Wand, CheckCircle2, Users, Brain } from "lucide-react";
-import { AILogo } from "../ai/AILogo";
 import { TaskCarousel } from "../ai/TaskCarousel";
+import Logo from "../Logo";
 
 export const AIAgentSection = () => {
   return (
@@ -20,19 +20,12 @@ export const AIAgentSection = () => {
           
           <div className="flex items-center justify-start pl-8">
             <div className="relative flex items-center">
-              <AILogo className="w-40 h-40" />
-              <div className="absolute left-36">
+              <Logo size="lg" showText={false} className="w-24 h-24" />
+              <div className="absolute left-28">
                 <TaskCarousel />
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="mt-16 text-center bg-background rounded-xl p-8 max-w-3xl mx-auto mb-20">
-          <h3 className="text-2xl font-semibold mb-4">Experience the Power of AI-Enhanced Product Management</h3>
-          <p className="text-muted-foreground mb-6">
-            Whether you're hiring or part of our talent community, our AI assistant is here to ensure your product development journey is smooth and successful
-          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mt-16">
