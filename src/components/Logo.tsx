@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 interface LogoProps {
   showText?: boolean;
   className?: string;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
 }
 
 const Logo = ({ showText = true, className = "", size = "md" }: LogoProps) => {
@@ -13,6 +13,8 @@ const Logo = ({ showText = true, className = "", size = "md" }: LogoProps) => {
         return "w-6 h-6";
       case "lg":
         return "w-12 h-12";
+      case "xl":
+        return "w-32 h-32";
       default:
         return "w-8 h-8";
     }
