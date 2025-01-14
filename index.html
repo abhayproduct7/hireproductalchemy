@@ -20,6 +20,69 @@
     <meta name="twitter:title" content="ProductHire | Connect with Expert Product Managers" />
     <meta name="twitter:description" content="Find and hire experienced product managers for your company. Join our community of product leaders making an impact across industries." />
     <meta name="twitter:image" content="/og-image.png" />
+
+    <!-- Structured Data for Rich Snippets -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "ProductHire",
+        "url": "https://producthire.com",
+        "logo": "https://producthire.com/producthire-logo.png",
+        "description": "ProductHire connects companies with experienced product managers. Find top product management talent for your startup or enterprise.",
+        "sameAs": [
+          "https://linkedin.com/company/producthire",
+          "https://twitter.com/producthire"
+        ],
+        "potentialAction": [
+          {
+            "@type": "Action",
+            "name": "hire-talent",
+            "target": "https://producthire.com/hire"
+          },
+          {
+            "@type": "Action",
+            "name": "join-community",
+            "target": "https://producthire.com/join"
+          }
+        ]
+      }
+    </script>
+
+    <!-- Website Structure Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "ProductHire",
+        "url": "https://producthire.com",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://producthire.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+
+    <!-- SiteNavigationElement Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SiteNavigationElement",
+        "name": [
+          "Hire Talent",
+          "Join Community",
+          "Dashboard",
+          "Profile"
+        ],
+        "url": [
+          "https://producthire.com/hire",
+          "https://producthire.com/join",
+          "https://producthire.com/dashboard",
+          "https://producthire.com/profile"
+        ]
+      }
+    </script>
   </head>
 
   <body>
