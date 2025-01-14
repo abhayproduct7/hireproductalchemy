@@ -58,7 +58,6 @@ const Logo = ({ showText = true, className = "", size = "md" }: LogoProps) => {
         <span className="text-2xl font-semibold tracking-tight">
           <span className="text-primary">product</span>
           <span className="text-secondary">hire</span>
-          <span className="text-primary">.co.uk</span>
         </span>
       )}
     </div>
