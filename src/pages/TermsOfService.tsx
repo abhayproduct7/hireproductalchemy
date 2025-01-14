@@ -1,6 +1,11 @@
 import { Navigation } from "@/components/Navigation";
+import { useEffect } from "react";
 
 const TermsOfService = () => {
+  useEffect(() => {
+    document.title = "Terms of Service | ProductHire Legal Agreement";
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />

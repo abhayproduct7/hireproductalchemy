@@ -10,6 +10,10 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = "Sign In to ProductHire | Secure Login";
+  }, []);
+
+  useEffect(() => {
     if (session) {
       // Get the return path from localStorage, but ensure it's a relative path
       const storedReturnTo = localStorage.getItem("returnTo");

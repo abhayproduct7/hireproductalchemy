@@ -17,6 +17,10 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    document.title = "ProductHire Dashboard | Manage Your Activities";
+  }, []);
+
+  useEffect(() => {
     if (!session) {
       navigate("/login");
       return;

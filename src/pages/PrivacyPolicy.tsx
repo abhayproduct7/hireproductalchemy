@@ -1,6 +1,11 @@
 import { Navigation } from "@/components/Navigation";
+import { useEffect } from "react";
 
 const PrivacyPolicy = () => {
+  useEffect(() => {
+    document.title = "Privacy Policy | ProductHire Data Protection";
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />

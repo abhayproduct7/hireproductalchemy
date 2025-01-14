@@ -17,6 +17,10 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    document.title = "Your ProductHire Profile | Manage Your Account";
+  }, []);
+
+  useEffect(() => {
     if (!session?.user) {
       navigate("/login");
       return;

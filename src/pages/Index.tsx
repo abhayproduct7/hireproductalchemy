@@ -8,8 +8,13 @@ import { RequirementsSection } from "@/components/sections/RequirementsSection";
 import { AIAgentSection } from "@/components/sections/AIAgentSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { Footer } from "@/components/Footer";
+import { useEffect } from "react";
 
 const Index = () => {
+  useEffect(() => {
+    document.title = "ProductHire | AI-Enhanced Product Management Talent Platform";
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />

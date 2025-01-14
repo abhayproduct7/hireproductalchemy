@@ -22,6 +22,10 @@ const JoinCommunity = () => {
   const showApplicationForm = location.hash === '#application';
 
   useEffect(() => {
+    document.title = "Join Our Product Management Community | ProductHire";
+  }, []);
+
+  useEffect(() => {
     const checkUserAndApplication = async () => {
       if (session?.user) {
         try {
