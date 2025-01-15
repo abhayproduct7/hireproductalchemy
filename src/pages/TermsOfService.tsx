@@ -60,7 +60,7 @@ const TermsOfService = () => {
             <h2 className="text-2xl font-semibold mb-4">5. Contact Information</h2>
             <p>
               If you have any questions about these Terms of Service, please contact us at: 
-              [Your Contact Email]
+              contact@producthire.co.uk
             </p>
           </section>
         </div>
