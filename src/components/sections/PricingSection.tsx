@@ -34,7 +34,7 @@ export const PricingSection = () => {
             <CardContent>
               <div className="space-y-4">
                 <div className="font-medium text-muted-foreground">
-                  Ideal for strategic product leadership
+                  Perfect for startups and early-stage companies
                 </div>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
@@ -52,7 +52,7 @@ export const PricingSection = () => {
                     >
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    <span className="ml-2">Flexible engagement</span>
+                    <span className="ml-2">Establish product development practices</span>
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -69,7 +69,7 @@ export const PricingSection = () => {
                     >
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    <span className="ml-2">Experienced product leaders</span>
+                    <span className="ml-2">Strategic product guidance</span>
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -86,7 +86,24 @@ export const PricingSection = () => {
                     >
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    <span className="ml-2">Strategic guidance</span>
+                    <span className="ml-2">MVP development & validation</span>
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className=" h-4 w-4 flex-shrink-0"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span className="ml-2">Cost-effective scaling</span>
                   </li>
                 </ul>
               </div>
@@ -109,7 +126,7 @@ export const PricingSection = () => {
             <CardContent>
               <div className="space-y-4">
                 <div className="font-medium text-muted-foreground">
-                  Perfect for end-to-end product ownership
+                  Ideal for scaleups and growth companies
                 </div>
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center">
@@ -127,7 +144,7 @@ export const PricingSection = () => {
                     >
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    <span className="ml-2">Dedicated product leadership</span>
+                    <span className="ml-2">Scale product teams effortlessly</span>
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -144,7 +161,7 @@ export const PricingSection = () => {
                     >
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    <span className="ml-2">Complete product ownership</span>
+                    <span className="ml-2">Product transformation initiatives</span>
                   </li>
                   <li className="flex items-center">
                     <svg
@@ -161,7 +178,24 @@ export const PricingSection = () => {
                     >
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    <span className="ml-2">Deep team integration</span>
+                    <span className="ml-2">Interim & replacement coverage</span>
+                  </li>
+                  <li className="flex items-center">
+                    <svg
+                      className=" h-4 w-4 flex-shrink-0"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span className="ml-2">New product innovation</span>
                   </li>
                 </ul>
               </div>
