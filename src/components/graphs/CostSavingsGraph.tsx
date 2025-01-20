@@ -1,37 +1,70 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { CircleDollarSign, TrendingDown } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export const CostSavingsGraph = () => {
+  // Sample data to show cost trends over time
+  const data = [
+    { month: '1mo', traditional: 100, producthire: 60 },
+    { month: '2mo', traditional: 200, producthire: 110 },
+    { month: '3mo', traditional: 300, producthire: 150 },
+    { month: '4mo', traditional: 400, producthire: 180 },
+    { month: '5mo', traditional: 500, producthire: 200 },
+    { month: '6mo', traditional: 600, producthire: 220 },
+  ];
+
   return (
     <div className="w-full space-y-6 bg-white rounded-xl p-6">
       <h3 className="text-xl font-semibold text-primary mb-4">Cost Comparison</h3>
       
-      <div className="relative h-[300px] flex items-end space-x-12 pb-8">
-        {/* Traditional PM Bar */}
-        <div className="flex-1 flex flex-col items-center">
-          <div 
-            className="w-full h-[280px] bg-gradient-to-b from-[#8E9196] to-[#C8C8C9] rounded-t-lg relative overflow-hidden shadow-lg"
+      <div className="w-full h-[400px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            data={data}
+            margin={{
+              top: 20,
+              right: 30,
+              left: 20,
+              bottom: 20,
+            }}
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-[#8E9196]/20 to-transparent" />
-          </div>
-          <div className="flex items-center gap-2 mt-4">
-            <CircleDollarSign className="w-5 h-5 text-[#8E9196]" />
-            <span className="font-medium text-sm text-[#222222]">Traditional Product Management</span>
-          </div>
-        </div>
-
-        {/* ProductHire Bar */}
-        <div className="flex-1 flex flex-col items-center">
-          <div 
-            className="w-full h-[180px] bg-gradient-to-b from-[#9b87f5] to-[#7E69AB] rounded-t-lg relative overflow-hidden shadow-lg animate-fade-up"
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-[#9b87f5]/20 to-transparent" />
-          </div>
-          <div className="flex items-center gap-2 mt-4">
-            <TrendingDown className="w-5 h-5 text-[#9b87f5]" />
-            <span className="font-medium text-sm text-[#222222]">ProductHire AI-Enhanced Talent</span>
-          </div>
-        </div>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <XAxis 
+              dataKey="month" 
+              label={{ 
+                value: 'Project Duration', 
+                position: 'bottom', 
+                offset: -10 
+              }}
+            />
+            <YAxis 
+              label={{ 
+                value: 'Development Cost', 
+                angle: -90, 
+                position: 'insideLeft',
+                offset: 0
+              }}
+            />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="traditional"
+              name="Traditional Product Management"
+              stroke="#8E9196"
+              strokeWidth={3}
+              dot={false}
+            />
+            <Line
+              type="monotone"
+              dataKey="producthire"
+              name="ProductHire AI-Enhanced Talent"
+              stroke="#9b87f5"
+              strokeWidth={3}
+              dot={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
 
       <Card className="border-2 border-[#9b87f5]/10 bg-[#9b87f5]/5">
