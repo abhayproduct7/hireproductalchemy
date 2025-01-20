@@ -8,6 +8,7 @@ import { RequirementsSection } from "@/components/sections/RequirementsSection";
 import { AIAgentSection } from "@/components/sections/AIAgentSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { Footer } from "@/components/Footer";
+import { ProcessComparisonGraph } from "@/components/graphs/ProcessComparisonGraph";
 import { useEffect } from "react";
 
 const Index = () => {
@@ -23,6 +24,11 @@ const Index = () => {
       <AIAgentSection />
       <PricingSection />
       <FeaturesSection />
+      <div className="py-24 bg-muted/30">
+        <div className="container max-w-6xl mx-auto px-4">
+          <ProcessComparisonGraph />
+        </div>
+      </div>
       <TestimonialsSection />
       <RequirementsSection />
       <ContactSection />
