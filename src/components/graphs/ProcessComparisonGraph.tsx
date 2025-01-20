@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Brain, Check, Clock, Users, X, Lightbulb, Shield, LineChart } from "lucide-react";
+import { Brain, Check, Clock, Users, X, Lightbulb, Shield } from "lucide-react";
 
 export const ProcessComparisonGraph = () => {
   const comparisonData = [
@@ -157,10 +157,8 @@ export const ProcessComparisonGraph = () => {
             </div>
             <div className="text-sm text-muted-foreground">
               <span className="font-medium text-primary block mb-2">Why ProductHire's AI-assisted PMs are the future</span>
-              ProductHire's AI-assisted PMs combine the best of both worlds: human expertise in strategic thinking, 
-              stakeholder management, and accountability, enhanced by AI capabilities for faster processing, 
-              data analysis, and creative problem-solving. This unique combination delivers superior results 
-              compared to both traditional PMs and AI-only solutions.
+              Our PMs combine human expertise with AI capabilities, delivering better results through enhanced 
+              decision-making, faster processing, and data-driven insights - all while maintaining full accountability.
             </div>
           </div>
         </CardContent>
