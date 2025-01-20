@@ -47,7 +47,6 @@ export const CostSavingsGraph = () => {
               }}
               tickFormatter={() => ''} // Remove Y-axis numbers
             />
-            <Tooltip />
             <Legend 
               verticalAlign="top"
               height={36}
