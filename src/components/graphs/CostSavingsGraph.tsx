@@ -6,12 +6,11 @@ export const CostSavingsGraph = () => {
     <div className="w-full space-y-6 bg-white rounded-xl p-6">
       <h3 className="text-xl font-semibold text-primary mb-4">Cost Comparison</h3>
       
-      <div className="relative h-64 flex items-end space-x-12 pb-8">
+      <div className="relative h-[300px] flex items-end space-x-12 pb-8">
         {/* Traditional PM Bar */}
         <div className="flex-1 flex flex-col items-center">
           <div 
-            style={{ height: '100%' }}
-            className="w-full bg-gradient-to-b from-[#8E9196] to-[#C8C8C9] rounded-t-lg relative overflow-hidden shadow-lg"
+            className="w-full h-[280px] bg-gradient-to-b from-[#8E9196] to-[#C8C8C9] rounded-t-lg relative overflow-hidden shadow-lg"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-[#8E9196]/20 to-transparent" />
           </div>
@@ -24,8 +23,7 @@ export const CostSavingsGraph = () => {
         {/* ProductHire Bar */}
         <div className="flex-1 flex flex-col items-center">
           <div 
-            style={{ height: '65%' }}
-            className="w-full bg-gradient-to-b from-[#9b87f5] to-[#7E69AB] rounded-t-lg relative overflow-hidden shadow-lg animate-fade-in"
+            className="w-full h-[180px] bg-gradient-to-b from-[#9b87f5] to-[#7E69AB] rounded-t-lg relative overflow-hidden shadow-lg animate-fade-up"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-[#9b87f5]/20 to-transparent" />
           </div>
