@@ -4,80 +4,80 @@ import { Check, X } from "lucide-react";
 export const ProcessComparisonGraph = () => {
   const comparisonData = [
     {
-      aspect: "Time to Hire",
-      producthire: "3-5 days",
-      traditional: "1-3 months",
-      freelance: "2-3 weeks",
+      aspect: "Strategic Decision Making",
+      aiAssisted: "Human expertise enhanced by AI",
+      traditional: "Human expertise only",
+      aiOnly: "Limited decision capability",
       highlight: true,
     },
     {
-      aspect: "Pre-vetted AI-Enhanced PMs",
-      producthire: true,
+      aspect: "AI Tools Proficiency",
+      aiAssisted: true,
       traditional: false,
-      freelance: false,
+      aiOnly: true,
       highlight: true,
     },
     {
-      aspect: "Fixed Transparent Pricing",
-      producthire: true,
-      traditional: false,
-      freelance: false,
+      aspect: "Ownership & Accountability",
+      aiAssisted: true,
+      traditional: true,
+      aiOnly: false,
       highlight: true,
     },
     {
-      aspect: "AI-Powered Matching",
-      producthire: true,
-      traditional: false,
-      freelance: false,
+      aspect: "Processing Speed",
+      aiAssisted: "10x faster with AI",
+      traditional: "Standard",
+      aiOnly: "Very fast but error-prone",
       highlight: true,
     },
     {
-      aspect: "Cost Level",
-      producthire: "££",
-      traditional: "££££",
-      freelance: "£",
+      aspect: "Stakeholder Management",
+      aiAssisted: true,
+      traditional: true,
+      aiOnly: false,
+      highlight: true,
+    },
+    {
+      aspect: "Data Analysis",
+      aiAssisted: "AI-enhanced human analysis",
+      traditional: "Manual analysis",
+      aiOnly: "Automated analysis only",
       highlight: false,
     },
     {
-      aspect: "Failure Rate",
-      producthire: "Very Low",
-      traditional: "Low",
-      freelance: "Very High",
+      aspect: "Creative Problem Solving",
+      aiAssisted: "Enhanced by AI suggestions",
+      traditional: "Human creativity only",
+      aiOnly: "Pattern-based solutions",
       highlight: true,
     },
     {
-      aspect: "Free Rematching",
-      producthire: true,
-      traditional: false,
-      freelance: false,
-      highlight: true,
-    },
-    {
-      aspect: "AI Training & Tools",
-      producthire: true,
-      traditional: false,
-      freelance: false,
+      aspect: "Risk Management",
+      aiAssisted: true,
+      traditional: true,
+      aiOnly: false,
       highlight: true,
     }
   ];
 
   return (
     <div className="w-full space-y-6 bg-white rounded-xl p-6">
-      <h3 className="text-xl font-semibold text-primary mb-6">See How We Compare</h3>
+      <h3 className="text-xl font-semibold text-primary mb-6">The Future of Product Management</h3>
       
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr className="border-b">
-              <th className="py-4 px-4 text-left font-medium text-muted-foreground">Features</th>
+              <th className="py-4 px-4 text-left font-medium text-muted-foreground">Capabilities</th>
               <th className="py-4 px-4 text-center bg-secondary/5 font-medium text-secondary">
-                ProductHire
+                AI-Assisted PM
               </th>
               <th className="py-4 px-4 text-center font-medium text-muted-foreground">
-                In-House Hire
+                Traditional PM
               </th>
               <th className="py-4 px-4 text-center font-medium text-muted-foreground">
-                Freelance Platform
+                AI-Only Agent
               </th>
             </tr>
           </thead>
@@ -89,15 +89,15 @@ export const ProcessComparisonGraph = () => {
               >
                 <td className="py-4 px-4 font-medium">{item.aspect}</td>
                 <td className="py-4 px-4 text-center">
-                  {typeof item.producthire === 'boolean' ? (
-                    item.producthire ? (
+                  {typeof item.aiAssisted === 'boolean' ? (
+                    item.aiAssisted ? (
                       <Check className="h-5 w-5 text-secondary mx-auto" />
                     ) : (
                       <X className="h-5 w-5 text-gray-400 mx-auto" />
                     )
                   ) : (
                     <span className={item.highlight ? 'text-secondary font-medium' : ''}>
-                      {item.producthire}
+                      {item.aiAssisted}
                     </span>
                   )}
                 </td>
@@ -113,14 +113,14 @@ export const ProcessComparisonGraph = () => {
                   )}
                 </td>
                 <td className="py-4 px-4 text-center">
-                  {typeof item.freelance === 'boolean' ? (
-                    item.freelance ? (
+                  {typeof item.aiOnly === 'boolean' ? (
+                    item.aiOnly ? (
                       <Check className="h-5 w-5 text-gray-600 mx-auto" />
                     ) : (
                       <X className="h-5 w-5 text-gray-400 mx-auto" />
                     )
                   ) : (
-                    <span>{item.freelance}</span>
+                    <span>{item.aiOnly}</span>
                   )}
                 </td>
               </tr>
@@ -132,9 +132,10 @@ export const ProcessComparisonGraph = () => {
       <Card className="mt-6 border-2 border-muted bg-muted/5">
         <CardContent className="p-4">
           <p className="text-sm text-muted-foreground">
-            ProductHire combines AI-enhanced product managers with cutting-edge tools and fixed pricing, 
-            ensuring consistent quality and faster time-to-hire while maintaining competitive costs. 
-            Our PMs are trained on advanced AI solutions for modern product management.
+            ProductHire's AI-assisted PMs combine the best of both worlds: human expertise in strategic thinking, 
+            stakeholder management, and accountability, enhanced by AI capabilities for faster processing, 
+            data analysis, and creative problem-solving. This unique combination delivers superior results 
+            compared to both traditional PMs and AI-only solutions.
           </p>
         </CardContent>
       </Card>
