@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { UserCircle2 } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import {
@@ -15,6 +15,7 @@ export const DesktopNav = () => {
   const session = useSession();
   const supabase = useSupabaseClient();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -25,6 +26,18 @@ export const DesktopNav = () => {
     navigate("/login");
   };
 
+  const scrollToPricing = () => {
+    if (location.pathname !== '/') {
+      navigate('/?scrollTo=pricing');
+      return;
+    }
+    
+    const pricingSection = document.querySelector('#pricing-section');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="hidden md:flex items-center space-x-8">
       <Link
@@ -33,6 +46,12 @@ export const DesktopNav = () => {
       >
         Hire Talent
       </Link>
+      <button 
+        onClick={scrollToPricing}
+        className="nav-link text-sm hover:text-secondary transition-colors"
+      >
+        Pricing
+      </button>
       <Link to="/join" className="nav-link text-sm">
         Join Our Community
       </Link>
