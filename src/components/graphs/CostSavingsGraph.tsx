@@ -41,7 +41,7 @@ export const CostSavingsGraph = () => {
             />
             <YAxis 
               label={{ 
-                value: 'Development Cost', 
+                value: 'Product Management Cost', 
                 angle: -90, 
                 position: 'insideLeft',
                 offset: -25,
