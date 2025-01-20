@@ -33,18 +33,18 @@ export const FeaturesSection = () => {
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          <div className="space-y-4">
+          <div className="space-y-6 lg:self-stretch flex flex-col justify-between">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-muted p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+                className="bg-muted p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex-1"
               >
-                <div className="flex items-center gap-3">
-                  <div className="bg-gray-100 p-2 rounded-full">
+                <div className="flex items-start gap-3">
+                  <div className="bg-gray-100 p-2 rounded-full shrink-0">
                     <feature.icon className="h-4 w-4 text-secondary" />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-primary mb-1">{feature.title}</h3>
+                  <div>
+                    <h3 className="text-lg font-semibold text-primary mb-2">{feature.title}</h3>
                     <p className="text-sm text-gray-600">{feature.description}</p>
                   </div>
                 </div>
@@ -52,7 +52,7 @@ export const FeaturesSection = () => {
             ))}
           </div>
 
-          <div className="lg:sticky lg:top-8">
+          <div className="lg:h-full flex items-stretch">
             <CostSavingsGraph />
           </div>
         </div>
