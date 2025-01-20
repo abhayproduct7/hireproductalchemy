@@ -82,6 +82,14 @@ export const ProcessComparisonGraph = () => {
       </div>
 
       <div className="grid gap-6 mt-8">
+        {/* Column Headers */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+          <div className="md:col-span-1"></div>
+          <div className="text-center font-medium text-secondary">AI-Assisted PM</div>
+          <div className="text-center font-medium">Traditional PM</div>
+          <div className="text-center font-medium">AI-Only Agent</div>
+        </div>
+
         {comparisonData.map((item, index) => (
           <div
             key={index}
@@ -108,7 +116,6 @@ export const ProcessComparisonGraph = () => {
                     {item.aiAssisted.label}
                   </span>
                 )}
-                <div className="text-xs text-muted-foreground mt-2">AI-Assisted PM</div>
               </CardContent>
             </Card>
 
@@ -125,7 +132,6 @@ export const ProcessComparisonGraph = () => {
                     {item.traditional.label}
                   </span>
                 )}
-                <div className="text-xs text-muted-foreground mt-2">Traditional PM</div>
               </CardContent>
             </Card>
 
@@ -142,7 +148,6 @@ export const ProcessComparisonGraph = () => {
                     {item.aiOnly.label}
                   </span>
                 )}
-                <div className="text-xs text-muted-foreground mt-2">AI-Only Agent</div>
               </CardContent>
             </Card>
           </div>
