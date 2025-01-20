@@ -127,7 +127,7 @@ export const PricingSection = () => {
                     >
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
-                    <span className="ml-2">Full-time dedication</span>
+                    <span className="ml-2">Dedicated product leadership</span>
                   </li>
                   <li className="flex items-center">
                     <svg
