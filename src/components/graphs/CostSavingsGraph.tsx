@@ -24,8 +24,8 @@ export const CostSavingsGraph = () => {
             margin={{
               top: 20,
               right: 30,
-              left: 20,
-              bottom: 20,
+              left: 40,  // Increased left margin for Y-axis label
+              bottom: 40, // Increased bottom margin for X-axis label
             }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -33,20 +33,30 @@ export const CostSavingsGraph = () => {
               dataKey="month" 
               label={{ 
                 value: 'Project Duration', 
-                position: 'bottom', 
-                offset: -10 
+                position: 'insideBottom', 
+                offset: -15,
+                style: { textAnchor: 'middle' }
               }}
+              padding={{ left: 20, right: 20 }}
             />
             <YAxis 
               label={{ 
                 value: 'Development Cost', 
                 angle: -90, 
                 position: 'insideLeft',
-                offset: 0
+                offset: -25,
+                style: { textAnchor: 'middle' }
               }}
             />
             <Tooltip />
-            <Legend />
+            <Legend 
+              verticalAlign="top"
+              height={36}
+              wrapperStyle={{
+                paddingTop: "10px",
+                paddingBottom: "10px"
+              }}
+            />
             <Line
               type="monotone"
               dataKey="traditional"
