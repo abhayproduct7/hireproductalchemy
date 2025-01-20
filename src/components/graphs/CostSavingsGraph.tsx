@@ -3,14 +3,12 @@ import { CircleDollarSign, TrendingDown } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export const CostSavingsGraph = () => {
-  // Sample data to show cost trends over time
+  // Sample data to show relative cost trends over time
   const data = [
-    { month: '1mo', traditional: 100, producthire: 60 },
-    { month: '2mo', traditional: 200, producthire: 110 },
-    { month: '3mo', traditional: 300, producthire: 150 },
-    { month: '4mo', traditional: 400, producthire: 180 },
-    { month: '5mo', traditional: 500, producthire: 200 },
-    { month: '6mo', traditional: 600, producthire: 220 },
+    { month: '3mo', traditional: 30, producthire: 20 },
+    { month: '6mo', traditional: 60, producthire: 35 },
+    { month: '9mo', traditional: 90, producthire: 45 },
+    { month: '1yr', traditional: 120, producthire: 55 },
   ];
 
   return (
@@ -24,8 +22,8 @@ export const CostSavingsGraph = () => {
             margin={{
               top: 20,
               right: 30,
-              left: 40,  // Increased left margin for Y-axis label
-              bottom: 40, // Increased bottom margin for X-axis label
+              left: 40,
+              bottom: 40,
             }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -47,6 +45,7 @@ export const CostSavingsGraph = () => {
                 offset: -25,
                 style: { textAnchor: 'middle' }
               }}
+              tickFormatter={() => ''} // Remove Y-axis numbers
             />
             <Tooltip />
             <Legend 
