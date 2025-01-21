@@ -28,19 +28,19 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
       <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-b border-gray-100">
         <Link
           to="/hire"
-          className="block px-3 py-2 rounded-md text-sm btn-secondary text-center"
+          className="block px-3 py-2 rounded-md text-sm bg-secondary text-white hover:bg-secondary/90 text-center"
         >
           Hire Talent
         </Link>
         <Link
           to="/join"
-          className="block px-3 py-2 rounded-md text-sm nav-link"
+          className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90"
         >
           Join Our Community
         </Link>
         <a
           href="#pricing-section"
-          className="block px-3 py-2 rounded-md text-sm btn-secondary text-center"
+          className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90"
         >
           Pricing
         </a>
@@ -48,19 +48,19 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
           <>
             <Link
               to="/profile"
-              className="block px-3 py-2 rounded-md text-sm nav-link"
+              className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90"
             >
               My Profile
             </Link>
             <Link
               to="/dashboard"
-              className="block px-3 py-2 rounded-md text-sm nav-link"
+              className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90"
             >
               Dashboard
             </Link>
             <button
               onClick={handleLogout}
-              className="block w-full text-left px-3 py-2 rounded-md text-sm nav-link"
+              className="block w-full text-left px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90"
             >
               Log Out
             </button>
@@ -68,7 +68,7 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
         ) : (
           <Link
             to="/login"
-            className="block px-3 py-2 rounded-md text-sm bg-primary text-white hover:bg-primary/90 text-center"
+            className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90 text-center"
           >
             Sign In
           </Link>
