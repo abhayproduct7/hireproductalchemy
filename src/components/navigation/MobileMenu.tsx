@@ -38,6 +38,12 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
         >
           Join Our Community
         </Link>
+        <a
+          href="#pricing-section"
+          className="block px-3 py-2 rounded-md text-sm btn-secondary text-center"
+        >
+          Pricing
+        </a>
         {session ? (
           <>
             <Link
@@ -62,7 +68,7 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
         ) : (
           <Link
             to="/login"
-            className="block px-3 py-2 rounded-md text-sm btn-primary text-center"
+            className="block px-3 py-2 rounded-md text-sm bg-primary text-white hover:bg-primary/90 text-center"
           >
             Sign In
           </Link>
