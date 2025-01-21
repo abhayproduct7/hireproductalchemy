@@ -34,10 +34,7 @@ export const CostSavingsGraph = () => {
                 offset: -10,
                 style: { 
                   textAnchor: 'middle',
-                  fontSize: '0.75rem',
-                  '@media (min-width: 640px)': {
-                    fontSize: '0.875rem'
-                  }
+                  fontSize: '12px'
                 }
               }}
               tick={{ fontSize: 12 }}
@@ -51,10 +48,7 @@ export const CostSavingsGraph = () => {
                 offset: 0,
                 style: { 
                   textAnchor: 'middle',
-                  fontSize: '0.75rem',
-                  '@media (min-width: 640px)': {
-                    fontSize: '0.875rem'
-                  }
+                  fontSize: '12px'
                 }
               }}
               tickFormatter={() => ''} 
@@ -64,10 +58,7 @@ export const CostSavingsGraph = () => {
               verticalAlign="top"
               height={36}
               wrapperStyle={{
-                fontSize: '0.75rem',
-                '@media (min-width: 640px)': {
-                  fontSize: '0.875rem'
-                },
+                fontSize: '12px',
                 paddingTop: "5px",
                 paddingBottom: "5px"
               }}
