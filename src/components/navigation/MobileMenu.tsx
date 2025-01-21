@@ -34,13 +34,13 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
         </Link>
         <Link
           to="/join"
-          className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90"
+          className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90 text-center"
         >
           Join Our Community
         </Link>
         <a
           href="#pricing-section"
-          className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90"
+          className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90 text-center"
         >
           Pricing
         </a>
@@ -48,19 +48,19 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
           <>
             <Link
               to="/profile"
-              className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90"
+              className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90 text-center"
             >
               My Profile
             </Link>
             <Link
               to="/dashboard"
-              className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90"
+              className="block px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90 text-center"
             >
               Dashboard
             </Link>
             <button
               onClick={handleLogout}
-              className="block w-full text-left px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90"
+              className="block w-full px-3 py-2 rounded-md text-sm text-primary hover:text-primary/90 text-center"
             >
               Log Out
             </button>
