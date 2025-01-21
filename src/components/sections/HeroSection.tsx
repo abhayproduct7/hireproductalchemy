@@ -37,8 +37,8 @@ export const HeroSection = () => {
             </div>
           </div>
 
-          <div className="hidden md:block relative">
-            <div className="relative bg-white rounded-lg shadow-xl p-8 overflow-hidden">
+          <div className="block relative mt-12 md:mt-0">
+            <div className="relative bg-white rounded-lg shadow-xl p-6 md:p-8 overflow-hidden">
               <div className="relative z-10">
                 <ProfileSection />
                 <ProductTasks />
