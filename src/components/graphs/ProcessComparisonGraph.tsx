@@ -81,77 +81,157 @@ export const ProcessComparisonGraph = () => {
         </p>
       </div>
 
-      <div className="grid gap-6 mt-8">
+      {/* Mobile view: Separate cards for each PM type */}
+      <div className="md:hidden space-y-8">
+        {/* AI-Assisted PM Card */}
+        <Card className="border-2 border-secondary bg-secondary/5">
+          <CardContent className="p-6">
+            <h4 className="text-lg font-semibold text-center mb-4">AI-Assisted PM</h4>
+            <div className="space-y-4">
+              {comparisonData.map((item, index) => (
+                <div key={`ai-assisted-${index}`} className="flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-secondary/10 shrink-0">
+                    <item.icon className="w-4 h-4 text-secondary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">{item.aspect}</p>
+                    <p className="text-sm text-secondary">
+                      {'value' in item.aiAssisted 
+                        ? item.aiAssisted.value 
+                          ? <Check className="w-4 h-4 inline" />
+                          : <X className="w-4 h-4 inline" />
+                        : item.aiAssisted.label}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Traditional PM Card */}
+        <Card>
+          <CardContent className="p-6">
+            <h4 className="text-lg font-semibold text-center mb-4">Traditional PM</h4>
+            <div className="space-y-4">
+              {comparisonData.map((item, index) => (
+                <div key={`traditional-${index}`} className="flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-gray-100 shrink-0">
+                    <item.icon className="w-4 h-4 text-gray-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">{item.aspect}</p>
+                    <p className="text-sm text-gray-600">
+                      {'value' in item.traditional 
+                        ? item.traditional.value 
+                          ? <Check className="w-4 h-4 inline" />
+                          : <X className="w-4 h-4 inline" />
+                        : item.traditional.label}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* AI-Only Card */}
+        <Card>
+          <CardContent className="p-6">
+            <h4 className="text-lg font-semibold text-center mb-4">AI-Only Agent</h4>
+            <div className="space-y-4">
+              {comparisonData.map((item, index) => (
+                <div key={`ai-only-${index}`} className="flex items-start gap-3">
+                  <div className="p-2 rounded-lg bg-gray-100 shrink-0">
+                    <item.icon className="w-4 h-4 text-gray-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">{item.aspect}</p>
+                    <p className="text-sm text-gray-600">
+                      {'value' in item.aiOnly 
+                        ? item.aiOnly.value 
+                          ? <Check className="w-4 h-4 inline" />
+                          : <X className="w-4 h-4 inline" />
+                        : item.aiOnly.label}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Desktop view: Original table layout */}
+      <div className="hidden md:block">
         {/* Column Headers */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
-          <div className="md:col-span-1"></div>
+        <div className="grid grid-cols-4 gap-4 items-center mb-6">
+          <div className="font-medium text-primary"></div>
           <div className="text-center font-medium text-secondary">AI-Assisted PM</div>
           <div className="text-center font-medium">Traditional PM</div>
           <div className="text-center font-medium">AI-Only Agent</div>
         </div>
 
-        {comparisonData.map((item, index) => (
-          <div
-            key={index}
-            className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center"
-          >
-            <div className="flex items-center gap-3 md:col-span-1">
-              <div className="p-2 rounded-lg bg-secondary/5">
-                <item.icon className="w-5 h-5 text-secondary" />
+        <div className="space-y-6">
+          {comparisonData.map((item, index) => (
+            <div key={index} className="grid grid-cols-4 gap-4 items-center">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-secondary/5">
+                  <item.icon className="w-5 h-5 text-secondary" />
+                </div>
+                <span className="font-medium text-primary">{item.aspect}</span>
               </div>
-              <span className="font-medium text-primary">{item.aspect}</span>
+
+              <Card className={`border-2 ${item.aiAssisted.highlight ? 'border-secondary bg-secondary/5' : 'border-muted'}`}>
+                <CardContent className="p-4 text-center">
+                  {'value' in item.aiAssisted ? (
+                    item.aiAssisted.value ? (
+                      <Check className="w-5 h-5 text-secondary mx-auto" />
+                    ) : (
+                      <X className="w-5 h-5 text-gray-400 mx-auto" />
+                    )
+                  ) : (
+                    <span className="text-sm font-medium text-secondary">
+                      {item.aiAssisted.label}
+                    </span>
+                  )}
+                </CardContent>
+              </Card>
+
+              <Card className="border-muted">
+                <CardContent className="p-4 text-center">
+                  {'value' in item.traditional ? (
+                    item.traditional.value ? (
+                      <Check className="w-5 h-5 text-gray-600 mx-auto" />
+                    ) : (
+                      <X className="w-5 h-5 text-gray-400 mx-auto" />
+                    )
+                  ) : (
+                    <span className="text-sm">
+                      {item.traditional.label}
+                    </span>
+                  )}
+                </CardContent>
+              </Card>
+
+              <Card className="border-muted">
+                <CardContent className="p-4 text-center">
+                  {'value' in item.aiOnly ? (
+                    item.aiOnly.value ? (
+                      <Check className="w-5 h-5 text-gray-600 mx-auto" />
+                    ) : (
+                      <X className="w-5 h-5 text-gray-400 mx-auto" />
+                    )
+                  ) : (
+                    <span className="text-sm">
+                      {item.aiOnly.label}
+                    </span>
+                  )}
+                </CardContent>
+              </Card>
             </div>
-
-            {/* Comparison Cards */}
-            <Card className={`border-2 ${item.aiAssisted.highlight ? 'border-secondary bg-secondary/5' : 'border-muted'}`}>
-              <CardContent className="p-4 text-center">
-                {'value' in item.aiAssisted ? (
-                  item.aiAssisted.value ? (
-                    <Check className="w-5 h-5 text-secondary mx-auto" />
-                  ) : (
-                    <X className="w-5 h-5 text-gray-400 mx-auto" />
-                  )
-                ) : (
-                  <span className="text-sm font-medium text-secondary">
-                    {item.aiAssisted.label}
-                  </span>
-                )}
-              </CardContent>
-            </Card>
-
-            <Card className="border-muted">
-              <CardContent className="p-4 text-center">
-                {'value' in item.traditional ? (
-                  item.traditional.value ? (
-                    <Check className="w-5 h-5 text-gray-600 mx-auto" />
-                  ) : (
-                    <X className="w-5 h-5 text-gray-400 mx-auto" />
-                  )
-                ) : (
-                  <span className="text-sm">
-                    {item.traditional.label}
-                  </span>
-                )}
-              </CardContent>
-            </Card>
-
-            <Card className="border-muted">
-              <CardContent className="p-4 text-center">
-                {'value' in item.aiOnly ? (
-                  item.aiOnly.value ? (
-                    <Check className="w-5 h-5 text-gray-600 mx-auto" />
-                  ) : (
-                    <X className="w-5 h-5 text-gray-400 mx-auto" />
-                  )
-                ) : (
-                  <span className="text-sm">
-                    {item.aiOnly.label}
-                  </span>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <Card className="mt-8 border-2 border-muted bg-muted/5">
